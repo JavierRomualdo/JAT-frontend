@@ -2,10 +2,10 @@
   "name": "jat-frontend",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng server.js",
+    "start": "ng app.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
