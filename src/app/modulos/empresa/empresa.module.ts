@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmpresaComponentComponent } from './empresa-component/empresa-component.component';
@@ -15,7 +16,6 @@ import { ModalPropiedadComponent } from './propiedades/modal-propiedad/modal-pro
 import { HomeComponent } from './home/home.component';
 
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { ModalLoteComponent } from './lotes/modal-lote/modal-lote.component';
 import { ModalHabitacionComponent } from './alquileres/habitaciones/modal-habitacion/modal-habitacion.component';
@@ -26,6 +26,7 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
     CommonModule,
     EmpresaRoutingModule,
     NgbModule.forRoot(),
+    ToastrModule.forRoot(),
     KeyFilterModule
   ],
   declarations: [
