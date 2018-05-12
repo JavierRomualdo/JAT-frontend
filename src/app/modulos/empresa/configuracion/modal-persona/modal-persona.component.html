@@ -63,7 +63,7 @@
                               <td></td>
                               <td></td>
                               <td></td>
-                              <td></td>
+                              <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
                               <td scope="row" style="width: 140px">
                                 <!--<ui-switch size="small" [(ngModel)]="o.estado" name="estado" (click)="confirmarcambiodeestado(o)">estado</ui-switch>-->
                                 <a class="btn-link cursor-pointer" title="editar" (click)="traerParaEdicion(1)" style="cursor: pointer"><i class="fa fa-edit text-primary" style="font-size: 23px;"></i></a>
@@ -106,8 +106,8 @@
             <div class="form-group row">
               <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span> </label>
               <div class="col-sm-2" >
-                <!--<ui-switch  *ngIf="ingeniero.id" [(ngModel)]="ingeniero.estado" name="estado"  >estado</ui-switch>
-                <ui-switch  *ngIf="!ingeniero.id"  [checked]="true"  name="estado1" >estado</ui-switch>-->
+                <!--<ui-switch  *ngIf="ingeniero.id" [(ngModel)]="ingeniero.estado" name="estado"  >estado</ui-switch>-->
+                <ui-switch  [checked]="true"  name="estado1" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
               </div>
               <label class="col-sm-3 form-control-label">D.N.I. <span class="text-primary">*</span></label>
               <div class="col-sm-4">

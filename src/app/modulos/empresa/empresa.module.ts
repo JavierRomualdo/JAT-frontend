@@ -14,7 +14,7 @@ import { ModalPersonaComponent } from './configuracion/modal-persona/modal-perso
 import { ModalRolComponent } from './configuracion/modal-rol/modal-rol.component';
 import { ModalPropiedadComponent } from './propiedades/modal-propiedad/modal-propiedad.component';
 import { HomeComponent } from './home/home.component';
-
+import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { ModalLoteComponent } from './lotes/modal-lote/modal-lote.component';
@@ -27,6 +27,7 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
     EmpresaRoutingModule,
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
+    UiSwitchModule,
     KeyFilterModule
   ],
   declarations: [

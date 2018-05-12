@@ -19,21 +19,21 @@ export class ConfiguracionComponent implements OnInit {
   }
 
   abrirDatos(): void {
-    const modalRef = this.modalService.open(ModalEmpresaComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalEmpresaComponent, {size: 'lg', keyboard: true});
     modalRef.result.then((result) => {
     }, (reason) => {
     });
   }
 
   abrirPersonas(): void {
-    const modalRef = this.modalService.open(ModalPersonaComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalPersonaComponent, {size: 'lg', keyboard: true});
     modalRef.result.then((result) => {
     }, (reason) => {
     });
   }
 
   abrirRoles() {
-    const modalRef = this.modalService.open(ModalRolComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalRolComponent, {size: 'lg', keyboard: true});
     modalRef.result.then((result) => {
     }, (reason) => {
     });
