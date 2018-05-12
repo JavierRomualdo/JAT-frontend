@@ -1,0 +1,149 @@
+<div class="card mb-0">
+    <div class="card-close" *ngIf="!proveedores">
+      <div class="dropdown">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true"> &times; </span><!--*ngIf="!proveedores && !captadores"-->
+        </button>
+      </div>
+    </div>
+    <div class="card-header d-flex align-items-center"><!--*ngIf="!proveedores && !captadores"-->
+      <h3 class="h4">Nueva Propiedad</h3>
+    </div><!--<div *ngIf="cargando"><app-cargando></app-cargando></div>-->
+
+    <!--FORMULARIO: NUEVO Y EDIT PERSONA-->
+    <div class="card-body pb-0">
+        <form class="form-horizontal" (ngSubmit)="guardarPropiedades()"><!--#formulario="ngForm"-->
+          <!--<div *ngIf="cargando">
+              <p>Cargando....</p>
+              <app-cargando></app-cargando>
+          </div>-->
+        <div class="pt-3">
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span> </label>
+            <div class="col-sm-2" >
+              <!--<ui-switch  *ngIf="ingeniero.id" [(ngModel)]="ingeniero.estado" name="estado"  >estado</ui-switch>
+              <ui-switch  *ngIf="!ingeniero.id"  [checked]="true"  name="estado1" >estado</ui-switch>-->
+            </div>
+            <label class="col-sm-3 form-control-label">Foto <span class="text-primary">*</span></label>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                  <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Propietario *</label>
+            <div class="col-sm-9">
+              <div class="form-group">
+                <div class="input-group">
+                  <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                  <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+              <label class="col-sm-3 form-control-label">Ubicacion *</label>
+              <div class="col-sm-9">
+                <div class="form-group">
+                  <div class="input-group">
+                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                    <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 form-control-label">Direccion *</label>
+              <div class="col-sm-9">
+                <input type="text" name="direcciong" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
+              </div>
+            </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Largo <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+            <label class="col-sm-3 form-control-label">Ancho <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">N° Pisos <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de pisos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+            <label class="col-sm-3 form-control-label">N° Cuartos <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese cant de cuartos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">N° Baños <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de baños" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+            <label class="col-sm-3 form-control-label">Jardin ? <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="ancho" required="" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Cochera ? <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="largo" required="" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+            <label class="col-sm-3 form-control-label">Precio (S/) <span class="text-primary">*</span></label>
+            <div class="col-sm-3">
+              <input type="text" name="largo" required="" placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 form-control-label">Descripcion.  <span class="text-primary">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese nombre completo" maxlength="50"><!--[(ngModel)]="ingeniero.nombre"-->
+            </div>
+          </div>
+          <!--<div class="form-row" >
+            <div class="col table-responsive"  *ngIf="listaPR && listaPR.length>0"  >
+              <table class="table table-sigro table-hover"  >
+                <thead class="thead-inverse" >
+                  <tr>
+                    <th>Roles.</th>
+                    <th style="width:30px;">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="cursor-pointer" *ngFor="let item of listaPR; let i = index;">
+                    <td>{ {item.idrol.nombre}}</td>
+                    <td style="padding-top: 0px; padding-bottom: 0px;">
+                      <ui-switch size="small" *ngIf="ingeniero.id" [(ngModel)]="item.estado" name="es5-{{i}}" >estado</ui-switch>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>-->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+              <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+              <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Cross click')">Cancelar</button>
+            </div>
+        </div>
+      </form>
+    </div>
+    <!--END FORMULARIO NUEVO Y EDIT PERSONA-->
+</div>

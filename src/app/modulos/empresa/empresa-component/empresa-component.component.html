@@ -1,0 +1,105 @@
+<div class="page">
+  <!-- Main Navbar-->
+  <header class="header">
+    <nav class="navbar">
+      <!-- Search Box-->
+      <div class="search-box">
+        <button class="dismiss"><i class="icon-close"></i></button>
+        <form id="searchForm" action="#" role="search">
+          <input type="search" placeholder="What are you looking for..." class="form-control">
+        </form>
+      </div>
+      <div class="container-fluid">
+        <div class="navbar-holder d-flex align-items-center justify-content-between">
+          <div class="navbar-header">
+            <a routerLink="/" class="navbar-brand">
+              <div class="brand-text brand-big"><span>IN </span><strong>M</strong></div>
+              <div class="brand-text brand-small"><strong>JAT</strong></div></a>
+            <a id="toggle-btn" href="javascript: return false" class="menu-btn active cursor-pointer">
+              <span></span><span></span><span></span></a>
+          </div>
+          <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+            <li class="nav-item d-flex align-items-center">
+              <a id="search" href="#"><i class="fa fa-search"></i></a>
+            </li>
+            <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red">12</span></a>
+              <ul aria-labelledby="notifications" class="dropdown-menu">
+                <li><a rel="nofollow" href="#" class="dropdown-item">
+                  <div class="notification">
+                    <div class="notification-content"><i class="fa fa-envelope bg-green"></i>Tiene 6 mensajes </div>
+                    <div class="notification-time"><small>Hace 4 minutos</small></div>
+                  </div></a>
+                </li>
+                <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Ver todas.                                            </strong></a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange">10</span></a>
+              <ul aria-labelledby="notifications" class="dropdown-menu">
+                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                  <div class="msg-profile"> <img src="assets/img/backend/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                  <div class="msg-body">
+                    <h3 class="h5">RivDu</h3><span>Envia tu mensaje</span>
+                  </div></a></li>
+                <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Leer todos.    </strong></a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a routerLink="../login" class="nav-link logout cursor-pointer"><i class="fa fa-power-off"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header><!--53936190-->
+
+  <div class="page-content d-flex align-items-stretch">
+    <nav class="side-navbar">
+      <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="assets/img/backend/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+          <h1 class="h4">Name User</h1><!--{{authService.getNombrecompleto()}}-->
+          <p>Admin</p>
+        </div>
+      </div>
+      <span class="heading">Principal</span>
+      <ul class="list-unstyled">
+        <li class="nav-item" routerLinkActive="active">
+          <a [routerLink]="['home']"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a [routerLink]="['propiedades']"><i class="fa fa-building"></i>Propiedades</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a [routerLink]="['lotes']"><i class="fa fa-bookmark"></i>Lotes</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active"><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-building"></i>Alquileres </a>
+          <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+            <li class="nav-item" routerLinkActive="active">
+              <a [routerLink]="['alquileres/locales']"><i class="fa fa-tasks"></i>Locales</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a [routerLink]="['alquileres/habitaciones']"><i class="fa fa-bookmark"></i>Habitaciones</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a [routerLink]="['configuracion']"><i class="fa fa-wrench"></i>Configuracion</a>
+          </li>
+      </ul>
+      <span class="heading">Extras</span>
+    </nav>
+    <div class="content-inner">
+      <router-outlet></router-outlet>
+      <footer class="main-footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12">
+              <p style="float: left">Inmobiliaria JAT &copy; 2018</p>
+              <p style="float:right">{{ahora | date:"dd/MM/yyyy"}}</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

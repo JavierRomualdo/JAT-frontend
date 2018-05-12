@@ -1,0 +1,12 @@
+<div class="card mb-0">
+    <div class="card-close" *ngIf="!proveedores">
+      <div class="dropdown">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true"> &times; </span><!--*ngIf="!proveedores && !captadores"-->
+        </button>
+      </div>
+    </div>
+    <div class="card-header d-flex align-items-center"><!--*ngIf="!proveedores && !captadores"-->
+      <h3 class="h4">Nuevo Lote</h3>
+    </div><!--<div *ngIf="cargando"><app-cargando></app-cargando></div>-->
+</div>

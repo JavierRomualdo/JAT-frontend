@@ -19,13 +19,21 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/primeng/resources/themes/omega/theme.css",
+        "../node_modules/primeng/resources/primeng.css",
+        "vendor/bootstrap/css/bootstrap.min.css",
+        "css/style.default.css",
+        "../node_modules/ngx-toastr/toastr.css",
+        "styles.css"
       ],
       "scripts": [
-        "../node_modules/popper.js/dist/umd/popper.min.js",
-        "../node_modules/jquery/dist/jquery.slim.min.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+        "vendor/jquery/jquery.min.js",
+        "vendor/popper.js/umd/popper.min.js",
+        "vendor/bootstrap/js/bootstrap.min.js",
+        "vendor/jquery.cookie/jquery.cookie.js",
+        "vendor/jquery-validation/jquery.validate.min.js",
+        "js/front.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

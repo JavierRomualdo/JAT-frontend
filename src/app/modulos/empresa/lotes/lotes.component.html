@@ -1,0 +1,79 @@
+<header class="page-header">
+    <div class="container-fluid">
+      <h2 class="no-margin-bottom">Datos de los Lotes</h2>
+    </div>
+  </header>
+  <section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+      <div class="row bg-white has-shadow">
+        <div class="col-xl-3 col-sm-6" (click)="abrirLotes()">
+          <div class="item d-flex align-items-center" style="cursor: pointer">
+            <div class="icon bg-green"><i class="fa fa-address-card"></i></div>
+            <div class="title"><span>Nuevo Lote</span>
+              <div class="progress">
+                <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="tables">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <!--<div class="card-close mb-2">
+                <a id="closeCard1" class="btn-link cursor-pointer"><i class="fa fa-plus-circle"></i> Nuevo</a>
+            </div>-->
+            <div class="card-header d-flex align-items-center">
+              <h3 class="h4">Lotes en venta</h3>
+            </div>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Busque por propietario" maxlength="150" id="cdescor" name="cdescor" required><!--[(ngModel)]="dni"-->
+                <input type="text" class="form-control" placeholder="Busque por ubicacion" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
+                <input type="text" class="form-control" placeholder="Busque por direccion" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
+                <button class="input-group-addon" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Propietario</th>
+                      <th>Foto</th>
+                      <th>Ubicacion</th>
+                      <th>Direccion</th>
+                      <th>Área</th>
+                      <th>Precio</th>
+                      <th>Descripcion</th>
+                      <th>Estado</th>
+                      <th>Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="cursor-pointer">
+                      <th scope="row">1</th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td scope="row "  style="width: 140px">
+                        <a class="btn-link curso-pointer" title="editar"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+<div class="container posSuperior">
+  <div class="row">
+    <div class="box">
+      <div class="col-lg-12">
+        <hr>
+        <h2 class="intro-text text-center">Formulario de
+            <strong>Contacto</strong>
+        </h2>
+        <hr>
+        <p class="text-justify">Suscríbete a nuestras ofertas semanales</p>
+        <p class="text-justify">Te enviaremos un mensaje con las mejores ofertas de los inmuebles de acuerdo a los criterios que <strong>tú</strong> estas buscando.
+        <strong>No esperes más y encuentra ya el inmueble que tanto deseas!</strong></p>
+
+        <div class="form-row align-items-center margenInf">
+
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="tipoInmueble">
+            <option selected>Propiedad</option>
+            <option value="1">Casas</option>
+            <option value="2">Departamentos</option>
+            <option value="3">Habitaciones</option>
+            <option value="4">Lotes</option>
+            <option value="5">Locales</option>
+            <option value="6">Oficinas</option>
+            <option value="7">Terrenos</option>
+          </select>
+
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="tipoContrato">
+            <option selected>Contrato</option>
+            <option value="1">Venta</option>
+            <option value="2">Alquiler</option>
+          </select>
+
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="departamento">
+            <option selected>Departamento</option>
+            <option value="1">Piura</option>
+            <option value="2">Otro</option>
+          </select>
+
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="ubicacion">
+            <option selected>Ubicación</option>
+            <option value="1">0 - 5 km</option>
+            <option value="2">5 - 10 km</option>
+            <option value="3">10 - 15 km</option>
+            <option value="4">5 - 20 km</option>
+            <option value="5"> +20km</option>
+          </select>
+
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="area">
+            <option selected>Precio</option>
+            <option value="1">0 - s/.500</option>
+            <option value="2">s/.500 - s/.1000</option>
+            <option value="2">s/.1000 - s/.2000</option>
+            <option value="2">s/.2000 - s/.3000</option>
+            <option value="2">+ s/.4000</option>
+          </select>
+
+        </div>
+
+        <p></p>
+
+        <form role="form">
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label>Correo Electrónico</label>
+                    <input type="email" class="form-control">
+                </div>
+                <div class="form-group col-lg-4">
+                    <label>Teléfono</label>
+                    <input type="tel" class="form-control">
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group col-lg-12">
+                    <label>Mensaje</label>
+                    <textarea class="form-control" rows="6"></textarea>
+                </div>
+                <div class="form-group col-lg-12">
+                    <input type="hidden" name="save" value="contact">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<app-footer></app-footer>
