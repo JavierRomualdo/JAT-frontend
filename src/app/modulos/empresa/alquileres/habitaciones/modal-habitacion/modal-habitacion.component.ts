@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,12 +7,22 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./modal-habitacion.component.css']
 })
 export class ModalHabitacionComponent implements OnInit {
+  @Input() edit;
+  public verNuevo = false;
 
   constructor(
     public activeModal: NgbActiveModal
   ) { }
 
   ngOnInit() {
+    if (this.edit) {
+      this.traerParaEdicion(this.edit);
+    }
   }
 
+  guardarHabitacion() {}
+
+  traerParaEdicion(id) {
+    this.verNuevo = true;
+  }
 }

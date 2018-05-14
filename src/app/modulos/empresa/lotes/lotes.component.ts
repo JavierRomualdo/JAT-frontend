@@ -17,7 +17,15 @@ export class LotesComponent implements OnInit {
   }
 
   abrirLotes(): void {
-    const modalRef = this.modalService.open(ModalLoteComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalLoteComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  editarLote(id) {
+    const modalRef = this.modalService.open(ModalLoteComponent, {size: 'lg', keyboard: true});
+    modalRef.componentInstance.edit = id;
     modalRef.result.then((result) => {
     }, (reason) => {
     });

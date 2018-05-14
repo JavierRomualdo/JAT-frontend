@@ -7,7 +7,8 @@
       </div>
     </div>
     <div class="card-header d-flex align-items-center"><!--*ngIf="!proveedores && !captadores"-->
-      <h3 class="h4">Nueva Propiedad</h3>
+      <h3 *ngIf="verNuevo" class="h4">Editar Propiedad</h3>
+      <h3 *ngIf="!verNuevo"  class="h4">Nueva Propiedad</h3>
     </div><!--<div *ngIf="cargando"><app-cargando></app-cargando></div>-->
 
     <!--FORMULARIO: NUEVO Y EDIT PERSONA-->
@@ -18,105 +19,196 @@
               <app-cargando></app-cargando>
           </div>-->
         <div class="pt-3">
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span> </label>
-            <div class="col-sm-2" >
-              <!--<ui-switch  *ngIf="ingeniero.id" [(ngModel)]="ingeniero.estado" name="estado"  >estado</ui-switch>-->
-              <ui-switch [checked]="true"  name="estado1" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
-            </div>
-            <label class="col-sm-3 form-control-label">Foto <span class="text-primary">*</span></label>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <div class="input-group">
-                  <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                  <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
-                  </div>
-                </div>
+          <div class="row">
+            <!--Card "consolidado-->
+            <div class="card col-md-12">
+              <div class="card-close mb-2">
+                <ui-switch [checked]="true"  name="estado1" title="estado">estado</ui-switch><!--*ngIf="!ingeniero.id"-->
               </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Propietario *</label>
-            <div class="col-sm-9">
-              <div class="form-group">
-                <div class="input-group">
-                  <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                  <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
-                  </div>
-                </div>
+              <div class="card-header d-flex align-items-center">
+                <h3 class="h5">General</h3>
               </div>
-            </div>
-          </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Ubicacion *</label>
-              <div class="col-sm-9">
-                <div class="form-group">
-                  <div class="input-group">
-                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                    <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+              <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Propietario *</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                        <input type="text" class="form-control" required="" placeholder="Busque el propietario" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <label class="col-sm-2 form-control-label">Precio (S/) <span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="largo" required="" placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                  </div>
                 </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Largo (mts.)<span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                    <small class="help-block-none">Atributo para el área de la propiedad.</small>
+                  </div>
+                  <label class="col-sm-2 form-control-label">Ancho (mts.)<span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                    <small class="help-block-none">Atributo para el área de la propiedad.</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Ubicacion *</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                        <input type="text" class="form-control" required="" placeholder="Busque la ubicación" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="col-sm-2 form-control-label">Direccion *</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="direcciong" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
+                  </div>
+                </div>
+                <!--<div class="form-group row">
+                  <div class="offset-md-4">
+                    <img src="assets/img/nofoto.png" width="200" height="190" style="border: 1px solid #ccc">
+                  </div>
+                </div>-->
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Direccion *</label>
-              <div class="col-sm-9">
-                <input type="text" name="direcciong" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
-              </div>
-            </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Largo <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-            <label class="col-sm-3 form-control-label">Ancho <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
+            <!--fin card "consolidado"-->
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">N° Pisos <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de pisos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-            <label class="col-sm-3 form-control-label">N° Cuartos <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese cant de cuartos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
+          <div class="row">
+            <!--Tapset-->
+            <ngb-tabset class="col-sm-12">
+                <ngb-tab title="Detalles">
+                  <ng-template ngbTabContent>
+                    <br/>
+                    <div class="form-group row">
+                      <label class="col-sm-2 form-control-label">Cant. Pisos <span class="text-primary">*</span></label>
+                      <div class="col-sm-4">
+                        <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de pisos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                      </div>
+                      <label class="col-sm-2 form-control-label">Cant. Cuartos <span class="text-primary">*</span></label>
+                      <div class="col-sm-4">
+                        <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese cant de cuartos" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 form-control-label">Cant. Baños <span class="text-primary">*</span></label>
+                      <div class="col-sm-4">
+                        <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de baños" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                      </div>
+                      <label class="col-sm-2 form-control-label">¿Jardin?<span class="text-primary"></span></label>
+                      <div class="col-sm-1">
+                        <ui-switch [checked]="false"  name="estado1" title="estado">estado</ui-switch>
+                      </div>
+                      <label class="col-sm-2 form-control-label">¿Cochera?<span class="text-primary"></span></label>
+                      <div class="col-sm-1">
+                        <ui-switch [checked]="false"  name="estado1" title="estado">estado</ui-switch>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 form-control-label">Descripcion.  <span class="text-primary">*</span></label>
+                      <div class="col-sm-4">
+                        <textarea class="form-control" name="descripcion" placeholder="Ingrese la descripcion" maxlength="100"></textarea>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <!---->
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Servicios</ng-template>
+                  <ng-template ngbTabContent>
+                    <br/>
+                    <div class="form-horizontal offset-md-1">
+                      <div class="i-checks">
+                        <input id="checkboxCustom1" type="checkbox" value="" checked="" class="checkbox-template">
+                        <label for="checkboxCustom1">Agua</label>
+                      </div>
+                      <div class="i-checks">
+                        <input id="checkboxCustom2" type="checkbox" value="" class="checkbox-template">
+                        <label for="checkboxCustom2">Desagüe</label>
+                      </div>
+                      <div class="i-checks">
+                        <input id="checkboxCustom3" type="checkbox" value="" class="checkbox-template">
+                        <label for="checkboxCustom3">Luz</label>
+                      </div>
+                      <div class="i-checks">
+                        <input id="checkboxCustom4" type="checkbox" value="" class="checkbox-template">
+                        <label for="checkboxCustom4">Internet</label>
+                      </div>
+                      <div class="i-checks">
+                        <input id="checkboxCustom5" type="checkbox" value="" class="checkbox-template">
+                        <label for="checkboxCustom5">Seguridad</label>
+                      </div>
+                      <div class="i-checks">
+                        <input id="checkboxCustom6" type="checkbox" value="" class="checkbox-template">
+                        <label for="checkboxCustom6">Autovalu</label>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <!---->
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Fotos</ng-template>
+                  <ng-template ngbTabContent>
+                    <br/>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" class="form-control" required="" placeholder="aqui cargue cada foto de la propiedad" disabled name="idubigeo">
+                        <button type="button" class="input-group-addon"><i class="fa fa-search"></i></button>
+                        <input type="text" class="form-control" required="" placeholder="ingrese el detalle de la foto"/>
+                        <button type="button" class="input-group-addon"><i class="fa fa-plus"></i></button>
+                      </div>
+                      <div class="table-responsive">
+                          <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Foto</th>
+                                <th>Detalle</th>
+                                <th>Opciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="cursor-pointer">
+                                <th scope="row">1</th>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                  <a class="btn-link curso-pointer" title="editar"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                                  <a class="btn-link curso-pointer" title="eliminar"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                                </td>
+                              </tr>
+                              <tr class="cursor-pointer">
+                                <th scope="row">2</th>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                  <a class="btn-link curso-pointer" title="editar"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                                  <a class="btn-link curso-pointer" title="eliminar"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">N° Baños <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese cant de baños" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-            <label class="col-sm-3 form-control-label">Jardin ? <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="ancho" required="" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Cochera ? <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="largo" required="" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-            <label class="col-sm-3 form-control-label">Precio (S/) <span class="text-primary">*</span></label>
-            <div class="col-sm-3">
-              <input type="text" name="largo" required="" placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Descripcion.  <span class="text-primary">*</span></label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese nombre completo" maxlength="50"><!--[(ngModel)]="ingeniero.nombre"-->
-            </div>
-          </div>
+
+
           <!--<div class="form-row" >
             <div class="col table-responsive"  *ngIf="listaPR && listaPR.length>0"  >
               <table class="table table-sigro table-hover"  >

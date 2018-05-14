@@ -16,7 +16,15 @@ export class HabitacionesComponent implements OnInit {
   }
 
   abrirHabitaciones(): void {
-    const modalRef = this.modalService.open(ModalHabitacionComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalHabitacionComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  editarHabitacion(id): void {
+    const modalRef = this.modalService.open(ModalHabitacionComponent, {size: 'lg', keyboard: true});
+    modalRef.componentInstance.edit = id;
     modalRef.result.then((result) => {
     }, (reason) => {
     });

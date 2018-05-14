@@ -20,6 +20,8 @@ import {KeyFilterModule} from 'primeng/keyfilter';
 import { ModalLoteComponent } from './lotes/modal-lote/modal-lote.component';
 import { ModalHabitacionComponent } from './alquileres/habitaciones/modal-habitacion/modal-habitacion.component';
 import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-local.component';
+import { ModalServicioComponent } from './configuracion/modal-servicio/modal-servicio.component';
+import { ModalUsuarioComponent } from './configuracion/modal-usuario/modal-usuario.component';
 
 @NgModule({
   imports: [
@@ -46,7 +48,9 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
     ModalPropiedadComponent,
     ModalLoteComponent,
     ModalHabitacionComponent,
-    ModalLocalComponent
+    ModalLocalComponent,
+    ModalServicioComponent,
+    ModalUsuarioComponent
   ],
   entryComponents: [
     ModalEmpresaComponent,
@@ -55,7 +59,9 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
     ModalPropiedadComponent,
     ModalLoteComponent,
     ModalHabitacionComponent,
-    ModalLocalComponent
+    ModalLocalComponent,
+    ModalServicioComponent,
+    ModalUsuarioComponent
   ],
   providers: [
     NgbActiveModal

@@ -7,6 +7,148 @@
       </div>
     </div>
     <div class="card-header d-flex align-items-center"><!--*ngIf="!proveedores && !captadores"-->
-      <h3 class="h4">Nuevo Lote</h3>
+      <h3 *ngIf="!verNuevo"  class="h4">Nuevo Lote</h3>
+      <h3 *ngIf="verNuevo"  class="h4">Editar Lote</h3>
     </div><!--<div *ngIf="cargando"><app-cargando></app-cargando></div>-->
+    <!--FORMULARIO: NUEVO Y EDIT PERSONA-->
+    <div class="card-body pb-0">
+        <form class="form-horizontal" (ngSubmit)="guardarLote()"><!--#formulario="ngForm"-->
+          <!--<div *ngIf="cargando">
+              <p>Cargando....</p>
+              <app-cargando></app-cargando>
+          </div>-->
+        <div class="pt-3">
+          <div class="row">
+            <!--Card "consolidado-->
+            <div class="card col-md-12">
+              <div class="card-close mb-2">
+                <ui-switch [checked]="true"  name="estado1" title="estado">estado</ui-switch><!--*ngIf="!ingeniero.id"-->
+              </div>
+              <div class="card-header d-flex align-items-center">
+                <h3 class="h5">General</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Propietario *</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                        <input type="text" class="form-control" required="" placeholder="Busque el propietario" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="col-sm-2 form-control-label">Precio (S/) <span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="largo" required="" placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Largo (mts.)<span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="largo" required="" class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                    <small class="help-block-none">Atributo para el área del lote.</small>
+                  </div>
+                  <label class="col-sm-2 form-control-label">Ancho (mts.)<span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <input type="text" name="ancho" required="" class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                    <small class="help-block-none">Atributo para el área del lote.</small>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Ubicacion *</label>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                        <input type="text" class="form-control" required="" placeholder="Busque la ubicación" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="col-sm-2 form-control-label">Direccion *</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="direcciong" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 form-control-label">Descripcion.  <span class="text-primary">*</span></label>
+                  <div class="col-sm-4">
+                    <textarea class="form-control" name="descripcion" placeholder="Ingrese la descripcion" maxlength="100"></textarea>
+                  </div>
+                </div>
+                <!--<div class="form-group row">
+                  <div class="offset-md-4">
+                    <img src="assets/img/nofoto.png" width="200" height="190" style="border: 1px solid #ccc">
+                  </div>
+                </div>-->
+              </div>
+            </div>
+            <!--fin card "consolidado"-->
+          </div>
+          <!---->
+          <div class="row">
+            <!--Card "consolidado-->
+            <div class="card col-md-12">
+              <div class="card-header d-flex align-items-center">
+                <h3 class="h5">Fotos</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control" required="" placeholder="aqui cargue cada foto de la propiedad" disabled name="idubigeo">
+                    <button type="button" class="input-group-addon"><i class="fa fa-search"></i></button>
+                    <input type="text" class="form-control" required="" placeholder="ingrese el detalle de la foto"/>
+                    <button type="button" class="input-group-addon"><i class="fa fa-plus"></i></button>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Foto</th>
+                          <th>Detalle</th>
+                          <th>Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="cursor-pointer">
+                          <th scope="row">1</th>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              <a class="btn-link curso-pointer" title="editar"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                              <a class="btn-link curso-pointer" title="eliminar"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                            </td>
+                        </tr>
+                        <tr class="cursor-pointer">
+                          <th scope="row">2</th>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              <a class="btn-link curso-pointer" title="editar"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                              <a class="btn-link curso-pointer" title="eliminar"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+            <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Cross click')">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
 </div>

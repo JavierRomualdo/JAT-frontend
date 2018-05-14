@@ -22,4 +22,12 @@ export class PropiedadesComponent implements OnInit {
     }, (reason) => {
     });
   }
+
+  editarPropiedad(id) {
+    const modalRef = this.modalService.open(ModalPropiedadComponent, {size: 'lg', keyboard: false});
+    modalRef.componentInstance.edit = id;
+    modalRef.result.then((result) => {
+    }, (reason) => {
+    });
+  }
 }

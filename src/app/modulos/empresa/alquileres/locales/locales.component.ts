@@ -16,7 +16,15 @@ export class LocalesComponent implements OnInit {
   }
 
   abrirLocales(): void {
-    const modalRef = this.modalService.open(ModalLocalComponent, {size: 'lg', keyboard: false});
+    const modalRef = this.modalService.open(ModalLocalComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  editarLocal(id) {
+    const modalRef = this.modalService.open(ModalLocalComponent, {size: 'lg', keyboard: true});
+    modalRef.componentInstance.edit = id;
     modalRef.result.then((result) => {
     }, (reason) => {
     });
