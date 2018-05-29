@@ -1,6 +1,7 @@
 import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresaComponentComponent } from './empresa-component/empresa-component.component';
 import { PropiedadesComponent } from './propiedades/propiedades.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
@@ -22,7 +23,7 @@ import { ModalHabitacionComponent } from './alquileres/habitaciones/modal-habita
 import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-local.component';
 import { ModalServicioComponent } from './configuracion/modal-servicio/modal-servicio.component';
 import { ModalUsuarioComponent } from './configuracion/modal-usuario/modal-usuario.component';
-
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +31,10 @@ import { ModalUsuarioComponent } from './configuracion/modal-usuario/modal-usuar
     NgbModule.forRoot(),
     ToastrModule.forRoot(),
     UiSwitchModule,
-    KeyFilterModule
+    KeyFilterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ChartsModule
   ],
   declarations: [
     EmpresaComponentComponent,

@@ -1,140 +1,123 @@
-<div class="card mb-0">
-    <div class="card-close"><!--*ngIf="!proveedores"-->
-      <div class="dropdown">
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-          <span aria-hidden="true"> &times; </span><!--*ngIf="!proveedores && !captadores"-->
-        </button>
-      </div>
+<div class="card mb-0 card-accent-primary">
+    <div class="card-header bg-primary">
+      <span *ngIf="!vistaFormulario" class="h6">MANTENIMIENTO DE SERVICIOS</span>
+      <span *ngIf="vistaFormulario && !verNuevo" class="h6">NUEVO SERVICIO</span>
+      <span *ngIf="vistaFormulario && verNuevo" class="h6">EDITANDO SERVICIO</span>
+      <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
+      </button>
     </div>
-    <div class="card-header d-flex align-items-center"><!--*ngIf="!proveedores && !captadores"-->
-      <h3 class="h4" *ngIf="!vistaFormulario">Mantenimiento de Servicios</h3>
-      <h3 class="h4" *ngIf="vistaFormulario && !verNuevo">Nuevo Servicio</h3>
-      <h3 class="h4" *ngIf="vistaFormulario && verNuevo">Editando Servicio</h3>
-    </div><!--<div *ngIf="cargando"><app-cargando></app-cargando></div>-->
-    <div class="card-body pb-0">
+    <form *ngIf="!vistaFormulario">
+      <div class="card-body pb-0" >
+        <!--/.card-->
+        <div class="card border-primary">
+            <div class="card-header bg-primary border-primary">
+              <i class="fa fa-align-justify"></i> Listado de Servicios
+              <button type="button" class="btn btn-primary btn-sm float-right" (click)="nuevo()">
+                <i class="fa fa-plus"></i> Nuevo
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control border-primary" placeholder="Busque por servicio" maxlength="150" id="cdescor" name="cdescor" required><!--[(ngModel)]="dni"-->
+                <input type="text" class="form-control border-primary" placeholder="Busque por detalle" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
 
-      <!--LISTADO DE SERVICIOS-->
-      <div *ngIf="!vistaFormulario" class="form-horizontal" style="padding: 2px"><!--!cargando && -->
-        <section class="tables pt-0 pb-0">
-          <div class="container-fluid" style="padding: 0px">
-            <div  class="row">
-              <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-close mb-2">
-                      <a id="closeCard2" class="btn-link cursor-pointer" (click)="nuevo()" style="cursor: pointer"><i class="fa fa-plus-circle"></i> Nuevo</a>
-                    </div>
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Listado de Servicios</h3>
-                    </div><!--ingenieros-->
-                    <div class="card-body">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Busque por servicio" maxlength="150" id="cdescor" name="cdescor" required><!--[(ngModel)]="dni"-->
-                        <input type="text" class="form-control" placeholder="Busque por detalle" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
-                        <button class="input-group-addon" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
-                      </div>
-                        <div class="table-responsive pt-">
-                          <table class="table table-striped table-bordered table-hover table-sm" >
-                            <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Servicio</th>
-                              <th>Detalle</th>
-                              <th>Estado</th>
-                              <th>Opciones</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="cursor-pointer"><!--*ngFor="let o of ingenieros;let i=index"-->
-                              <th scope="row">1</th><!--(click)="elegir<Ingeniero(o)"  {{i+1}}-->
-                              <td></td>
-                              <td></td>
-                              <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
-                              <td scope="row" style="width: 140px">
-                                <!--<ui-switch size="small" [(ngModel)]="o.estado" name="estado" (click)="confirmarcambiodeestado(o)">estado</ui-switch>-->
-                                <a class="btn-link cursor-pointer" title="editar" (click)="traerParaEdicion(1)" style="cursor: pointer"><i class="fa fa-edit text-primary" style="font-size: 23px;"></i></a>
-                              </td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
-                </div>
+                <button class="input-group-addon btn btn-square btn-primary" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
               </div>
-            </div>
-          </div>
-        </section>
-        <div>
-        <!--<div class="row mb-3">
-          <div class="col-md-6 table-responsive">
-            <ngb-pagination style="margin-bottom: 0px;" class="ngb-pagination-sigro" [collectionSize]="paginacion.totalRegistros" [(page)]="page" [maxSize]="1" [boundaryLinks]="true" (pageChange)="listarIngenieros()"></ngb-pagination>
-          </div>
-          <div class="col-md-6 text-right pr-3">
-            <p class="card-text text-secondary"><small>Mostrando {{paginacion.paginaActual}} de {{paginacion.totalPaginas}} páginas.</small></p>
-          </div>
-        </div>-->
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Limpiar</button><!--(click)="limpiar()"-->
-          <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Cross click')">Cancelar</button>
-        </div>
-        </div>
-      </div>
-      <!--End Lista de Servicios-->
-
-      <!--FORMULARIO: NUEVO Y EDIT PERSONA-->
-      <div *ngIf="vistaFormulario"><!--&& !cargando-->
-        <form class="form-horizontal" (ngSubmit)="guardarServicio()"><!--#formulario="ngForm"-->
-            <!--<div *ngIf="cargando">
-                <p>Cargando....</p>
-                <app-cargando></app-cargando>
-            </div>-->
-          <div class="pt-3">
-            <div class="form-group row">
-                <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span> </label>
-                <div class="col-sm-9" >
-                  <!--<ui-switch  *ngIf="ingeniero.id" [(ngModel)]="ingeniero.estado" name="estado"  >estado</ui-switch>-->
-                  <ui-switch [checked]="true"  name="estado1" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
-                </div>
-              </div>
-            <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Servicio.  <span class="text-primary">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="rol" required="" placeholder="Ingrese el servicio" maxlength="50"><!--[(ngModel)]="ingeniero.nombre"-->
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Detalle</label>
-              <div class="col-sm-9">
-                <input type="text" name="correo" class="form-control" placeholder="Ingrese el detalle del servicio" maxlength="50"><!--[(ngModel)]="ingeniero.correo"-->
-              </div>
-            </div>
-            <!--<div class="form-row" >
-              <div class="col table-responsive"  *ngIf="listaPR && listaPR.length>0"  >
-                <table class="table table-sigro table-hover"  >
-                  <thead class="thead-inverse" >
-                    <tr>
-                      <th>Roles.</th>
-                      <th style="width:30px;">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="cursor-pointer" *ngFor="let item of listaPR; let i = index;">
-                      <td>{ {item.idrol.nombre}}</td>
-                      <td style="padding-top: 0px; padding-bottom: 0px;">
-                        <ui-switch size="small" *ngIf="ingeniero.id" [(ngModel)]="item.estado" name="es5-{{i}}" >estado</ui-switch>
-                      </td>
-                    </tr>
-                  </tbody>
+              <div class="table-responsive">
+                <!--/.table-->
+                <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
+                    <thead class="thead-light">
+                      <tr>
+                        <th class="text-center">#</th>
+                        <th>Servicio</th>
+                        <th>Detalle</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th class="text-center">1</th>
+                        <td></td>
+                        <td></td>
+                        <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
+                        <td scope="row" class="text-center">
+                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="text-center">2</th>
+                        <td></td>
+                        <td></td>
+                        <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
+                        <td scope="row" class="text-center">
+                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
                 </table>
+                <!--/.table-->
+                <ul class="pagination">
+                    <li class="page-item">
+                      <a class="page-link" href="#">Prev</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
               </div>
-            </div>-->
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
-                <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-                <button type="button" class="btn btn-outline-dark" (click)="vistaFormulario = false">Cancelar</button>
-              </div>
-          </div>
-        </form>
+            </div>
+        </div>
+        <!--/.card-->
       </div>
-      <!--END FORMULARIO NUEVO Y EDIT PERSONA-->
-    </div>
+      <div class="modal-footer border-primary">
+          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+          <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
+      </div>
+    </form>
+    <form #servicio="ngForm" *ngIf="vistaFormulario" class="form-horizontal" (ngSubmit)="guardarServicio()"> <!--#formulario="ngForm"-->
+      <div class="card-body" >
+            <!--<div *ngIf="cargando">
+              <p>Cargando....</p>
+              <app-cargando></app-cargando>
+            </div>-->
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span></label>
+                <div class="col-sm-9" >
+                  <ui-switch [checked]="true" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Servicio <span class="text-primary">*</span></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese el servicio" maxlength="50"><!--[(ngModel)]="ingeniero.nombre"-->
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Detalle</label>
+                <div class="col-sm-9">
+                  <input type="text" name="correo" placeholder="Ingrese detalle del servicio" class="form-control" maxlength="50"><!--[(ngModel)]="ingeniero.correo"-->
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer border-primary">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!servicio.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+          <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+          <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
+      </div>
+    </form>
   </div>

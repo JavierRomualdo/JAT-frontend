@@ -24,4 +24,6 @@ export class ModalUsuarioComponent implements OnInit {
     // aqui traemos los datos del usuario con ese id para ponerlo en el formulario y editarlo
     this.verNuevo = true;
   }
+
+  guardarUsuario() {}
 }

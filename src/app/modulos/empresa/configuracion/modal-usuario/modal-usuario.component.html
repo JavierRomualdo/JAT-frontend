@@ -1,78 +1,75 @@
-<div class="card mb-0">
-    <div class="card-close">
-      <div class="dropdown">
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-    <div class="card-header d-flex align-items-center">
-      <h3 class="h4">Mantenimiento de Usuarios</h3>
-    </div>
-    <div class="card-body pb-0"><!--*ngIf="!cargando"-->
-      <form>
-        <div class="row">
-          <div class="card col-md-12">
-            <div class="card-close mb-2">
-              <ui-switch [checked]="true"  name="estado1" >estado</ui-switch>
-            </div>
-            <div class="card-header d-flex align-items-center">
-              <h3 *ngIf="verNuevo" class="h4">Editar Usuario</h3>
-              <h3 *ngIf="!verNuevo"  class="h4">Nuevo Usuario</h3>
-            </div>
-            <div class="card-body">
-                <div class="form-group row">
-                  <label class="col-sm-3 form-control-label">Nombre *</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" required placeholder="Ingrese nombres" name="razonsocial"  maxlength="250">
-                  </div>
-                </div>
-                <div class="line"></div>
-                <div class="form-group row">
-                  <label class="col-sm-3 form-control-label">Email</label>
-                  <div class="col-sm-9">
-                    <input type="email" name="email" class="form-control" required placeholder="Ingrese el email" maxlength="100">
-                  </div>
-                </div>
-                <div class="form-group row">
-                <label class="col-sm-3 form-control-label">Foto *</label>
+<div class="card mb-0 card-accent-primary">
+  <div class="card-header bg-primary">
+    <span class="h6">MANTENIMIENTO DE USUARIOS</span>
+    <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
+    </button>
+  </div>
+  <form #lote="ngForm" class="form-horizontal" (ngSubmit)="guardarUsuario()">
+    <div class="card-body pb-0">
+      <!--/.card-->
+      <div class="card border-primary">
+          <div class="card-header bg-primary border-primary">
+            <i class="fa fa-align-justify"></i>
+            <span *ngIf="!verNuevo">Nuevo Usuario</span>
+            <span *ngIf="verNuevo">Editar Usuario</span>
+            <ui-switch [checked]="true"  name="estado1" class="float-right" title="estado">estado</ui-switch>
+          </div>
+          <div class="card-body">
+            <!--/.row-->
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Nombre *</label>
                 <div class="col-sm-9">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                      <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
-                      <div class="input-group-append">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button><!--(click)="abrirModalUbigeo()"-->
-                      </div>
+                  <input type="text" class="form-control" required placeholder="Ingrese nombres" name="razonsocial"  maxlength="250">
+                </div>
+            </div>
+            <!--/.row-->
+            <div class="line"></div>
+            <div class="form-group row">
+                <label class="col-sm-3 form-control-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="email" name="email" class="form-control" required placeholder="Ingrese el email" maxlength="100">
+                </div>
+            </div>
+            <!--/.row-->
+            <div class="form-group row">
+              <label class="col-sm-3 form-control-label">Foto *</label>
+              <div class="col-sm-9">
+                <div class="form-group">
+                  <div class="input-group">
+                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                    <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button><!--(click)="abrirModalUbigeo()"-->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!--/.row-->
           </div>
         </div>
-        <!---->
-        <div class="row">
-          <div class="card col-md-12">
-            <div class="card-header d-flex align-items-center">
-              <h3 class="h4">Foto</h3>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="offset-sm-4">
-                  <img src="assets/img/nofoto.png" width="200">
-                </div>
+        <!--/.card-->
+
+        <div class="card border-primary">
+          <div class="card-header bg-primary border-primary">
+            <i class="fa fa-align-justify"></i> Foto
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="offset-sm-4">
+                <img src="assets/img/nofoto.png" width="200">
               </div>
             </div>
           </div>
         </div>
-      </form>
-      <!---->
-      <div class="modal-footer">
-          <div>
-            <button type="submit" class="btn btn-primary btn-sm">Aceptar</button>
-          </div>
-          <button type="button" class="btn btn-outline-dark btn-sm" (click)="activeModal.dismiss('Cross click')">Cancelar</button>
-        </div>
     </div>
+    <div class="modal-footer border-primary">
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!lote.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+
+      <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
+    </div>
+  </form>
 </div>

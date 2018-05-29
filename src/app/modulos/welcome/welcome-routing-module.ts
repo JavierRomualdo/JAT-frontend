@@ -7,20 +7,25 @@ import { NosotrosComponent } from './nosotros/nosotros.component';
 import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { WelcomeComponentComponent } from './welcome-component/welcome-component.component';
 
 const welcomeRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'nosotros', component: NosotrosComponent},
-  {path: 'servicios', component: ServiciosComponent,
+  {
+    path: '',
+    component: WelcomeComponentComponent,
     children: [
-      {path: 'alquileres', component: AlquileresComponent},
-      {path: 'lotes', component: LotesComponent},
-      {path: 'propiedades', component: PropiedadesComponent},
+      // {path: '', component: HomeComponent},
+      {path: 'home', component: HomeComponent},
+      {path: 'nosotros', component: NosotrosComponent},
+      {path: 'servicios', component: ServiciosComponent},
+      {path: 'servicios/propiedades', component: PropiedadesComponent},
+      {path: 'servicios/lotes', component: LotesComponent},
+      {path: 'servicios/alquileres', component: AlquileresComponent},
+      {path: 'suscripcion', component: SuscripcionComponent},
+      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      {path: '**', component: HomeComponent}
     ]
-  },
-  {path: 'suscripcion', component: SuscripcionComponent},
-  {path: '', redirectTo: '', pathMatch: 'full'},
-  {path: '**', component: HomeComponent}
+  }
 ];
 
 @NgModule({

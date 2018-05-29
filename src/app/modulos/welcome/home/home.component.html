@@ -1,6 +1,8 @@
-<app-navbar></app-navbar>
-<div class="container posSuperior">
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<section class="bg-primary">
+  <div class="">
+    <!-- Carousel Start-->
+    <div class="home-carousel">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -10,8 +12,8 @@
       <div class="carousel-item active">
         <img class="d-block w-100" src="assets\img\home\casa.jpeg" alt="First slide">
         <div class="carousel-caption d-none d-md-block">
-          <h3>CASAS</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+          <h3>PROPIEDADES</h3>
+          <p>Tenemos de diferentes precios agusto del cliente propietario.</p>
         </div>
       </div>
       <div class="carousel-item">
@@ -25,7 +27,7 @@
         <img class="d-block w-100" src="assets\img\home\lotes.jpg" alt="Third slide">
         <div class="carousel-caption d-none d-md-block">
           <h3>LOTES</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+          <p>Los mejores lotes de la region piura al mejor precio del cliente.</p>
         </div>
       </div>
     </div>
@@ -38,17 +40,91 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-  <br>
-  <div class="container fondoDiv">
-    <h2>Titulo</h2>
-    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   </div>
-</div>
-<app-footer></app-footer>
+      <!-- Carousel End-->
+  </div>
+</section>
+<section class="bg-white bar">
+    <div class="container">
+      <div class="heading text-center">
+        <h2>Inmobiliaria Jat</h2>
+      </div>
+      <p class="lead" style="font-size: 22px">Empresa dedicada a brindar diferentes servicios de venta de propiedades, lotes y alquileres de locales y habitaciones
+        en la region Piura. Si esta buscando una propiedad, un lote, o un alquiler, la empresa te brinda a separar el servicio para finalmente brindarle
+        el servicio seleccionado por el cliente.</p>
+      <div class="row portfolio">
+        <div class="col-lg-4">
+          <div class="home-blog-post">
+              <div class="image"><img src="assets/img/portfolio-4.jpg" alt="..." class="img-fluid">
+                <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i>Leer mas</a></div>
+              </div>
+            <div class="text">
+              <h4><a href="#">Propiedades </a></h4>
+              <!--<p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
+              <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
+              -->
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="home-blog-post">
+            <div class="image"><img src="assets/img/portfolio-5.jpg" alt="..." class="img-fluid">
+              <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i>Leer mas</a></div>
+            </div>
+            <div class="text">
+              <h4><a href="#">Lotes</a></h4>
+              <!--<p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
+              <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
+              -->
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="home-blog-post">
+            <div class="image"><img src="assets/img/portfolio-6.jpg" alt="..." class="img-fluid">
+              <div class="overlay d-flex align-items-center justify-content-center"><a href="#" class="btn btn-template-outlined-white"><i class="fa fa-chain"> </i>Leer mas</a></div>
+            </div>
+            <div class="text">
+              <h4><a href="#">Alquileres </a></h4>
+              <!--<p class="author-category">By <a href="#">John Snow</a> in <a href="blog.html">Webdesign</a></p>
+              <p class="intro">Fifth abundantly made Give sixth hath. Cattle creature i be don't them behold green moved fowl Moved life us beast good yielding. Have bring.</p><a href="#" class="btn btn-template-outlined">Continue Reading</a>
+              -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="see-more text-center">
+          <p>¿Quisiera saber más de nosotros?</p><a [routerLink]="['nosotros']" class="btn btn-template-outlined">Empresa Jat</a>
+      </div>-->
+    </div>
+  </section>
+  <section class="bar background-pentagon no-mb">
+      <div class="container">
+        <div class="row showcase text-center">
+          <div class="col-md-3 col-sm-6">
+            <div class="item">
+              <div class="icon-outlined icon-sm icon-thin"><i class="fa fa-align-justify"></i></div>
+              <h4><span class="h1 counter">580</span><br> Clientes</h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="item">
+              <div class="icon-outlined icon-sm icon-thin"><i class="fa fa-users"></i></div>
+              <h4><span class="h1 counter">100</span><br>Propiedades</h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="item">
+              <div class="icon-outlined icon-sm icon-thin"><i class="fa fa-copy"></i></div>
+              <h4><span class="h1 counter">320</span><br>Lotes</h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="item">
+              <div class="icon-outlined icon-sm icon-thin"><i class="fa fa-font"></i></div>
+              <h4><span class="h1 counter">923</span><br>Alquileres</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

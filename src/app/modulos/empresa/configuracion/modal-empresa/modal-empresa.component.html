@@ -1,72 +1,76 @@
-<div class="card mb-0">
-    <div class="card-close">
-      <div class="dropdown">
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-    <div class="card-header d-flex align-items-center">
-      <h3 class="h4">Datos principales de la Empresa</h3>
-    </div>
-    <div class="card-body pb-0"><!--*ngIf="!cargando"-->
-      <form>
-        <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Nombre *</label>
+<div class="card mb-0 card-accent-primary">
+  <div class="card-header bg-primary">
+    <span class="h6">DATOS PRINCIPALES DE LA EMPRESA</span>
+    <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
+    </button>
+  </div>
+  <form #empresa="ngForm" class="form-horizontal" (ngSubmit)="guardarEmpresa()">
+    <div class="card-body pb-0">
+      <div class="form-group row">
+          <label class="col-sm-3 form-control-label">Nombre <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" required name="razonsocial"  maxlength="250">
+            <input type="text" class="form-control" placeholder="Ingrese nombre de la empresa" required name="razonsocial"  maxlength="250">
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Ruc *</label>
+          <label class="col-sm-3 form-control-label">Ruc <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" required name="ruc" disabled>
+            <input type="text" class="form-control" placeholder="Ingrese ruc de la empresa" required name="ruc" disabled>
             <small class="help-block-none">Este atributo es fundamental, se recomienda no cambiarlo.</small>
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Ubicacion</label>
+          <label class="col-sm-3 form-control-label">Ubicacion <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" name="urbanizacion" class="form-control" maxlength="100">
+            <input type="text" name="urbanizacion" placeholder="Ingrese ubicacion" class="form-control" maxlength="100">
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Direccion</label>
+          <label class="col-sm-3 form-control-label">Direccion <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" name="avcajiron" class="form-control">
+            <input type="text" name="avcajiron" placeholder="Ingrese direccion" class="form-control">
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Telefono</label>
+          <label class="col-sm-3 form-control-label">Telefono <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="email" name="email" class="form-control" maxlength="100">
+            <input type="email" name="email" placeholder="Ingrese telefono" class="form-control" maxlength="100">
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Email</label>
+          <label class="col-sm-3 form-control-label">Email <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="email" name="email" class="form-control" maxlength="100">
+            <input type="email" name="email" placeholder="Ingrese email" class="form-control" maxlength="100">
           </div>
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Logo</label>
-          <div class="col-sm-9">
-            <input type="email" name="email" class="form-control" maxlength="100">
-          </div>
+            <label class="col-sm-3 form-control-label">Logo </label>
+            <div class="col-sm-9">
+              <div class="form-group">
+                <div class="input-group">
+                  <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                  <input type="text" placeholder="Ingrese logo de la empresa" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button><!--(click)="abrirModalUbigeo()"-->
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
-        <div class="modal-footer">
-          <div>
-            <button type="submit" class="btn btn-primary btn-sm">Aceptar</button>
-          </div>
-          <button type="button" class="btn btn-outline-dark btn-sm" (click)="activeModal.dismiss('Cross click')">Cancelar</button>
-        </div>
-      </form>
     </div>
-</div>
+    <div class="modal-footer border-primary">
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!empresa.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
 
+      <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
+    </div>
+  </form>
+</div>

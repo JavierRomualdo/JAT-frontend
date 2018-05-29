@@ -11,10 +11,16 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import {WelcomeRoutingModule} from './welcome-routing-module';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { WelcomeComponentComponent } from './welcome-component/welcome-component.component';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
     CommonModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyACiya9u1WJZ3DBZmZcw2gUlczgoHtxC80'
+    }),
     WelcomeRoutingModule
   ],
   declarations: [
@@ -26,6 +32,7 @@ import { FooterComponent } from './shared/footer/footer.component';
     SuscripcionComponent,
     ServiciosComponent,
     NavbarComponent,
-    FooterComponent]
+    FooterComponent,
+    WelcomeComponentComponent]
 })
 export class WelcomeModule { }

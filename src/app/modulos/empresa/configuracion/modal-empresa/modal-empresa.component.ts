@@ -14,4 +14,5 @@ export class ModalEmpresaComponent implements OnInit {
   ngOnInit() {
   }
 
+  guardarEmpresa() {}
 }

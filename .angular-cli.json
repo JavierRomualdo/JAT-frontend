@@ -19,21 +19,41 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/font-awesome/css/font-awesome.css",
+
+        "vendor/owl.carousel/assets/owl.carousel.min.css",
+        "css/style.green.css",
+        "css/style.admin.css",
         "../node_modules/primeng/resources/themes/omega/theme.css",
-        "../node_modules/primeng/resources/primeng.css",
-        "vendor/bootstrap/css/bootstrap.min.css",
-        "css/style.default.css",
+        "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/ngx-toastr/toastr.css",
+
+        "../node_modules/@coreui/icons/css/coreui-icons.min.css",
+        "../node_modules/flag-icon-css/css/flag-icon.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/simple-line-icons/css/simple-line-icons.css",
+        "../node_modules/pace-progress/themes/blue/pace-theme-barber-shop.css",
+        "vendor/pace-progress/css/pace.min.css",
+        "css/parallax.css",
         "styles.css"
       ],
       "scripts": [
-        "vendor/jquery/jquery.min.js",
-        "vendor/popper.js/umd/popper.min.js",
-        "vendor/bootstrap/js/bootstrap.min.js",
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/popper.js/dist/umd/popper.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../node_modules/chart.js/dist/Chart.bundle.min.js",
+        "../node_modules/pace-progress/pace.min.js",
+        "../node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
+        "../node_modules/@coreui/coreui/dist/js/coreui.min.js",
+        "../node_modules/chart.js/dist/Chart.min.js",
+
+        "../node_modules/chart.js/src/chart.js",
+        "../node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js",
+
+        "js/pace.min.js",
+        "js/main.js",
         "vendor/jquery.cookie/jquery.cookie.js",
-        "vendor/jquery-validation/jquery.validate.min.js",
-        "js/front.js"
+        "js/front.js",
+        "js/parallax.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
