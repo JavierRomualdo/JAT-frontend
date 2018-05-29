@@ -101,3 +101,6 @@
 .fadeIn {
   animation-name: fadeIn;
 }
+.switch-medium[_ngcontent-c3] small[_ngcontent-c3]{
+  margin-left: 0px;
+}
