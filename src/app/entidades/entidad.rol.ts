@@ -1,5 +1,5 @@
 export class Rol {
-  id: number;
+  id?: number;
   rol: string;
   permiso: string;
   estado: boolean;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response,
           Request, RequestOptions,
           URLSearchParams, RequestMethod
@@ -10,7 +10,7 @@ import { AppConfig } from '../app-config';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/toPromise';
-
+// import Http en modelu.ts
 export interface ObjetoJWT {
   userId: string;
   token: string;
@@ -30,6 +30,11 @@ export class ApiRequestService {
   ) { }
 
   appendAuthHeader(): Headers {
+    // this.headers = new Headers();
+    // this.headers.append('Content-Type', 'application/json');
+    // this.headers.append('Authorization', 'add_your_token_here');
+    // this.headers.append('Access-Control-Allow-Origin', '*');
+
     this.headers = new Headers({ 'Content-Type': 'application/json' });
     const objJWT: ObjetoJWT = JSON.parse(localStorage.getItem(this.usuarioActualKey));
     if (objJWT !== null) {
@@ -48,9 +53,11 @@ export class ApiRequestService {
         url: this.appConfig.baseApiPath + url
     });
     if (urlParam) {
+      console.log('params');
         options = options.merge({ params: urlParam });
     }
     if (body) {
+      console.log('body');
         options = options.merge({ body: JSON.stringify(body) });
     }
     return options;

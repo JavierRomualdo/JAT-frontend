@@ -8,7 +8,7 @@ export class Habitacion {
   ubicacion: string;
   direccion: string;
   camas: number;
-  tbaños: boolean;
+  tbaño: boolean;
   descripcion: string;
   foto: Blob;
   // fotos: Blob [];

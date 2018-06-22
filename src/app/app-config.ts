@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AppConfig {
 
-    // public baseApiPath:string="https://jat-backend.herokuapp.com/";
-    public baseApiPath: String = 'http://localhost:8080/';
+    // public baseApiPath:string="https://jat-backend.herokuapp.com/api/";
+    public baseApiPath: String = 'http://127.0.0.1:8000/api/';
 
     constructor() {}
 }

@@ -1,13 +1,16 @@
 <div class="card mb-0 card-accent-primary">
   <div class="card-header bg-primary">
     <span *ngIf="!vistaFormulario" class="h6">MANTENIMIENTO DE PERSONAS</span>
-    <span *ngIf="vistaFormulario && !verNuevo" class="h6">NUEVA PERSONA</span>
-    <span *ngIf="vistaFormulario && verNuevo" class="h6">EDITANDO PERSONA</span>
+    <span *ngIf="vistaFormulario && verNuevo" class="h6">NUEVA PERSONA</span>
+    <span *ngIf="vistaFormulario && !verNuevo"class="h6">EDITANDO PERSONA</span>
     <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
     </button>
   </div>
-  <form *ngIf="!vistaFormulario">
+  <div *ngIf="cargando">
+    <app-cargando></app-cargando>
+  </div>
+  <form #buscarservicios="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
     <div class="card-body pb-0" >
       <!--/.card-->
       <div class="card border-primary">
@@ -19,13 +22,11 @@
           </div>
           <div class="card-body">
             <div class="input-group">
-              <input type="text" class="form-control border-primary" placeholder="Busque por nombre" maxlength="150" id="cdescor" name="cdescor" required><!--[(ngModel)]="dni"-->
-              <input type="text" class="form-control border-primary" placeholder="Busque por dni" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
-              <select class="form-control border-primary" placeholder="Filtrar por Rol" style="height: calc(2.5rem);" id="catbus" name="catbus"  required="" name="tiporol" placeholder="Filtrar por Rol">
+              <input type="text" class="form-control border-primary" placeholder="Busque por nombre" maxlength="150" name="nombre" [(ngModel)]="parametros.nombres">
+              <input type="text" class="form-control border-primary" placeholder="Busque por dni" maxlength="150" name="dni" [(ngModel)]="parametros.dni">
+              <select class="form-control border-primary" placeholder="Filtrar por Rol" style="height: calc(2.5rem);" name="roles" [(ngModel)]="idServicio" placeholder="Filtrar por Rol">
                   <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
-                  <option>Seleccion rol ...</option>
-                  <option>Administrador</option>
-                  <option>Propietario</option>
+                  <option [ngValue]="rol.id" *ngFor="let rol of roles"  >{{rol.rol}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposroles"  >{ {tip.nombre}}</option>-->
               </select>
               <button class="input-group-addon btn btn-square btn-primary" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
@@ -36,7 +37,7 @@
                   <thead class="thead-light">
                     <tr>
                       <th class="text-center">#</th>
-                      <th>Nombre</th>
+                      <th>Nombres</th>
                       <th>Dni</th>
                       <th class="text-center">Ubicacion</th>
                       <th>Direccion</th>
@@ -48,32 +49,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th class="text-center">1</th>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
-                      <td scope="row" class="text-center">
-                        <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                    <!--<tr *ngFor="let persona of personas;let i=index">
+                      <th class="text-center">{{i+1}}</th>
+                      <td>{{persona.nombres}}</td>
+                      <td>{{persona.dni}}</td>
+                      <td>{{persona.ubicacion}}</td>
+                      <td>{{persona.direccion}}}</td>
+                      <td>{{persona.telefono}}</td>
+                      <td>{{persona.correo}}</td>
+                      <td>{{persona.rol}}</td>
+                      <td>
+                        <ui-switch [(ngModel)]="persona.estado" name="estado" (click)="confirmarcambiodeestado(persona)">estado</ui-switch>
                       </td>
-                    </tr>
-                    <tr>
-                      <th class="text-center">2</th>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
                       <td scope="row" class="text-center">
-                        <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                        <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(persona.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                      </td>
+                    </tr>-->
+                    <tr>
+                      <th class="text-center"></th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <ui-switch name="estado" [checked]="true">estado</ui-switch>
+                      </td>
+                      <td scope="row" class="text-center">
+                        <a class="btn-link" style="cursor: pointer"  title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
                       </td>
                     </tr>
                   </tbody>
@@ -105,78 +110,104 @@
       <!--/.card-->
     </div>
     <div class="modal-footer border-primary">
-        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
-        <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
+      <button type="reset" class="btn btn-sm btn-danger" (click)="limpiar()" ><i class="fa fa-ban"></i> Limpiar</button>
+      <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
     </div>
   </form>
-  <form #persona="ngForm" *ngIf="vistaFormulario" class="form-horizontal" (ngSubmit)="guardarPersonas()"> <!--#formulario="ngForm"-->
-    <div class="card-body" >
-          <!--<div *ngIf="cargando">
-            <p>Cargando....</p>
-            <app-cargando></app-cargando>
-          </div>-->
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span></label>
-              <div class="col-sm-2" >
-                <ui-switch [checked]="true" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
+  <form #formulario="ngForm" *ngIf="!cargando && vistaFormulario" class="form-horizontal" (ngSubmit)="guardarPersona()">
+    <div *ngIf="cargando">
+      <p>Cargando ....</p>
+      <app-cargando></app-cargando>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span></label>
+        <div class="col-sm-2">
+          <ui-switch *ngIf="persona.id" [(ngModel)]="persona.estado" name="estado" >estado</ui-switch>
+          <ui-switch *ngIf="!persona.id" [checked]="true" name="estado" >estado</ui-switch>
+        </div>
+        <label class="col-sm-3 form-control-label">D.N.I. <span class="text-primary">*</span></label>
+        <div class="col-sm-4">
+          <input type="text" name="dni" placeholder="Ingrese dni" required="" class="form-control" maxlength="8" pKeyFilter="pint" [(ngModel)]="persona.dni">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Nombre <span class="text-primary">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese nombre completo" maxlength="50" [(ngModel)]="persona.nombres">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Correo</label>
+        <div class="col-sm-9">
+          <input type="text" name="correo" placeholder="Ingrese correo" class="form-control" maxlength="50" [(ngModel)]="persona.correo">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Ubicacion <span class="text-primary">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" name="ubicacion" required="" placeholder="Ingrese ubicacion" class="form-control" maxlength="255" [(ngModel)]="persona.ubicacion">
+        </div>
+        <!--<div class="col-sm-9">
+          <div class="form-group">
+            <div class="input-group">
+              <label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>
+              <input type="text" class="form-control" placeholder="Ingrese ubicacion" required="" disabled name="idubigeo">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
               </div>
-              <label class="col-sm-3 form-control-label">D.N.I. <span class="text-primary">*</span></label>
-              <div class="col-sm-4">
-                <input type="text" name="numerodni" placeholder="Ingrese dni" required="" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
-              </div>
+            </div>
           </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Nombre <span class="text-primary">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese nombre completo" maxlength="50"><!--[(ngModel)]="ingeniero.nombre"-->
-              </div>
-          </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Correo</label>
-              <div class="col-sm-9">
-                <input type="text" name="correo" placeholder="Ingrese correo" class="form-control" maxlength="50"><!--[(ngModel)]="ingeniero.correo"-->
-              </div>
-          </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Ubicacion <span class="text-primary">*</span></label>
-              <div class="col-sm-9">
-                <div class="form-group">
-                  <div class="input-group">
-                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                    <input type="text" class="form-control" placeholder="Ingrese ubicacion" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
-                    <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Direccion <span class="text-primary">*</span></label>
-              <div class="col-sm-9">
-                <input type="text" name="direcciong" required="" placeholder="Ingrese ubicacion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
-              </div>
-          </div>
-          <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Telefono</label>
-              <div class="col-sm-9">
-                <input type="text" name="telefono"  class="form-control" placeholder="Ingrese telefon" maxlength="15"><!--[(ngModel)]="ingeniero.telefono"-->
-              </div>
-          </div>
-          <div class="pc-line-neg row box-line-negocio no-gutters justify-content-between align-items-center mt-3 p-2" style="background-color: antiquewhite">
-              <div class="col">
-                Asignar Roles a esta persona
-              </div>
-              <div class="col-auto">
-                <a (click)="abrirrol()"><i class="fa fa-plus-circle fa-2x cursor-pointer text-primary" ></i></a>
-              </div>
-          </div>
+        </div>-->
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Direccion <span class="text-primary">*</span></label>
+        <div class="col-sm-9">
+          <input type="text" name="direccion" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255" [(ngModel)]="persona.direccion">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 form-control-label">Telefono</label>
+        <div class="col-sm-9">
+          <input type="text" name="telefono"  class="form-control" placeholder="Ingrese telefon" maxlength="15" [(ngModel)]="persona.telefono">
+        </div>
+      </div>
+      <div class="pc-line-neg row box-line-negocio no-gutters justify-content-between align-items-center mt-3 p-2" style="background-color: antiquewhite">
+        <div class="col">
+          Asignar Roles a esta persona
+        </div>
+        <div class="col-auto">
+          <a (click)="abrirrol()"><i class="fa fa-plus-circle fa-2x cursor-pointer text-primary" ></i></a>
+        </div>
+      </div>
+      <div class="form-row" >
+        <div class="col table-responsive"  *ngIf="listaPR && listaPR.length>0"  >
+          <table class="table table-sigro table-hover"  >
+            <thead class="thead-inverse" >
+              <tr>
+                <th>Roles.</th>
+                <th style="width:30px;">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cursor-pointer" *ngFor="let item of listaPR; let i = index;">
+                <td>
+                  {{item.idrol.nombre}}
+                </td>
+                <td style="padding-top: 0px; padding-bottom: 0px;">
+                  <ui-switch size="small" *ngIf="persona.id" [(ngModel)]="item.estado" name="es5-{{i}}" >estado</ui-switch>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="modal-footer border-primary">
-        <button type="submit" class="btn btn-sm btn-primary" [disabled]="!persona.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
-        <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
-        <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+      <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
     </div>
   </form>
 </div>

@@ -24,6 +24,10 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
 import { ModalServicioComponent } from './configuracion/modal-servicio/modal-servicio.component';
 import { ModalUsuarioComponent } from './configuracion/modal-usuario/modal-usuario.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { CargandoComponent } from '../../util/cargando/cargando.component';
+import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -54,7 +58,9 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ModalHabitacionComponent,
     ModalLocalComponent,
     ModalServicioComponent,
-    ModalUsuarioComponent
+    ModalUsuarioComponent,
+    CargandoComponent,
+    ConfirmacionComponent
   ],
   entryComponents: [
     ModalEmpresaComponent,
@@ -65,7 +71,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     ModalHabitacionComponent,
     ModalLocalComponent,
     ModalServicioComponent,
-    ModalUsuarioComponent
+    ModalUsuarioComponent,
+    ConfirmacionComponent
   ],
   providers: [
     NgbActiveModal
