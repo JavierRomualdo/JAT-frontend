@@ -6,6 +6,8 @@ export class Empresa {
   direccion: string;
   telefono: string;
   correo: string;
-  logo: Blob;
+  nombrefoto: string = null;
+  foto: string = null;
+  estado: boolean;
   // fotos: Blob[];
 }

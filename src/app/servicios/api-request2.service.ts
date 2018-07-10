@@ -3,6 +3,7 @@ import { Http, Headers, Response,
           Request, RequestOptions,
           URLSearchParams, RequestMethod
         } from '@angular/http';
+import {HttpClient, HttpEventType} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { AppConfig } from '../app-config';
@@ -13,6 +14,8 @@ import { Rol } from '../entidades/entidad.rol';
 import {Observer} from 'rxjs/Observer';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
+import { FileItem } from '../entidades/file-item';
+
 
 export interface ObjetoJWT {
   userId: string;
@@ -26,6 +29,7 @@ export class ApiRequest2Service {
 
   constructor(
     private _http: Http,
+    private http: HttpClient,
     private router: Router,
     private appConfig: AppConfig
   ) {
@@ -80,7 +84,7 @@ export class ApiRequest2Service {
   // function editar
   put(url: string, objeto: Object): Promise<any> {
     return new Promise((resolve, reject) => {
-      this._http.patch(this.appConfig.baseApiPath + url, objeto, {
+      this._http.put(this.appConfig.baseApiPath + url, objeto, {
           headers: this.appendAuthHeader()
       }).map((res: Response) => res.json()).subscribe(
         (res) => {
@@ -108,6 +112,28 @@ export class ApiRequest2Service {
         }
       );
     });
+  }
+
+  // Subir Imagenes
+  onUpload(file: File, archivo: FileItem) {
+    let exito: Boolean = false;
+    const fd = new FormData();
+    fd.append('image', file, file.name);
+    this.http.post('https://us-central1-inmobiliaria-dd0b7.cloudfunctions.net/uploadFile', fd, {
+      reportProgress: true,
+      observe: 'events'
+    }).subscribe(
+      event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          archivo.progreso = Math.round(event.loaded / event.total * 100);
+          console.log('Upload Progress: ' + archivo.progreso + '%');
+        } else if (event.type === HttpEventType.Response) {
+          console.log(event);
+          exito = true;
+        }
+      }
+    );
+    return exito;
   }
 
   handleError(error: any): Promise<any> {

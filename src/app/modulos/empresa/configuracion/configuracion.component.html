@@ -110,26 +110,28 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th class="text-center">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
+                      <tr *ngFor="let usuario of usuarios;let i=index">
+                        <th class="text-center">{{i+1}}</th>
+                        <td *ngIf="usuario.foto==null">
+                          <a href="assets/img-empresa/avatars/usuario.png" target="_blank">
+                            <img src="assets/img-empresa/avatars/usuario.png" class="rounded mx-auto d-block" width="10"/>
+                          </a>
+                        </td>
+                        <td *ngIf="usuario.foto!=null">
+                          <a [href]="usuario.foto" target="_blank">
+                            <img [src]="usuario.foto" class="rounded mx-auto d-block" width="10"/>
+                          </a>
+                        </td>
+                        <td>{{usuario.name}}</td>
+                        <td>{{usuario.email}}</td>
+                        <td>
+                          <ui-switch [(ngModel)]="usuario.estado" name="estado" (click)="confirmarcambiodeestado(usuario)">estado</ui-switch>
+                        </td>
                         <td scope="row" class="text-center">
-                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarUsuario(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarUsuario(usuario.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
                         </td>
                       </tr>
-                      <tr>
-                        <th class="text-center">2</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><ui-switch [checked]="true"  name="estado1" >estado</ui-switch></td>
-                        <td scope="row" class="text-center">
-                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarUsuario(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
-                        </td>
-                      </tr>
+
                     </tbody>
                 </table>
                 <!--/.table-->

@@ -5,7 +5,7 @@
       <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
     </button>
   </div>
-  <form #lote="ngForm" class="form-horizontal" (ngSubmit)="guardarUsuario()">
+  <form #usuarioform="ngForm" class="form-horizontal" (ngSubmit)="guardarusuario()">
     <div class="card-body pb-0">
       <!--/.card-->
       <div class="card border-primary">
@@ -18,32 +18,43 @@
           <div class="card-body">
             <!--/.row-->
             <div class="form-group row">
-                <label class="col-sm-3 form-control-label">Nombre *</label>
+                <label class="col-sm-3 form-control-label">Nombre <span class="text-primary">*</span></label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" required placeholder="Ingrese nombres" name="razonsocial"  maxlength="250">
+                  <input type="text" class="form-control" required placeholder="Ingrese nombres" [(ngModel)]="usuario.name" name="name"  maxlength="250">
                 </div>
             </div>
             <!--/.row-->
             <div class="line"></div>
             <div class="form-group row">
-                <label class="col-sm-3 form-control-label">Email</label>
+                <label class="col-sm-3 form-control-label">Email <span class="text-primary">*</span></label>
                 <div class="col-sm-9">
-                  <input type="email" name="email" class="form-control" required placeholder="Ingrese el email" maxlength="100">
+                  <input type="email" name="email" class="form-control" [(ngModel)]="usuario.email" required placeholder="Ingrese el email" maxlength="100">
                 </div>
             </div>
             <!--/.row-->
+            <div class="line"></div>
             <div class="form-group row">
-              <label class="col-sm-3 form-control-label">Foto *</label>
+                <label class="col-sm-3 form-control-label">Password <span class="text-primary">*</span></label>
+                <div class="col-sm-9">
+                  <input type="password" name="password" [(ngModel)]="usuario.password" class="form-control" required placeholder="Ingrese password" minlength="6" maxlength="100">
+                </div>
+            </div>
+            <!--/.row-->
+            <!--/.row-->
+            <div class="form-group row">
+              <label class="col-sm-3 form-control-label">Foto </label>
               <div class="col-sm-9">
-                <div class="form-group">
+                <input type="file" class="btn btn-primary form-control-file" accept="image/*" (change)="detectarArchivo($event)">
+                <!--<input type="text" class="form-control" [(ngModel)]="usuario.foto"  name="foto">-->
+                <!--<div class="form-group">
                   <div class="input-group">
-                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                    <input type="text" class="form-control" required="" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                    <input type="text" class="form-control" required="" disabled name="idubigeo">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button><!--(click)="abrirModalUbigeo()"-->
+                      <input type="file" class="btn btn-primary" (change)="detectarArchivo($event)">
+                      <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
             <!--/.row-->
@@ -57,15 +68,76 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="offset-sm-4">
-                <img src="assets/img/nofoto.png" width="200">
+              <div class="col-md-12">
+                <ngb-progressbar type="info" [value]="archivo.progreso">{{archivo.progreso | number: '.2-2'}} %</ngb-progressbar>
+                <!--<div class="progress" (scroll)="detectarprogreso($event)">
+                    <p-progressBar></p-progressBar>
+
+                  <div class="progress-bar" role="progressbar"  [ngStyle]="{'width': archivo.progreso + '%'}">{ {archivo.progreso | number: '.2-2'}} %</div>
+                </div>-->
+                <!--<div class="progress" *ngFor="let archivo of archivos">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{'width': archivo.progreso + '%'}">{ {archivo.progreso | number: '.2-2'}} %</div>
+                </div>-->
+              </div>
+            </div><br/>
+            <div class="row">
+              <div class="col-md-12" *ngIf="imagen==null; then imagenDefecto else imagenFirebase" >
+              </div>
+              <ng-template #imagenDefecto class="text-center">
+                <img src="assets/img-empresa/avatars/usuario.png" class="rounded mx-auto d-block">
+              </ng-template>
+              <ng-template #imagenFirebase class="text-center">
+                <img [src]="imagen" class="rounded mx-auto d-block" width="300" alt="..."/>
+              </ng-template>
+              <!--
+              <div class="col-md-4">
+                <div appNgDropFile [archivos]="archivos" (mouseSobre)="estaSobreElemento = $event" [ngClass]="{'file-over': estaSobreElemento}" class="well drop-zone file-over">
+                  <h5>Deje caer aqui los archivos</h5>
+                  <img src="assets/drop-images.png">
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <button (click)="cargarImagenes()" [disabled]="archivos.length==0" class="btn btn-success btn-sm">Subir Imagenes</button>
+                <button (click)="limpiarArchivos()" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> Limpiar</button>
+
+                <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="text-center"><i class="fa fa-file-image-o"></i></th>
+                      <th class="text-center">Tamaño</th>
+                      <th class="text-center">Pogreso</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items | async" style="cursor: pointer">
+                      <td>{ {item.nombre}}</td>
+                      <td>{ {item.size}}</td>
+                      <td><img [src]="item.foto" alt="..." width="30px"/></td>
+                    </tr>
+                    <tr *ngFor="let archivo of archivos" style="cursor: pointer">
+                      <td [ngClass]="{'text-green': archivo.progreso >= 100}">{ {archivo.nombreArchivo}}</td>
+                      <td>{ {archivo.archivo.size / 1024 /1024 | number: '.2-2'}} MB</td>
+                      <td>
+                          <div class="progress">
+                              <div class="progress-bar" role="progressbar" [ngStyle]="{'width': archivo.progreso + '%'}">{{archivo.progreso | number: '.2-2'}} %</div>
+                            </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>-->
+            </div><br/>
+            <div class="row" class="text-center" *ngIf="fotoingresada" >
+              <div class="col-md-12">
+                <button type="button" (click)="subirimagen()" class="btn btn-sm btn-success">Subir Imagen</button>
               </div>
             </div>
           </div>
         </div>
     </div>
     <div class="modal-footer border-primary">
-      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!lote.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!usuarioform.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
       <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
 

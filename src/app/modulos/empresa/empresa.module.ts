@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import {ProgressBarModule} from 'primeng/progressbar';
 import { ModalLoteComponent } from './lotes/modal-lote/modal-lote.component';
 import { ModalHabitacionComponent } from './alquileres/habitaciones/modal-habitacion/modal-habitacion.component';
 import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-local.component';
@@ -27,6 +29,12 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { CargandoComponent } from '../../util/cargando/cargando.component';
 import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.component';
 
+import { NgDropFileDirective } from '../../directivas/ng-drop-file.directive';
+import { AngularFireModule } from 'angularfire2';
+import { CargaImagenesService } from '../../servicios/carga-imagenes.service';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
   imports: [
@@ -36,9 +44,14 @@ import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.comp
     ToastrModule.forRoot(),
     UiSwitchModule,
     KeyFilterModule,
+    ProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   declarations: [
     EmpresaComponentComponent,
@@ -60,7 +73,8 @@ import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.comp
     ModalServicioComponent,
     ModalUsuarioComponent,
     CargandoComponent,
-    ConfirmacionComponent
+    ConfirmacionComponent,
+    NgDropFileDirective,
   ],
   entryComponents: [
     ModalEmpresaComponent,
@@ -75,7 +89,8 @@ import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.comp
     ConfirmacionComponent
   ],
   providers: [
-    NgbActiveModal
+    NgbActiveModal,
+    CargaImagenesService
   ]})
 export class EmpresaModule { }
 

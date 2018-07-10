@@ -3,6 +3,7 @@ export class Users {
   name: string;
   email: string;
   password: string;
-  foto: Blob;
+  nombrefoto: string = null;
+  foto: string = null;
   estado: boolean;
 }
