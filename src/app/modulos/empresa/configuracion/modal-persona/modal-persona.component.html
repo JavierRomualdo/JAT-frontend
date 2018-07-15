@@ -10,7 +10,7 @@
   <div *ngIf="cargando">
     <app-cargando></app-cargando>
   </div>
-  <form #buscarservicios="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
+  <form #buscarpersonas="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
     <div class="card-body pb-0" >
       <!--/.card-->
       <div class="card border-primary">
@@ -26,6 +26,7 @@
               <input type="text" class="form-control border-primary" placeholder="Busque por dni" maxlength="150" name="dni" [(ngModel)]="parametros.dni">
               <select class="form-control border-primary" placeholder="Filtrar por Rol" style="height: calc(2.5rem);" name="roles" [(ngModel)]="idServicio" placeholder="Filtrar por Rol">
                   <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
+                  <option value="0">Seleccione rol...</option>
                   <option [ngValue]="rol.id" *ngFor="let rol of roles"  >{{rol.rol}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposroles"  >{ {tip.nombre}}</option>-->
               </select>
@@ -49,12 +50,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!--<tr *ngFor="let persona of personas;let i=index">
+                    <tr *ngFor="let persona of personas;let i=index" style="cursor: pointer" (click)="enviarpersona(persona)">
                       <th class="text-center">{{i+1}}</th>
                       <td>{{persona.nombres}}</td>
                       <td>{{persona.dni}}</td>
                       <td>{{persona.ubicacion}}</td>
-                      <td>{{persona.direccion}}}</td>
+                      <td>{{persona.direccion}}</td>
                       <td>{{persona.telefono}}</td>
                       <td>{{persona.correo}}</td>
                       <td>{{persona.rol}}</td>
@@ -63,22 +64,6 @@
                       </td>
                       <td scope="row" class="text-center">
                         <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(persona.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
-                      </td>
-                    </tr>-->
-                    <tr>
-                      <th class="text-center"></th>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <ui-switch name="estado" [checked]="true">estado</ui-switch>
-                      </td>
-                      <td scope="row" class="text-center">
-                        <a class="btn-link" style="cursor: pointer"  title="editar" (click)="traerParaEdicion(1)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
                       </td>
                     </tr>
                   </tbody>
@@ -114,6 +99,8 @@
       <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
     </div>
   </form>
+
+  <!--FORMULARIO DE PERSONAS-->
   <form #formulario="ngForm" *ngIf="!cargando && vistaFormulario" class="form-horizontal" (ngSubmit)="guardarPersona()">
     <div *ngIf="cargando">
       <p>Cargando ....</p>
@@ -128,13 +115,13 @@
         </div>
         <label class="col-sm-3 form-control-label">D.N.I. <span class="text-primary">*</span></label>
         <div class="col-sm-4">
-          <input type="text" name="dni" placeholder="Ingrese dni" required="" class="form-control" maxlength="8" pKeyFilter="pint" [(ngModel)]="persona.dni">
+          <input type="text" name="dni" placeholder="Ingrese dni" required class="form-control" maxlength="8" pKeyFilter="pint" [(ngModel)]="persona.dni">
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-3 form-control-label">Nombre <span class="text-primary">*</span></label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" name="nombre" required="" placeholder="Ingrese nombre completo" maxlength="50" [(ngModel)]="persona.nombres">
+          <input type="text" class="form-control" name="nombre" required placeholder="Ingrese nombre completo" maxlength="50" [(ngModel)]="persona.nombres">
         </div>
       </div>
       <div class="form-group row">
@@ -146,7 +133,7 @@
       <div class="form-group row">
         <label class="col-sm-3 form-control-label">Ubicacion <span class="text-primary">*</span></label>
         <div class="col-sm-9">
-          <input type="text" name="ubicacion" required="" placeholder="Ingrese ubicacion" class="form-control" maxlength="255" [(ngModel)]="persona.ubicacion">
+          <input type="text" name="ubicacion" required placeholder="Ingrese ubicacion" class="form-control" maxlength="255" [(ngModel)]="persona.ubicacion">
         </div>
         <!--<div class="col-sm-9">
           <div class="form-group">
@@ -163,40 +150,45 @@
       <div class="form-group row">
         <label class="col-sm-3 form-control-label">Direccion <span class="text-primary">*</span></label>
         <div class="col-sm-9">
-          <input type="text" name="direccion" required="" placeholder="Ingrese direccion" class="form-control" maxlength="255" [(ngModel)]="persona.direccion">
+          <input type="text" name="direccion" required placeholder="Ingrese direccion" class="form-control" maxlength="255" [(ngModel)]="persona.direccion">
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-3 form-control-label">Telefono</label>
+        <label class="col-sm-3 form-control-label">Telefono <span class="text-primary">*</span></label>
         <div class="col-sm-9">
-          <input type="text" name="telefono"  class="form-control" placeholder="Ingrese telefon" maxlength="15" [(ngModel)]="persona.telefono">
+          <input type="text" name="telefono" required  class="form-control" placeholder="Ingrese telefono" maxlength="15" [(ngModel)]="persona.telefono">
         </div>
       </div>
-      <div class="pc-line-neg row box-line-negocio no-gutters justify-content-between align-items-center mt-3 p-2" style="background-color: antiquewhite">
+      <div *ngIf="listaPR.length==0"  class="pc-line-neg row box-line-negocio no-gutters justify-content-between align-items-center mt-3 p-2" style="background-color: antiquewhite">
         <div class="col">
           Asignar Roles a esta persona
         </div>
         <div class="col-auto">
-          <a (click)="abrirrol()"><i class="fa fa-plus-circle fa-2x cursor-pointer text-primary" ></i></a>
+          <a (click)="abrirrol()" title="asignar rol" style="cursor: pointer"><i class="fa fa-plus-circle fa-2x cursor-pointer text-primary" ></i></a>
         </div>
       </div>
       <div class="form-row" >
-        <div class="col table-responsive"  *ngIf="listaPR && listaPR.length>0"  >
-          <table class="table table-sigro table-hover"  >
-            <thead class="thead-inverse" >
+        <div class="col table-responsive" *ngIf="listaPR && listaPR.length>0"  >
+          <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline"><!--table table-sigro table-hover-->
+            <thead class="thead-inverse">
               <tr>
+                <th>#</th>
                 <th>Roles.</th>
                 <th style="width:30px;">Opciones</th>
               </tr>
             </thead>
             <tbody>
               <tr class="cursor-pointer" *ngFor="let item of listaPR; let i = index;">
+                <th class="text-center">{{i+1}}</th>
                 <td>
-                  {{item.idrol.nombre}}
+                  {{item.rol}} <!--item.idrol.rol-->
                 </td>
-                <td style="padding-top: 0px; padding-bottom: 0px;">
+                <td class="text-center">
+                  <a class="btn-link" style="cursor: pointer" title="quitar" (click)="quitardelista(item)"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                </td>
+                <!--<td style="padding-top: 0px; padding-bottom: 0px;">
                   <ui-switch size="small" *ngIf="persona.id" [(ngModel)]="item.estado" name="es5-{{i}}" >estado</ui-switch>
-                </td>
+                </td>-->
               </tr>
             </tbody>
           </table>

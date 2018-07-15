@@ -40,7 +40,7 @@ export class ModalServicioComponent implements OnInit {
 
   busqueda(): void {
     console.log(this.parametros);
-    this.api.post('busquedaServicios', this.parametros).then(
+    this.api.post('buscarservicio', this.parametros).then(
       (res) => {
         console.log(res);
         this.servicios = res;

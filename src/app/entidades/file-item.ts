@@ -4,6 +4,7 @@ export class FileItem {
   public url: string;
   public estaSubiendo: boolean;
   public progreso: number;
+  public detalle: string;
 
   constructor(archivo: File) {
     this.archivo = archivo;

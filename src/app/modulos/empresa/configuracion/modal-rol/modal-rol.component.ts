@@ -227,4 +227,8 @@ export class ModalRolComponent implements OnInit {
     this.cargando = false;
     this.toastr.error('Error Interno: ' + error, 'Error');
   }
+
+  enviarrol(rol: Rol) {
+    this.activeModal.close(rol);
+  }
 }

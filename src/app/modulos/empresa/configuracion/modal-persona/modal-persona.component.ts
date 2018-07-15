@@ -36,14 +36,39 @@ export class ModalPersonaComponent implements OnInit {
   ) {
     this.persona = new Persona();
     this.parametros = new Persona();
+    this.listaPR = [];
   }
 
   ngOnInit() {
-    // this.listarPersonas();
-    // this.listarRoles();
+    this.listarPersonas();
+    this.listarRoles();
   }
 
-  busqueda() {}
+  busqueda() {
+    console.log(this.parametros);
+    this.api.post('buscarpersona', this.parametros).then(
+      (res) => {
+        console.log(res);
+        this.personas = res;
+        this.toastr.success(res.operacionMensaje, 'Exito');
+        this.cargando = false;
+        this.vistaFormulario = false;
+        this.verNuevo = false;
+      },
+      (error) => {
+        if (error.status === 422) {
+          this.errors = [];
+          const errors = error.json();
+          console.log('Error');
+          this.cargando = false;
+          this.handleError(error);
+          /*for (const key in errors) {
+            this.errors.push(errors[key]);
+          }*/
+        }
+      }
+    ).catch(err => this.handleError(err));
+  }
 
   limpiar() {
     this.parametros = new Persona();
@@ -55,6 +80,7 @@ export class ModalPersonaComponent implements OnInit {
     this.vistaFormulario = true;
     this.verNuevo = true;
     this.persona = new Persona();
+    this.listaPR = [];
     this.listaPR = this.listaPR && this.listaPR.length > 0 ? this.listaPR : [];
   }
 
@@ -82,7 +108,7 @@ export class ModalPersonaComponent implements OnInit {
 
   listarRoles() {
     this.cargando = true;
-    this.api.get('roles/getRoles').then(
+    this.api.get('roles').then(
       (res) => {
         this.roles = res;
         this.cargando = false;
@@ -105,10 +131,11 @@ export class ModalPersonaComponent implements OnInit {
   traerParaEdicion(id) {
     this.vistaFormulario = true;
     this.verNuevo = false;
-    // this.cargando = true;
-    /*this.api.get('personas/' + id).then(
+    this.cargando = true;
+    this.api.get('personas/' + id).then(
       (res) => {
-        // console.log(res);
+        console.log('esto trajo para editar');
+        console.log(res);
         this.persona = res;
         this.cargando = false;
         this.listaPR = this.persona.personarolList && this.persona.personarolList.length > 0 ? this.persona.personarolList : [];
@@ -121,15 +148,19 @@ export class ModalPersonaComponent implements OnInit {
           this.cargando = false;
         }
       }
-    ).catch(err => this.handleError(err));*/
+    ).catch(err => this.handleError(err));
   }
 
   guardarPersona() {
     this.cargando = true;
     this.persona.personarolList = this.listaPR;
+    this.persona.rol_id = this.listaPR[0]; // this.listaPR[0].idrol
     if (!this.persona.id) { // guardar nuevo rol
+      console.log('antes de guardar persona: ');
+      console.log(this.persona);
       this.api.post('personas', this.persona).then(
         (res) => {
+          console.log('se guardo estos datos: ');
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
           this.cargando = false;
@@ -176,21 +207,21 @@ export class ModalPersonaComponent implements OnInit {
     }
   }
 
-  confirmarcambiodeestado(rol): void {
+  confirmarcambiodeestado(persona): void {
     const modalRef = this.modal.open(ConfirmacionComponent, {windowClass: 'nuevo-modal', size: 'sm', keyboard: false});
     modalRef.result.then((result) => {
       this.confirmarcambioestado = true;
-      this.cambiarestadopersona(rol);
+      this.cambiarestadopersona(persona);
       this.auth.agregarmodalopenclass();
     }, (reason) => {
-      rol.estado = !rol.estado;
+      persona.estado = !persona.estado;
       this.auth.agregarmodalopenclass();
     });
   }
 
-  cambiarestadopersona(rol) {
+  cambiarestadopersona(persona) {
     this.cargando = true;
-    this.api.delete('personas/' + rol.id).then(
+    this.api.delete('personas/' + persona.id).then(
       (res) => {
         console.log(res);
         this.toastr.success(res.operacionMensaje, 'Exito');
@@ -217,28 +248,38 @@ export class ModalPersonaComponent implements OnInit {
   }
 
   abrirrol() {
-    const modalRef = this.modal.open(ModalRolComponent, {windowClass: 'nuevo-modal', size: 'sm', keyboard: true});
+    const modalRef = this.modal.open(ModalRolComponent, {windowClass: 'nuevo-modal', size: 'lg', keyboard: true});
       modalRef.result.then((result) => {
         const rol = result;
-        const pr = {
+        console.log('se seleccion el rol: ');
+        console.log(result);
+        /*const pr = {
           personarolPK: {
             idrol: rol.id,
             idpersona: this.persona.id
           },
           estado: true,
           idrol: rol
-        };
+        };*/
         const rSelect = this.listaPR.find(item => item.idrol.id === rol.id);
         if (rSelect && rSelect.idrol && rSelect.idrol.id) {
-                  this.toastr.warning('Rol ya existe', 'Aviso');
+          this.toastr.warning('Rol ya existe', 'Aviso');
         } else {
-                  this.listaPR.push(pr);
+          this.listaPR.push(rol);
         }
         this.auth.agregarmodalopenclass();
       }, (reason) => {
           this.auth.agregarmodalopenclass();
         }
     );
+  }
+
+  quitardelista(pr) {
+    this.listaPR.pop(pr);
+  }
+
+  enviarpersona(persona: Persona) {
+    this.activeModal.close(persona);
   }
 
 }

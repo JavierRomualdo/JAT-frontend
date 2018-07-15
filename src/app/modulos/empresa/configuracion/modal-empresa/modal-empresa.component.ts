@@ -29,6 +29,7 @@ export class ModalEmpresaComponent implements OnInit {
     public modalService: NgbModal,
     public _cargaImagenes: CargaImagenesService,
   ) {
+    this.empresa = new Empresa();
     this.archivo = new FileItem(null);
   }
 
@@ -41,16 +42,20 @@ export class ModalEmpresaComponent implements OnInit {
     this.cargando = true;
     this.api.get('empresa').then( // va a retornar siempre el primer registro de la tabla empresa en la bd
       (res) => {
-        console.log('datos empresa: ');
-        console.log(res);
-        this.empresa = res;
-        console.log('traido para edicion');
-        console.log(this.empresa);
-        this.imagen = res.foto;
-        console.log('res.foto = ' + this.imagen);
-        console.log('nombre empresa = ' + this.empresa.nombre);
-        this.imagenAnterior = res.foto;
-
+        if (res !== 'vacio') {
+          console.log('datos empresa: ');
+          console.log(res);
+          this.empresa = res;
+          console.log('traido para edicion');
+          console.log(this.empresa);
+          this.imagen = res.foto;
+          console.log('res.foto = ' + this.imagen);
+          console.log('nombre empresa = ' + this.empresa.nombre);
+          this.imagenAnterior = res.foto;
+        } else {
+          console.log('esta vacio');
+          this.imagenAnterior = undefined;
+        }
         this.cargando = false;
       },
       (error) => {
@@ -68,8 +73,9 @@ export class ModalEmpresaComponent implements OnInit {
   }
 
   guardarEmpresa() {
+    this.cargando = true;
     // this.imagenAnterior es un parametro que tambien se podra visualizar si es nuevo o editar empresa
-    if (this.imagenAnterior === undefined) { // nueva empresa
+    if (this.imagenAnterior === undefined) { // nueva empresa undefined
       if (this.archivo.archivo == null) { // la empresa guarda sin su foto
         console.log('empresa antes de guardar:');
         console.log(this.empresa);

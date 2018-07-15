@@ -84,16 +84,21 @@
             <!--/.card-->
             <div class="card border-primary">
               <div class="card-header bg-primary">
-                <i class="fa fa-align-justify"></i> Usuarios
+                <i class="fa fa-align-justify"></i> Administradores
                 <button type="button" class="btn btn-primary btn-sm float-right" (click)="abrirUsuario()">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
+              <div *ngIf="cargando">
+                <app-cargando></app-cargando>
+              </div>
+              <form #buscarusuarios="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
               <div class="card-body">
                 <div class="input-group">
-                  <input type="text" class="form-control border-primary" placeholder="Busque por nombre" maxlength="150" id="cdescor" name="cdescor" required><!--[(ngModel)]="dni"-->
-                  <input type="text" class="form-control border-primary" placeholder="Busque por email" maxlength="150" id="cdescr" name="cdscor" required><!--[(ngModel)]="nombre"-->
-                  <button class="input-group-addon btn btn-square btn-primary" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+                  <input type="text" class="form-control border-primary" [(ngModel)]="parametros.name" placeholder="Busque por nombre" maxlength="150" id="cdescor" name="cdescor">
+                  <input type="text" class="form-control border-primary" [(ngModel)]="parametros.email" placeholder="Busque por email" maxlength="150" id="cdescr" name="cdscor">
+                  <button class="input-group-addon btn btn-square btn-primary" title="buscar" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+                  <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-ban"></i></button>
                 </div>
                 <!--/.table-->
                 <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
@@ -156,6 +161,8 @@
                     </li>
                 </ul>
               </div>
+            </form>
+            <!--/.form-->
             </div>
             <!--/.card-->
           </div>

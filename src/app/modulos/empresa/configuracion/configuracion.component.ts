@@ -21,13 +21,16 @@ export class ConfiguracionComponent implements OnInit {
   public cargando: Boolean = false;
   public confirmarcambioestado: Boolean = false;
   public  usuarios: any = []; // lista proyecto
+  public parametros: Users;
   errors: Array<Object> = [];
   constructor(
     public modalService: NgbModal,
     public api: ApiRequest2Service,
     public toastr: ToastrService,
     public auth: AuthService,
-  ) { }
+  ) {
+    this.parametros = new Users();
+  }
 
   ngOnInit() {
     this.listarUsuarios();
@@ -129,6 +132,36 @@ export class ConfiguracionComponent implements OnInit {
           const errors = error.json();
           console.log('Error');
           this.cargando = false;
+          /*for (const key in errors) {
+            this.errors.push(errors[key]);
+          }*/
+        }
+      }
+    ).catch(err => this.handleError(err));
+  }
+
+  limpiar() {
+    this.parametros = new Users();
+    this.usuarios = [];
+    this.listarUsuarios();
+  }
+
+  busqueda() {
+    console.log(this.parametros);
+    this.api.post('buscarusuario', this.parametros).then(
+      (res) => {
+        console.log(res);
+        this.usuarios = res;
+        this.toastr.success(res.operacionMensaje, 'Exito');
+        this.cargando = false;
+      },
+      (error) => {
+        if (error.status === 422) {
+          this.errors = [];
+          const errors = error.json();
+          console.log('Error');
+          this.cargando = false;
+          this.handleError(error);
           /*for (const key in errors) {
             this.errors.push(errors[key]);
           }*/

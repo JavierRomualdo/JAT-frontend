@@ -41,7 +41,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let rol of roles;let i=index">
+                      <tr *ngFor="let rol of roles;let i=index" style="cursor: pointer" (click)="enviarrol(rol)">
                         <th class="text-center">{{i+1}}</th>
                         <td>{{rol.rol}}</td>
                         <td>{{rol.permiso}}</td>

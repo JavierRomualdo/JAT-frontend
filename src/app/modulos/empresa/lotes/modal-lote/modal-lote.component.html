@@ -6,7 +6,7 @@
       <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
     </button>
   </div>
-  <form #lote="ngForm" class="form-horizontal" (ngSubmit)="guardarLote()">
+  <form #loteform="ngForm" class="form-horizontal" (ngSubmit)="guardarlote()">
     <div class="card-body pb-0">
       <!--/.card-->
       <div class="card border-primary">
@@ -22,28 +22,28 @@
                 <div class="form-group">
                   <div class="input-group">
                     <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                    <input type="text" class="form-control" required name="propietario" placeholder="Busque el propietario" disabled><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                    <label class="form-control">{{persona.nombres}} - {{persona.dni}}</label>
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                      <button type="button" class="btn btn-primary" (click)="buscarpropietario()"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
                     </div>
                   </div>
                 </div>
               </div>
               <label class="col-sm-2 form-control-label">Precio (S/) <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <input type="text" name="precio" required placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                <input type="text" name="precio" [(ngModel)]="lote.precio" required placeholder="Ingrese el precio" class="form-control" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
                 </div>
             </div>
             <!--/.row-->
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Largo (mts.) <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <input type="text" name="largo" required class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                <input type="text" name="largo" [(ngModel)]="lote.largo" required class="form-control" placeholder="Ingrese largo (area)" maxlength="8" pKeyFilter="pint">
                 <small class="help-block-none">Atributo para el área del lote.</small>
               </div>
               <label class="col-sm-2 form-control-label">Ancho (mts.) <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <input type="text" name="ancho" required class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint"><!--[(ngModel)]="ingeniero.dni"-->
+                <input type="text" name="ancho" [(ngModel)]="lote.ancho" required class="form-control" placeholder="Ingrese ancho (area)" maxlength="8" pKeyFilter="pint">
                 <small class="help-block-none">Atributo para el área del lote.</small>
               </div>
             </div>
@@ -51,26 +51,30 @@
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Ubicacion <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <div class="form-group">
+                <input type="text" class="form-control" [(ngModel)]="lote.ubicacion" required placeholder="Busque la ubicación"  name="ubicacion">
+                <!--<div class="form-group">
                   <div class="input-group">
-                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
-                    <input type="text" class="form-control" required placeholder="Busque la ubicación" disabled name="idubigeo"><!--[(ngModel)]="ingeniero.idubigeo.nombre"-->
+                    <input type="text" class="form-control" required placeholder="Busque la ubicación" disabled name="idubigeo">
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
               <label class="col-sm-2 form-control-label">Direccion <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <input type="text" name="direccion" required placeholder="Ingrese direccion" class="form-control" maxlength="255"><!--[(ngModel)]="ingeniero.direccion"-->
+                <input type="text" name="direccion" [(ngModel)]="lote.direccion" required placeholder="Ingrese direccion" class="form-control" maxlength="255">
               </div>
             </div>
             <!--/.row-->
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Descripcion <span class="text-primary">*</span></label>
-              <div class="col-sm-10">
-                <textarea class="form-control" name="descripcion" required placeholder="Ingrese descripcion" maxlength="100"></textarea>
+              <label class="col-sm-2 form-control-label">Foto Principal</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" [(ngModel)]="lote.foto" name="foto" placeholder="Ingrese foto">
+              </div>
+              <label class="col-sm-2 form-control-label">Descripcion</label>
+              <div class="col-sm-4">
+                <textarea class="form-control" [(ngModel)]="lote.descripcion" name="descripcion" placeholder="Ingrese descripcion" maxlength="100"></textarea>
               </div>
             </div>
             <!--/.row-->
@@ -83,7 +87,52 @@
             <i class="fa fa-align-justify"></i> Fotos
           </div>
           <div class="card-body">
-            <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" (click)="cargarImagenes()" [disabled]="archivos.length==0" class="btn btn-success btn-sm">Subir Imagenes</button>
+                <button type="button" (click)="limpiarArchivos()" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> Limpiar</button>
+                <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th class="text-center"><i class="fa fa-file-image-o"></i></th>
+                      <th class="text-center">Tamaño</th>
+                      <th class="text-center">Pogreso</th>
+                      <th class="text-center">Detalle</th>
+                      <th class="text-center">Opciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let archivo of archivos; let i = index;" style="cursor: pointer">
+                      <td>{{i+1}}</td>
+                      <td [ngClass]="{'text-green': archivo.progreso >= 100}">{{archivo.nombreArchivo}}</td>
+                      <td>{{archivo.archivo.size / 1024 /1024 | number: '.2-2'}} MB</td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar" [ngStyle]="{'width': archivo.progreso + '%'}">{{archivo.progreso | number: '.2-2'}} %</div>
+                        </div>
+                      </td>
+                      <td>
+                        <input class="form-control" [(ngModel)]="archivos[i].detalle" name="descripcion" placeholder="Ingrese descripcion">
+                      </td>
+                      <td class="text-center">
+                        <a class="btn-link" style="cursor: pointer" title="quitar" (click)="quitarfoto(archivos[i])"><i class="fa fa-remove text-primary" style="font-size: 23px; "></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <div appNgDropFile [archivos]="archivos" (mouseSobre)="estaSobreElemento = $event" [ngClass]="{'file-over': estaSobreElemento}" class="well drop-zone file-over">
+                  <h5>Deje caer aqui los archivos</h5>
+                  <img src="assets/drop-images.png">
+                </div>
+              </div>
+            </div>
+
+            <!--<div class="form-group">
               <div class="input-group">
                 <input type="text" class="form-control border-primary" placeholder="aqui cargue cada foto de la propiedad" disabled name="idubigeo">
                 <button type="button" class="input-group-addon btn btn-square btn-primary"><i class="fa fa-search"></i></button>
@@ -144,12 +193,12 @@
                     </li>
                 </ul>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
     </div>
     <div class="modal-footer border-primary">
-      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!lote.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!loteform.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
       <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
 

@@ -4,10 +4,10 @@ export class Persona {
   rol_id: Rol;
   dni: string;
   nombres: string;
-  correo: string;
+  correo: string = null;
   ubicacion: string;
   direccion: string;
   telefono: string;
-  estado: boolean;
+  estado: Boolean = true;
   personarolList: any = {};
 }
