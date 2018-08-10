@@ -1,86 +1,96 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiRequestService } from '../../../../servicios/api-request.service';
+import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
-import { Rol } from '../../../../entidades/entidad.rol';
-import { ApiRequest2Service } from '../../../../servicios/api-request2.service';
-import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
-import { AuthService } from '../../../../servicios/auth.service';
+import { AuthService } from '../../../../../servicios/auth.service';
+import { Servicios } from '../../../../../entidades/entidad.servicios';
+import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirmacion.component';
 
 @Component({
-  selector: 'app-modal-rol',
-  templateUrl: './modal-rol.component.html',
-  styleUrls: ['./modal-rol.component.css']
+  selector: 'app-modal-servicio',
+  templateUrl: './modal-servicio.component.html',
+  styleUrls: ['./modal-servicio.component.css']
 })
-export class ModalRolComponent implements OnInit {
-  public rol: Rol;
+export class ModalServicioComponent implements OnInit {
+  public servicio: Servicios;
   public vistaFormulario = false;
   public cargando: Boolean = false;
   public verNuevo: Boolean = false;
   public confirmarcambioestado: Boolean = false;
-  public roles: any = [];
+  public servicios: any = [];
   errors: Array<Object> = [];
-  public parametros: Rol;
+  public parametros: Servicios;
 
   public listado: Boolean = false;
   constructor(
     public activeModal: NgbActiveModal,
     public api: ApiRequest2Service,
     public toastr: ToastrService,
+    private modalService: NgbModal,
     private modal: NgbModal,
     public auth: AuthService
   ) {
-    this.rol = new Rol();
-    this.parametros = new Rol();
+    this.servicio = new Servicios();
+    this.parametros = new Servicios();
   }
 
   ngOnInit() {
-    this.listarRoles();
+    this.listarServicios();
   }
 
   busqueda(): void {
-    console.log(this.parametros);
-    this.api.post('busquedaRoles', this.parametros).then(
-      (res) => {
-        console.log(res);
-        this.roles = res;
-        this.toastr.success(res.operacionMensaje, 'Exito');
-        this.cargando = false;
-        this.vistaFormulario = false;
-        this.verNuevo = false;
-      },
-      (error) => {
-        if (error.status === 422) {
-          this.errors = [];
-          const errors = error.json();
-          console.log('Error');
+    let nohayvacios: Boolean = false;
+    if (this.parametros.servicio !== undefined && this.parametros.servicio !== '') {
+      // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
+      nohayvacios = true;
+    }
+    if (this.parametros.detalle !== undefined && this.parametros.detalle !== '') {
+      // this.toastr.info('Hay detalle datos: ' + this.parametros.detalle);
+      nohayvacios = true;
+    }
+    if (nohayvacios) {
+      console.log(this.parametros);
+      this.api.post('buscarservicio', this.parametros).then(
+        (res) => {
+          console.log(res);
+          this.servicios = res;
+          this.toastr.success(res.operacionMensaje, 'Exito');
           this.cargando = false;
-          this.handleError(error);
-          /*for (const key in errors) {
-            this.errors.push(errors[key]);
-          }*/
+          this.vistaFormulario = false;
+          this.verNuevo = false;
+        },
+        (error) => {
+          if (error.status === 422) {
+            this.errors = [];
+            const errors = error.json();
+            console.log('Error');
+            this.cargando = false;
+            this.handleError(error);
+          }
         }
-      }
-    ).catch(err => this.handleError(err));
+      ).catch(err => this.handleError(err));
+    } else {
+      this.toastr.info('Ingrese datos');
+    }
   }
 
   limpiar() {
-    this.parametros = new Rol();
-    this.roles = [];
-    this.listarRoles();
+    this.parametros = new Servicios();
+    this.servicios = [];
+    this.listarServicios();
   }
 
-  nuevo() {
+  nuevo(): void {
     this.vistaFormulario = true;
     this.verNuevo = true;
-    this.rol = new Rol();
+    this.servicio = new Servicios();
   }
 
-  listarRoles() {
+  listarServicios() {
     this.cargando = true;
-    this.api.get('roles').then(
+    this.api.get('servicios').then(
       (res) => {
-        this.roles = res;
+        this.servicios = res;
         this.cargando = false;
         console.log(res);
       },
@@ -102,10 +112,10 @@ export class ModalRolComponent implements OnInit {
     this.vistaFormulario = true;
     this.verNuevo = false;
     this.cargando = true;
-    this.api.get('roles/' + id).then(
+    this.api.get('servicios/' + id).then(
       (res) => {
         // console.log(res);
-        this.rol = res;
+        this.servicio = res;
         this.cargando = false;
       },
       (error) => {
@@ -122,17 +132,17 @@ export class ModalRolComponent implements OnInit {
     ).catch(err => this.handleError(err));
   }
 
-  guardarRol() {
+  guardarServicio() {
     this.cargando = true;
-    if (!this.rol.id) { // guardar nuevo rol
-      this.api.post('roles', this.rol).then(
+    if (!this.servicio.id) { // guardar nuevo servicio
+      this.api.post('servicios', this.servicio).then(
         (res) => {
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
           this.cargando = false;
           this.vistaFormulario = false;
           this.verNuevo = false;
-          this.listarRoles();
+          this.listarServicios();
         },
         (error) => {
           if (error.status === 422) {
@@ -147,15 +157,15 @@ export class ModalRolComponent implements OnInit {
           }
         }
       ).catch(err => this.handleError(err));
-    } else { // guardar el rol editado
-      this.api.put('roles/' + this.rol.id, this.rol).then(
+    } else { // guardar el servicio editado
+      this.api.put('servicios/' + this.servicio.id, this.servicio).then(
         (res) => {
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
           this.cargando = false;
           this.vistaFormulario = false;
           this.verNuevo = false;
-          this.listarRoles();
+          this.listarServicios();
         },
         (error) => {
           if (error.status === 422) {
@@ -171,42 +181,27 @@ export class ModalRolComponent implements OnInit {
         }
       ).catch(err => this.handleError(err));
     }
-    /*this.api.post('api/roles', this.rol)
-        .then(respuesta => {
-            if (respuesta && respuesta.extraInfo) {
-                this.rol = respuesta.extraInfo;
-                this.toastr.success('Registro guardado exitosamente', 'Exito');
-                // this.cargando = false;
-                this.listado = true;
-                this.listarroles();
-                this.vistaFormulario = false;
-            } else {
-                // this.cargando=false;
-                this.toastr.error(respuesta.operacionMensaje, 'Error');
-            }
-        })
-        .catch(err => this.handleError(err));*/
   }
 
-  confirmarcambiodeestado(rol): void {
+  confirmarcambiodeestado(servicio): void {
     const modalRef = this.modal.open(ConfirmacionComponent, {windowClass: 'nuevo-modal', size: 'sm', keyboard: false});
     modalRef.result.then((result) => {
       this.confirmarcambioestado = true;
-      this.cambiarestadorol(rol);
+      this.cambiarestadoservicio(servicio);
       this.auth.agregarmodalopenclass();
     }, (reason) => {
-      rol.estado = !rol.estado;
+      servicio.estado = !servicio.estado;
       this.auth.agregarmodalopenclass();
     });
   }
 
-  cambiarestadorol(rol) {
+  cambiarestadoservicio(servicio) {
     this.cargando = true;
-    this.api.delete('roles/' + rol.id).then(
+    this.api.delete('servicios/' + servicio.id).then(
       (res) => {
         console.log(res);
         this.toastr.success(res.operacionMensaje, 'Exito');
-        this.listarRoles();
+        this.listarServicios();
         this.cargando = false;
       },
       (error) => {
@@ -223,12 +218,12 @@ export class ModalRolComponent implements OnInit {
     ).catch(err => this.handleError(err));
   }
 
+  enviarservicio(servicio: Servicios) {
+    this.activeModal.close(servicio);
+  }
+
   private handleError(error: any): void {
     this.cargando = false;
     this.toastr.error('Error Interno: ' + error, 'Error');
-  }
-
-  enviarrol(rol: Rol) {
-    this.activeModal.close(rol);
   }
 }

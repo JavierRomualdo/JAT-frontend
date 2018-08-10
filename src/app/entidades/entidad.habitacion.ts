@@ -7,10 +7,16 @@ export class Habitacion {
   ancho: number;
   ubicacion: string;
   direccion: string;
-  camas: number;
-  tbaño: boolean;
-  descripcion: string;
-  foto: Blob;
+  // tslint:disable-next-line:no-inferrable-types
+  ncamas: number = 0;
+  tbanio: Boolean = false;
+  descripcion: string = null;
+  foto: string = null;
+  path: string = null; // camino o ruta de imagenes en cloud storage de firebase
   // fotos: Blob [];
-  estado: boolean;
+  estado: Boolean = true;
+  habitacionpersonaList: any = {};
+  fotosList: any = {};
+  serviciosList: any = {};
+  habitacionservicioList: any = {};
 }

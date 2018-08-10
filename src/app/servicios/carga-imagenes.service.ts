@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs-compat/Observable';
-import * as firebase from 'firebase/';
+import * as firebase from 'firebase';
 import { FileItem } from '../entidades/file-item';
 
 @Injectable()
@@ -138,6 +138,7 @@ export class CargaImagenesService {
       return changes.map(a => {
         const data = a.payload.doc.data() as any;
         data.id = a.payload.doc.id;
+        console.log(data);
         return data;
       });
     });

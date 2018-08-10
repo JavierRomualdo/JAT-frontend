@@ -7,9 +7,15 @@ export class Local {
     ancho: number;
     ubicacion: string;
     direccion: string;
-    nbaños: number;
+    tbanio: Boolean = false;
     descripcion: string;
-    foto: Blob;
+    foto: string = null;
+    path: string = null; // camino o ruta de imagenes en cloud storage de firebase
+    // foto: Blob;
     // fotos: Blob[];
-    estado: boolean;
+    estado: Boolean = true;
+    localpersonaList: any = {};
+    fotosList: any = {};
+    serviciosList: any = {};
+    localservicioList: any = {};
 }

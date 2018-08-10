@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { FileItem } from '../../../../entidades/file-item';
-import { Empresa } from '../../../../entidades/entidad.empresa';
-import { CargaImagenesService } from '../../../../servicios/carga-imagenes.service';
-import { ApiRequest2Service } from '../../../../servicios/api-request2.service';
+import { FileItem } from '../../../../../entidades/file-item';
+import { Empresa } from '../../../../../entidades/entidad.empresa';
+import { CargaImagenesService } from '../../../../../servicios/carga-imagenes.service';
+import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 
 @Component({
   selector: 'app-modal-empresa',

@@ -3,6 +3,7 @@ import { Servicios } from './entidad.servicios';
 
 export class Casaservicio {
   id: number;
-  casa_id: Casa;
-  servicio_id: Servicios;
+  casa_id: number;
+  servicio_id: number;
+  estado: Boolean = true;
 }

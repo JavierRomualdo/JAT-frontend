@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileItem } from '../../../../entidades/file-item';
-import { CargaImagenesService } from '../../../../servicios/carga-imagenes.service';
+import { FileItem } from '../../../../../entidades/file-item';
+import { CargaImagenesService } from '../../../../../servicios/carga-imagenes.service';
 // import { Observable } from 'rxjs';
-import { Users } from '../../../../entidades/entidad.users';
-import { ApiRequest2Service } from '../../../../servicios/api-request2.service';
+import { Users } from '../../../../../entidades/entidad.users';
+import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs-compat/Observable';
 

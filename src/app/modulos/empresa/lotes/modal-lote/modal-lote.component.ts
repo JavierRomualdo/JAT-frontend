@@ -4,13 +4,14 @@ import { FileItem } from '../../../../entidades/file-item';
 import { CargaImagenesService } from '../../../../servicios/carga-imagenes.service';
 import { ApiRequest2Service } from '../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
-import { ModalPersonaComponent } from '../../configuracion/modal-persona/modal-persona.component';
+import { ModalPersonaComponent } from '../../configuracion/empresa/modal-persona/modal-persona.component';
 import { AuthService } from '../../../../servicios/auth.service';
 import { Persona } from '../../../../entidades/entidad.persona';
 import { Foto } from '../../../../entidades/entidad.foto';
 import { Lote } from '../../../../entidades/entidad.lote';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
 
 @Component({
   selector: 'app-modal-lote',
@@ -24,13 +25,13 @@ export class ModalLoteComponent implements OnInit {
   public lote: Lote;
   public archivos: FileItem[] = [];
   public fotos: Foto[];
-  public files: File[];
+  // public files: File[];
   public persona: Persona;
   public listaLP: any = []; // lista de persona-roles
   errors: Array<Object> = [];
 
-  private itemsCollection: AngularFirestoreCollection<FileItem>;
-  items: Observable<FileItem[]>;
+  // private itemsCollection: AngularFirestoreCollection<FileItem>;
+  // items: Observable<FileItem[]>;
 
   constructor(
     public modalService: NgbModal,
@@ -58,15 +59,17 @@ export class ModalLoteComponent implements OnInit {
     this.cargando = true;
     this.lote.lotepersonaList = this.listaLP;
     this.lote.persona_id = this.listaLP[0]; // this.listaPR[0].idrol
-    if (!this.lote.id) { // guardar nuevo rol
+    if (!this.edit) { // guardar nuevo rol
       // guardar en lista fotos
       for (const item of this.archivos) {
         const foto: Foto = new Foto();
+        foto.nombre = item.nombreArchivo;
         foto.foto = item.url;
         foto.detalle = item.detalle;
         this.fotos.push(foto);
       }
       this.lote.fotosList = this.fotos;
+      this.fotos = [];
       console.log('fotos: ');
       console.log(this.lote.fotosList);
       console.log('antes de guardar lote: ');
@@ -94,12 +97,29 @@ export class ModalLoteComponent implements OnInit {
         }
       ).catch(err => this.handleError(err));
     } else { // guardar el rol editado
+      // guardar en lista fotos
+      let fotos: Foto[];
+      fotos = [];
+      for (const item of this.archivos) {
+        const foto: Foto = new Foto();
+        foto.nombre = item.nombreArchivo;
+        foto.foto = item.url;
+        foto.detalle = item.detalle;
+        fotos.push(foto);
+      }
+      this.lote.fotosList = fotos;
+      fotos = [];
+      console.log('fotos: ');
+      console.log(this.lote.fotosList);
+      console.log('antes de editar lote: ');
+      console.log(this.lote);
       this.api.put('lotes/' + this.lote.id, this.lote).then(
         (res) => {
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
           this.cargando = false;
           this.verNuevo = false;
+          this.activeModal.close(this.lote);
         },
         (error) => {
           if (error.status === 422) {
@@ -125,13 +145,26 @@ export class ModalLoteComponent implements OnInit {
       (res) => {
         // console.log(res);
         this.lote = res;
+        this.listaLP = res.lotepersonaList;
+        this.persona = this.listaLP[0] ;
+
+        for (const item of res.fotosList) {
+          console.log('foto: ');
+          console.log(item);
+          this.fotos.push(item);
+        }
+        console.log('fotoss : ');
+        console.log(this.fotos);
+        // this.fotos = res.fotosList;
         console.log('traido para edicion');
         console.log(this.lote);
+        this.lote.fotosList = {}; // tiene que ser vacio xq son la lista de imagenes nuevas pa agregarse
+        // traer archivos de firebase storage
+        // this._cargaImagenes.getImagenes(res.path);
 
         // aqui metodo para mostrar todas las imagenes de este lote ....
         // this.imagen = res.foto;
         // this.imagenAnterior = res.foto;
-
         this.cargando = false;
       },
       (error) => {
@@ -161,12 +194,32 @@ export class ModalLoteComponent implements OnInit {
   }
 
   cargarImagenes() {
-    this.lote.path = 'lotes/' + this.persona.dni;
-    this._cargaImagenes.cargarImagenesFirebase(this.lote.path, this.archivos);
+    let estadetalle: Boolean = true;
+    for (const item of this.archivos) {
+      if (item.detalle === '' || item.detalle === null || item.detalle === undefined) {
+        // aqui falta el detalle (input type text) del archivo que obligatoriamente debe tener contenido
+        estadetalle = false;
+      }
+    }
+    if (estadetalle) {
+      this.lote.path = 'lotes/' + this.persona.dni;
+      this._cargaImagenes.cargarImagenesFirebase(this.lote.path, this.archivos);
+    } else {
+      this.toastr.info('¡ Ingrese detalle de la imagen(s)!');
+    }
   }
 
   limpiarArchivos() {
     this.archivos = [];
+  }
+
+  limpiarlote() {
+    // limpiar persona
+    this.persona = new Persona();
+    this.lote.persona_id = new Persona();
+    this.listaLP = [];
+    // limpiar foto
+    this.lote.foto = null;
   }
 
   quitarfoto(item: FileItem) {
@@ -174,6 +227,60 @@ export class ModalLoteComponent implements OnInit {
     this.archivos.splice(index, 1);
     console.log('las fotos que quedan: ');
     console.log(this.archivos);
+  }
+
+  guardardetallefoto(foto: Foto) {
+    console.log('salio del foco');
+    this.api.put('fotos/' + foto.id, foto).then(
+      (res) => {
+        console.log('se ha modificado foto:');
+        console.log(res);
+      },
+      (error) => {
+        console.log('error: ');
+      }
+    ).catch(err => this.handleError(err));
+  }
+
+  quitarfotolote(foto: Foto) {
+    const modalRef = this.modalService.open(ConfirmacionComponent, {windowClass: 'nuevo-modal', size: 'sm', keyboard: false});
+    modalRef.result.then((result) => {
+      // elimino de la bd
+      this.eliminarfotolote(foto);
+      // elimino de firebase storage
+      this._cargaImagenes.deleteArchivo(this.lote.path, foto.nombre);
+      if (this.lote.foto === foto.foto) {
+        this.lote.foto = null;
+      }
+      this.toastr.success(result.operacionMensaje, 'Exito');
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
+  eliminarfotolote(foto: Foto) {
+    this.api.delete('lotefoto/' + foto.id).then(
+      (res) => {
+        console.log('se ha eliminado:');
+        console.log(res);
+        const index = this.fotos.indexOf(foto);
+        this.fotos.splice(index, 1);
+      },
+      (error) => {
+        console.log('error: ');
+      }
+    ).catch(err => this.handleError(err));
+  }
+
+  mostrarFotoPrincipal(item: FileItem) {
+    if (item.progreso >= 100 ) {
+      this.lote.foto = item.url;
+    }
+  }
+
+  mostrarFotoPrincipalExistente(foto: Foto) {
+    this.lote.foto = foto.foto;
   }
 
   private handleError(error: any): void {

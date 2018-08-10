@@ -30,7 +30,7 @@
                   <option [ngValue]="rol.id" *ngFor="let rol of roles"  >{{rol.rol}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposroles"  >{ {tip.nombre}}</option>-->
               </select>
-              <button class="input-group-addon btn btn-square btn-primary" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+              <button class="input-group-addon btn btn-square btn-primary" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
             </div>
             <div class="table-responsive">
               <!--/.table-->
@@ -196,7 +196,7 @@
       </div>
     </div>
     <div class="modal-footer border-primary">
-      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid || listaPR.length==0"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
       <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
       <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>

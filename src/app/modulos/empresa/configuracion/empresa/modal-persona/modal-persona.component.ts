@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Persona } from '../../../../entidades/entidad.persona';
-import { ApiRequest2Service } from '../../../../servicios/api-request2.service';
+import { Persona } from '../../../../../entidades/entidad.persona';
+import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../../servicios/auth.service';
-import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
+import { AuthService } from '../../../../../servicios/auth.service';
+import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirmacion.component';
 import { ModalRolComponent } from '../modal-rol/modal-rol.component';
+import { Rol } from '../../../../../entidades/entidad.rol';
 
 @Component({
   selector: 'app-modal-persona',
@@ -20,7 +21,7 @@ export class ModalPersonaComponent implements OnInit {
   public confirmarcambioestado: Boolean = false;
   public personas: any = [];
   errors: Array<Object> = [];
-  public roles: any = [];
+  public roles: Rol[];
   public parametros: Persona;
   public idServicio: Number = 0; // sirve para el combo roles en la busqueda
 
@@ -36,6 +37,7 @@ export class ModalPersonaComponent implements OnInit {
   ) {
     this.persona = new Persona();
     this.parametros = new Persona();
+    this.roles = [];
     this.listaPR = [];
   }
 
@@ -45,29 +47,51 @@ export class ModalPersonaComponent implements OnInit {
   }
 
   busqueda() {
-    console.log(this.parametros);
-    this.api.post('buscarpersona', this.parametros).then(
-      (res) => {
-        console.log(res);
-        this.personas = res;
-        this.toastr.success(res.operacionMensaje, 'Exito');
-        this.cargando = false;
-        this.vistaFormulario = false;
-        this.verNuevo = false;
-      },
-      (error) => {
-        if (error.status === 422) {
-          this.errors = [];
-          const errors = error.json();
-          console.log('Error');
-          this.cargando = false;
-          this.handleError(error);
-          /*for (const key in errors) {
-            this.errors.push(errors[key]);
-          }*/
+    let nohayvacios: Boolean = false;
+    if (this.parametros.nombres !== undefined && this.parametros.nombres !== '') {
+      // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
+      nohayvacios = true;
+    }
+    if (this.parametros.dni !== undefined && this.parametros.dni !== '') {
+      // this.toastr.info('Hay detalle datos: ' + this.parametros.detalle);
+      nohayvacios = true;
+    }
+    if (this.idServicio > 0) {
+      // this.toastr.info('Hay detalle datos: ' + this.parametros.detalle);
+      nohayvacios = true;
+      for (const rol of this.roles) {
+        if (this.idServicio === rol.id) {
+          this.parametros.rol_id = rol;
         }
       }
-    ).catch(err => this.handleError(err));
+    }
+    if (nohayvacios) {
+      console.log(this.parametros);
+      this.api.post('buscarpersona', this.parametros).then(
+        (res) => {
+          console.log(res);
+          this.personas = res;
+          this.toastr.success(res.operacionMensaje, 'Exito');
+          this.cargando = false;
+          this.vistaFormulario = false;
+          this.verNuevo = false;
+        },
+        (error) => {
+          if (error.status === 422) {
+            this.errors = [];
+            const errors = error.json();
+            console.log('Error');
+            this.cargando = false;
+            this.handleError(error);
+            /*for (const key in errors) {
+              this.errors.push(errors[key]);
+            }*/
+          }
+        }
+      ).catch(err => this.handleError(err));
+    } else {
+      this.toastr.info('Ingrese datos');
+    }
   }
 
   limpiar() {

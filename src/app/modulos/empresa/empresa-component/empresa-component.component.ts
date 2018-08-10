@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { ModalUsuarioComponent } from '../configuracion/modal-usuario/modal-usuario.component';
+import { ModalUsuarioComponent } from '../configuracion/empresa/modal-usuario/modal-usuario.component';
 
 @Component({
   selector: 'app-empresa-component',

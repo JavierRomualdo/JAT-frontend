@@ -1,8 +1,8 @@
 <div class="card mb-0 card-accent-primary">
     <div class="card-header bg-primary">
-      <span *ngIf="!vistaFormulario" class="h6">MANTENIMIENTO DE SERVICIOS</span>
-      <span *ngIf="vistaFormulario && verNuevo" class="h6">NUEVO SERVICIO</span>
-      <span *ngIf="vistaFormulario && !verNuevo" class="h6">EDITANDO SERVICIO</span>
+      <span *ngIf="!vistaFormulario" class="h6">MANTENIMIENTO DE TIPO UBIGEO</span>
+      <span *ngIf="vistaFormulario && verNuevo" class="h6">NUEVO TIPO UBIGEO</span>
+      <span *ngIf="vistaFormulario && !verNuevo" class="h6">EDITANDO TIPO UBIGEO</span>
       <button type="button" class="close float-right" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
         <i class="fa fa-close"></i><!--*ngIf="!proveedores && !captadores"-->
       </button>
@@ -10,22 +10,21 @@
     <div *ngIf="cargando">
       <app-cargando></app-cargando>
     </div>
-    <form #buscarservicios="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
+    <!--/.form-->
+    <form #buscarroles="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
       <div class="card-body pb-0" >
         <!--/.card-->
         <div class="card border-primary">
             <div class="card-header bg-primary border-primary">
-              <i class="fa fa-align-justify"></i> Listado de Servicios
+              <i class="fa fa-align-justify"></i> Listado de Tipo Ubigeo
               <button type="button" class="btn btn-primary btn-sm float-right" (click)="nuevo()">
                 <i class="fa fa-plus"></i> Nuevo
               </button>
             </div>
             <div class="card-body">
               <div class="input-group">
-                <input type="text" class="form-control border-primary" placeholder="Busque por servicio" maxlength="150" id="cdescor" name="servicio" [(ngModel)]="parametros.servicio">
-                <input type="text" class="form-control border-primary" placeholder="Busque por detalle" maxlength="150" id="cdescr" name="detalle" [(ngModel)]="parametros.detalle">
-
-                <button class="input-group-addon btn btn-square btn-primary" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+                <input type="text" class="form-control border-primary" placeholder="Busque por tioo ubigeo" maxlength="150" name="tipoubigeo" [(ngModel)]="parametros.tipoubigeo"><!--[(ngModel)]="dni"-->
+                <button type="submit" class="input-group-addon btn btn-square btn-primary"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
               </div>
               <div class="table-responsive">
                 <!--/.table-->
@@ -33,22 +32,20 @@
                     <thead class="thead-light">
                       <tr>
                         <th class="text-center">#</th>
-                        <th>Servicio</th>
-                        <th>Detalle</th>
+                        <th>Tipo Ubigeo</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let servicio of servicios;let i=index">
+                      <tr *ngFor="let tipoubigeo of tipoubigeos;let i=index" style="cursor: pointer" (click)="enviartipoubigeo(tipoubigeo)">
                         <th class="text-center">{{i+1}}</th>
-                        <td>{{servicio.servicio}}</td>
-                        <td>{{servicio.detalle}}</td>
+                        <td>{{tipoubigeo.tipoubigeo}}</td>
                         <td>
-                          <ui-switch [(ngModel)]="servicio.estado" name="estado" (click)="confirmarcambiodeestado(servicio)">estado</ui-switch>
+                          <ui-switch [(ngModel)]="tipoubigeo.estado" name="estado" (click)="confirmarcambiodeestado(tipoubigeo)">estado</ui-switch>
                         </td>
                         <td scope="row" class="text-center">
-                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(servicio.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="traerParaEdicion(tipoubigeo.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
                         </td>
                       </tr>
                     </tbody>
@@ -80,12 +77,12 @@
         <!--/.card-->
       </div>
       <div class="modal-footer border-primary">
-          <button type="reset" class="btn btn-sm btn-danger" (click)="limpiar()"><i class="fa fa-ban"></i> Limpiar</button>
+          <button (click)="limpiar()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
           <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
       </div>
     </form>
     <!--/.form-->
-    <form #formulario="ngForm" *ngIf="!cargando && vistaFormulario" class="form-horizontal" (ngSubmit)="guardarServicio()"> <!--#formulario="ngForm"-->
+    <form #formulario="ngForm" *ngIf="!cargando && vistaFormulario" class="form-horizontal" (ngSubmit)="guardarTipoUbigeo()"> <!--#formulario="ngForm"-->
       <div *ngIf="cargando">
         <p>Cargando ....</p>
         <app-cargando></app-cargando>
@@ -94,28 +91,23 @@
         <div class="form-group row">
           <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span></label>
           <div class="col-sm-9" >
-            <ui-switch *ngIf="servicio.id" [(ngModel)]="servicio.estado" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
-            <ui-switch *ngIf="!servicio.id" [checked]="true" name="estado" >estado</ui-switch>
+            <ui-switch *ngIf="tipoubigeo.id" [(ngModel)]="tipoubigeo.estado" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
+            <ui-switch *ngIf="!tipoubigeo.id" [checked]="true" name="estado" >estado</ui-switch>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Servicio <span class="text-primary">*</span></label>
+          <label class="col-sm-3 form-control-label">Tipo Ubigeo <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="servicio" required="" placeholder="Ingrese el servicio" maxlength="50" [(ngModel)]="servicio.servicio">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Detalle</label>
-          <div class="col-sm-9">
-            <input type="text" name="detalle" placeholder="Ingrese detalle del servicio" class="form-control" maxlength="50" [(ngModel)]="servicio.detalle">
+            <input type="text" class="form-control" name="tipoubigeo" required="" placeholder="Ingrese nombre tipo ubigeo" maxlength="50" [(ngModel)]="tipoubigeo.tipoubigeo"><!--[(ngModel)]="ingeniero.nombre"-->
           </div>
         </div>
       </div>
       <div class="modal-footer border-primary">
-        <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
-        <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
-        <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+          <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
+          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+          <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
       </div>
     </form>
+    <!--/.card-->
   </div>

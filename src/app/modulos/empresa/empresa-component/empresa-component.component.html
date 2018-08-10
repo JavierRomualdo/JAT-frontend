@@ -128,11 +128,23 @@
           </li>
           <li class="divider"></li>
           <li class="nav-title">Extras</li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['configuracion']">
-              <i class="nav-icon icon-calculator"></i> Configuracion
-              <span class="badge badge-primary">NEW</span>
-            </a>
+          <li class="nav-item nav-dropdown" routerLinkActive="active">
+            <a class="nav-link nav-dropdown-toggle" href="#">
+              <i class="nav-icon icon-calculator"></i> Configuracion</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['configuracion/empresa']">
+                  <i class="nav-icon icon-calculator"></i> Empresa
+                  <span class="badge badge-primary">NEW</span>
+                </a>
+              </li>
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['configuracion/ubigeo']">
+                  <i class="nav-icon icon-calculator"></i> Ubigeo
+                  <span class="badge badge-primary">NEW</span>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
