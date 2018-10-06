@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "jat-frontend": {
-      "root": "",
+      "root": "e2e/",
       "sourceRoot": "src",
       "projectType": "application",
       "architect": {
@@ -44,11 +44,11 @@
               "node_modules/owl.carousel/dist/owl.carousel.min.js",
               "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
               "node_modules/jquery.counterup/jquery.counterup.min.js",
-              "node_modules/pace-progress/pace.min.js",
+
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
               "node_modules/@coreui/coreui/dist/js/coreui.min.js",
               "node_modules/@coreui/coreui-plugin-chartjs-custom-tooltips/dist/js/custom-tooltips.min.js",
-              "src/js/pace.min.js",
+
               "src/vendor/jquery.cookie/jquery.cookie.js",
               "src/js/front.js",
               "src/js/parallax.js"
@@ -152,8 +152,7 @@
       }
     },
     "jat-frontend-e2e": {
-      "root": "",
-      "sourceRoot": "e2e",
+      "root": "e2e/",
       "projectType": "application",
       "architect": {
         "e2e": {

@@ -7,6 +7,7 @@ import { AuthService } from '../../../servicios/auth.service';
 import { Lote } from '../../../entidades/entidad.lote';
 import { ConfirmacionComponent } from '../../../util/confirmacion/confirmacion.component';
 import { Persona } from '../../../entidades/entidad.persona';
+import { Ubigeo } from '../../../entidades/entidad.ubigeo';
 
 @Component({
   selector: 'app-lotes',
@@ -29,6 +30,7 @@ export class LotesComponent implements OnInit {
   ) {
     this.parametros = new Lote();
     this.parametros.persona_id = new Persona();
+    this.parametros.ubigeo_id = new Ubigeo();
   }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class LotesComponent implements OnInit {
   limpiar() {
     this.parametros = new Lote();
     this.parametros.persona_id = new Persona();
+    this.parametros.ubigeo_id = new Ubigeo();
     this.lotes = [];
     this.listarLotes();
   }
@@ -48,7 +51,7 @@ export class LotesComponent implements OnInit {
       this.parametros.persona_id.nombres !== '') {
         nohayvacios = true;
       }
-    if (this.parametros.ubicacion !== undefined && this.parametros.ubicacion !== '') {
+    if (this.parametros.ubigeo_id.ubigeo !== undefined && this.parametros.ubigeo_id.ubigeo !== '') {
       // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
       nohayvacios = true;
     }

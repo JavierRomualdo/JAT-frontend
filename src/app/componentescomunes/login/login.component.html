@@ -1,16 +1,29 @@
-<div class="container login">
-  <form class="form-signin" action="login.html" method="post">
-    <h3>Inicie sesión</h3>
-    <br>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Ingrese usuario" required autofocus>
-    <br>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Ingrese contraseña" required>
-    <br>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="remember-me"> Recordar
-      </label>
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 id="login-modalLabel" class="modal-title">Iniciar Sesion</h4>
+    <button type="button" data-dismiss="modal" aria-label="Close" class="close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">X</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <button class="btn btn-outline-primary" (click)="ingresar()">INICIAR SESION CON GOOGLE</button>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
-  </form>
+    <div class="form-group">
+      <button class="btn btn-outline-primary">INICIAR SESION CON TWITTER</button>
+    </div>
+    <form>
+      <div class="form-group">
+        <input id="email_modal" type="text" placeholder="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input id="password_modal" type="password" placeholder="password" class="form-control">
+      </div>
+      <p class="text-center">
+        <button type="button" class="btn btn-template-outlined"><i class="fa fa-sign-in"></i> Iniciar sesion</button>
+      </p>
+    </form>
+    <p class="text-center text-muted">Not registered yet?</p>
+    <p class="text-center text-muted"><a href="customer-register.html"><strong>Register now</strong></a>! It is easy and done in 1 minute and gives you access to special discounts and much more!</p>
+  </div>
 </div>

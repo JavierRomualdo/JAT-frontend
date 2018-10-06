@@ -10,6 +10,8 @@ import { LocalesComponent } from './alquileres/locales/locales.component';
 import { HabitacionesComponent } from './alquileres/habitaciones/habitaciones.component';
 import { HomeComponent } from './home/home.component';
 import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
+import { CocherasComponent } from './alquileres/cocheras/cocheras.component';
+import { ApartamentosComponent } from './alquileres/apartamentos/apartamentos.component';
 
 const empresaRoutes: Routes = [
   {
@@ -19,7 +21,9 @@ const empresaRoutes: Routes = [
       {path: 'home', component: HomeComponent},
       {path: 'alquileres/locales', component: LocalesComponent},
       {path: 'alquileres/habitaciones', component: HabitacionesComponent},
-      {path: 'propiedades', component: PropiedadesComponent},
+      {path: 'alquileres/cocheras', component: CocherasComponent},
+      {path: 'alquileres/apartamentos', component: ApartamentosComponent},
+      {path: 'alquileres/propiedades', component: PropiedadesComponent},
       {path: 'configuracion/empresa', component: EmpresaConfiguracionComponent},
       {path: 'configuracion/ubigeo', component: UbigeoComponent},
       {path: 'lotes', component: LotesComponent},

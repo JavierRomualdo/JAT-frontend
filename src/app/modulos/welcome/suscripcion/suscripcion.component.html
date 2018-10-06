@@ -1,48 +1,45 @@
-<section class="bar background-pentagon no-mb">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="heading text-center">
-          <h2>Contacto</h2>
-        </div>
-      </div>
+<section class="bar bg-white no-mb">
+  <h3 class="heading text-center">CONTACTO</h3>
+    <div class="container">
+
       <div class="col-md-8 mx-auto">
-        <form>
+        <form #mensajeform="ngForm" (ngSubmit)="enviarmensaje()" *ngIf="!cargando">
           <div class="row">
             <p class="lead">
               Ingrese su consulta de acuerdo a los servicios brindados por la empresa inmobiliaria:
             </p>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="firstname">Nombres (*)</label>
-                <input id="firstname" type="text" placeholder="Ingrese nombres" class="form-control">
+                <label for="nombres"><strong>Nombres <span class="text-primary">*</span></strong></label>
+                <input id="nombres" type="text" class="form-control" [(ngModel)]="mensaje.nombres" name="nombres" required placeholder="Ingrese nombres">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="lastname">Telefono (*)</label>
-                <input id="lastname" type="text" placeholder="Ingrese telefono" class="form-control">
+                <label for="telefono"><strong>Telefono <span class="text-primary">*</span></strong></label>
+                <input id="telefono" type="text" class="form-control" [(ngModel)]="mensaje.telefono" name="telefono" required placeholder="Ingrese telefono">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="text" placeholder="Ingrese email" class="form-control">
+                <label for="email"><strong>Email <span class="text-primary">*</span></strong></label>
+                <input id="email" type="text" class="form-control" [(ngModel)]="mensaje.email" name="email" required placeholder="Ingrese email">
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="subject">Titulo (*)</label>
-                <input id="subject" type="text" placeholder="Ingrese titulo del mensaje" class="form-control">
+                <label for="titulo"><strong>Titulo <span class="text-primary">*</span></strong></label>
+                <input id="titulo" type="text" class="form-control" [(ngModel)]="mensaje.titulo" name="titulo" required placeholder="Ingrese titulo del mensaje">
               </div>
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <label for="message">Mensaje (*)</label>
-                <textarea id="message" placeholder="Ingrese mensaje" class="form-control"></textarea>
+                <label for="mensaje"><strong>Mensaje <span class="text-primary">*</span></strong></label>
+                <textarea id="mensaje" class="form-control" [(ngModel)]="mensaje.mensaje" name="mensaje" required placeholder="Ingrese mensaje"></textarea>
               </div>
             </div>
             <div class="col-sm-12 text-center">
-              <button type="submit" class="btn btn-template-outlined"><i class="fa fa-envelope-o"></i> Enviar Mensaje</button>
+              <button type="submit" class="btn btn-template-outlined" [disabled]="!mensajeform.form.valid"><i class="fa fa-envelope-o"></i> Enviar mensaje</button>
             </div>
           </div>
         </form>

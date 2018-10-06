@@ -33,16 +33,16 @@
               <div class="row">
                 <!--/.col-->
                 <div class="col-sm-3">
-                  <div class="callout callout-info">
-                    <small class="text-muted">Nuevas Habitaciones</small>
+                  <div class="callout callout-info" style="cursor: pointer" (click)="abrirHabitaciones()">
+                    <small class="text-muted">Habitaciones</small>
                     <br>
-                    <strong class="h4">0</strong>
+                    <strong class="h4">{{habitaciones.length}}</strong>
                   </div>
                 </div>
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-danger">
-                    <small class="text-muted">Habitaciones Alquiladas</small>
+                    <small class="text-muted">Alquiladas</small>
                     <br>
                     <strong class="h4">0</strong>
                   </div>
@@ -50,7 +50,7 @@
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-warning">
-                    <small class="text-muted">Habitaciones Reservadas</small>
+                    <small class="text-muted">Reservadas</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -61,7 +61,7 @@
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-success">
-                    <small class="text-muted">Habitaciones Retenidos</small>
+                    <small class="text-muted">Retenidos</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -99,12 +99,12 @@
                 <div class="input-group">
                   <input type="text" class="form-control border-primary" placeholder="Busque por propietario" maxlength="150" id="nombres"
                     [(ngModel)]="parametros.persona_id.nombres" name="nombres">
-                  <input type="text" class="form-control border-primary" placeholder="Busque por ubicacion" maxlength="150" id="ubicacion"
-                    [(ngModel)]="parametros.ubicacion" name="ubicacion">
+                  <input type="text" class="form-control border-primary" placeholder="Busque por ubigeo" maxlength="150" id="ubigeo"
+                    [(ngModel)]="parametros.ubigeo_id.ubigeo" name="ubicacion">
                   <input type="text" class="form-control border-primary" placeholder="Busque por direccion" maxlength="150" id="direccion"
                     [(ngModel)]="parametros.direccion" name="direccion">
                   <button class="input-group-addon btn btn-square btn-primary" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button>
-                  <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-ban"></i></button>
+                  <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-eraser"></i></button>
                 </div>
                 <div class="table-responsive">
                   <!--/.table-->
@@ -116,13 +116,13 @@
                             <i class="fa fa-file-image-o"></i>
                           </th>
                           <th>Propietario</th>
-                          <th class="text-center">Ubicacion</th>
+                          <th class="text-center">Ubigeo</th>
                           <th>Direccion</th>
                           <th class="text-center">Area</th>
                           <th>Precio</th>
                           <th>Camas</th>
                           <th>¿Baño?</th>
-                          <th>Descripcion</th>
+                          <!--<th>Descripcion</th>-->
                           <th>Estado</th>
                           <th>Opciones</th>
                         </tr>
@@ -141,7 +141,7 @@
                             </a>
                           </td>
                           <td>{{habitacion.nombres}}</td>
-                          <td>{{habitacion.ubicacion}}</td>
+                          <td>{{habitacion.ubigeo}}</td>
                           <td>{{habitacion.direccion}}</td>
                           <td>{{habitacion.largo}} x {{habitacion.ancho}} mts.</td>
                           <td>S/ {{habitacion.precio}}</td>
@@ -150,7 +150,7 @@
                             <label *ngIf="habitacion.tbanio==0" >No</label>
                             <label *ngIf="habitacion.tbanio==1" >Si</label>
                           </td>
-                          <td>{{habitacion.descripcion}}</td>
+                          <!--<td>{ {habitacion.descripcion}}</td>-->
                           <td>
                             <ui-switch [(ngModel)]="habitacion.estado" name="estado" (click)="confirmarcambiodeestado(habitacion)">estado</ui-switch>
                           </td>

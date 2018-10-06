@@ -33,16 +33,16 @@
               <div class="row">
                 <!--/.col-->
                 <div class="col-sm-3">
-                  <div class="callout callout-info">
-                    <small class="text-muted">Nuevos Lotes</small>
+                  <div class="callout callout-info" style="cursor: pointer" (click)="abrirLotes()">
+                    <small class="text-muted">Lotes</small>
                     <br>
-                    <strong class="h4">0</strong>
+                    <strong class="h4">{{lotes.length}}</strong>
                   </div>
                 </div>
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-danger">
-                    <small class="text-muted">Lotes Vendidos</small>
+                    <small class="text-muted">Vendidos</small>
                     <br>
                     <strong class="h4">0</strong>
                   </div>
@@ -50,7 +50,7 @@
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-warning">
-                    <small class="text-muted">Lotes Reservados</small>
+                    <small class="text-muted">Reservados</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -61,7 +61,7 @@
                 <!--/.col-->
                 <div class="col-sm-3">
                   <div class="callout callout-success">
-                    <small class="text-muted">Lotes Retenidos</small>
+                    <small class="text-muted">Retenidos</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -99,12 +99,12 @@
                 <div class="input-group">
                   <input type="text" class="form-control border-primary" placeholder="Busque por propietario" maxlength="150" id="nombres"
                     [(ngModel)]="parametros.persona_id.nombres" name="nombres">
-                  <input type="text" class="form-control border-primary" placeholder="Busque por ubicacion" maxlength="150" id="ubicacion"
-                    [(ngModel)]="parametros.ubicacion" name="ubicacion">
+                  <input type="text" class="form-control border-primary" placeholder="Busque por ubigeo" maxlength="150" id="ubigeo"
+                    [(ngModel)]="parametros.ubigeo_id.ubigeo" name="ubicacion">
                   <input type="text" class="form-control border-primary" placeholder="Busque por direccion" maxlength="150" id="direccion"
                     [(ngModel)]="parametros.direccion" name="direccion">
                   <button class="input-group-addon btn btn-square btn-primary" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button>
-                  <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-ban"></i></button>
+                  <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-eraser"></i></button>
                 </div>
                 <!--/.table-->
                 <div class="table-responsive">
@@ -116,11 +116,11 @@
                           <i class="fa fa-file-image-o"></i>
                         </th>
                         <th>Propietario</th>
-                        <th class="text-center">Ubicacion</th>
+                        <th class="text-center">Ubigeo</th>
                         <th>Direccion</th>
                         <th class="text-center">Area</th>
                         <th>Precio</th>
-                        <th>Descripcion</th>
+                        <!--<th>Descripcion</th>-->
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
@@ -139,11 +139,11 @@
                           </a>
                         </td>
                         <td>{{lote.nombres}}</td>
-                        <td>{{lote.ubicacion}}</td>
+                        <td>{{lote.ubigeo}}</td>
                         <td>{{lote.direccion}}</td>
                         <td>{{lote.largo}} x {{lote.ancho}} mts.</td>
                         <td>S/ {{lote.precio}}</td>
-                        <td>{{lote.descripcion}}</td>
+                        <!--<td>{ {lote.descripcion}}</td>-->
                         <td>
                           <ui-switch [(ngModel)]="lote.estado" name="estado" (click)="confirmarcambiodeestado(lote)">estado</ui-switch>
                         </td>

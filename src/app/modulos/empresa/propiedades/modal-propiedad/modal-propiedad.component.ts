@@ -13,6 +13,9 @@ import { ModalPersonaComponent } from '../../configuracion/empresa/modal-persona
 import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
 import { ModalServicioComponent } from '../../configuracion/empresa/modal-servicio/modal-servicio.component';
 import { Casaservicio } from '../../../../entidades/entidad.casaservicio';
+import { Ubigeo } from '../../../../entidades/entidad.ubigeo';
+import { ModalUbigeoComponent } from '../../configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
+import { UbigeoGuardar } from '../../../../entidades/entidad.ubigeoguardar';
 
 @Component({
   selector: 'app-modal-propiedad',
@@ -29,6 +32,7 @@ export class ModalPropiedadComponent implements OnInit {
   public casaservicios: Casaservicio[];
   public fotos: Foto[];
   public persona: Persona;
+  public ubigeo: UbigeoGuardar;
   public listaLP: any = []; // lista de persona-roles
   errors: Array<Object> = [];
 
@@ -44,6 +48,10 @@ export class ModalPropiedadComponent implements OnInit {
     this.fotos = [];
     this.servicios = [];
     this.persona = new Persona();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.archivos = [];
     this.listaLP = [];
   }
@@ -59,6 +67,7 @@ export class ModalPropiedadComponent implements OnInit {
     this.cargando = true;
     this.casa.casapersonaList = this.listaLP;
     this.casa.persona_id = this.listaLP[0]; // this.listaPR[0].idrol
+    this.casa.ubigeo_id = this.ubigeo.ubigeo;
     this.casa.serviciosList = this.servicios;
     if (!this.edit) { // guardar nueva propiedad
       // guardar en lista fotos
@@ -149,6 +158,7 @@ export class ModalPropiedadComponent implements OnInit {
         this.casa = res;
         this.listaLP = res.casapersonaList;
         this.persona = this.listaLP[0];
+        this.ubigeo = res.ubigeo;
         this.servicios = res.serviciosList;
         this.casaservicios = res.casaservicioList;
 
@@ -191,6 +201,19 @@ export class ModalPropiedadComponent implements OnInit {
       this.persona = result;
       this.casa.persona_id = result;
       this.listaLP[0] = result;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
+  buscarubigeo() {
+    const modalRef = this.modalService.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.casa.ubigeo_id = result.ubigeo;
       this.auth.agregarmodalopenclass();
     }, (reason) => {
       this.auth.agregarmodalopenclass();
@@ -243,6 +266,11 @@ export class ModalPropiedadComponent implements OnInit {
     // limpiar persona
     this.persona = new Persona();
     this.casa.persona_id = new Persona();
+    this.casa.ubigeo_id = new Ubigeo();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.listaLP = [];
     // limpiar foto
     this.casa.foto = null;

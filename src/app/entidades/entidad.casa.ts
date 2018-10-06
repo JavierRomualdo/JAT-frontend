@@ -1,11 +1,13 @@
 import { Persona } from './entidad.persona';
+import { Ubigeo } from './entidad.ubigeo';
+
 export class Casa {
   id: number;
   persona_id: Persona;
+  ubigeo_id: Ubigeo;
   precio: number;
   largo: number;
   ancho: number;
-  ubicacion: string;
   direccion: string;
   // tslint:disable-next-line:no-inferrable-types
   npisos: number = 0;
@@ -22,6 +24,8 @@ export class Casa {
   path: string = null; // camino o ruta de imagenes en cloud storage de firebase
   // foto: Blob;
   // fotos: Blob [];
+  // tslint:disable-next-line:no-inferrable-types
+  nmensajes: number = 0;
   estado: Boolean = true;
   casapersonaList: any = {};
   fotosList: any = {};

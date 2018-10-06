@@ -102,7 +102,7 @@
 
               <div class="col-md-8">
                 <button (click)="cargarImagenes()" [disabled]="archivos.length==0" class="btn btn-success btn-sm">Subir Imagenes</button>
-                <button (click)="limpiarArchivos()" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> Limpiar</button>
+                <button (click)="limpiarArchivos()" class="btn btn-danger btn-sm"><i class="fa fa-eraser"></i> Limpiar</button>
 
                 <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
                   <thead class="thead-light">
@@ -142,7 +142,7 @@
     <div class="modal-footer border-primary">
       <button type="submit" class="btn btn-sm btn-primary" [disabled]="!usuarioform.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-eraser"></i> Limpiar</button>
 
       <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
     </div>

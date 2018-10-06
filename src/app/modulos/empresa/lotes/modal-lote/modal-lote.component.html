@@ -62,17 +62,19 @@
             </div>
             <!--/.row-->
             <div class="form-group row">
-              <label class="col-sm-2 form-control-label">Ubicacion <span class="text-primary">*</span></label>
+              <label class="col-sm-2 form-control-label">Ubigeo <span class="text-primary">*</span></label>
               <div class="col-sm-4">
-                <input type="text" class="form-control" [(ngModel)]="lote.ubicacion" required placeholder="Busque la ubicación"  name="ubicacion">
-                <!--<div class="form-group">
+                <div class="form-group">
                   <div class="input-group">
-                    <input type="text" class="form-control" required placeholder="Busque la ubicación" disabled name="idubigeo">
+                    <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                    <label class="form-control">
+                      {{ubigeo.departamento.ubigeo}} - {{ubigeo.provincia.ubigeo}} - {{ubigeo.ubigeo.ubigeo}}
+                    </label>
                     <div class="input-group-append">
-                      <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                      <button type="button" class="btn btn-primary" (click)="buscarubigeo()"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
                     </div>
                   </div>
-                </div>-->
+                </div>
               </div>
               <label class="col-sm-2 form-control-label">Direccion <span class="text-primary">*</span></label>
               <div class="col-sm-4">
@@ -101,7 +103,7 @@
             <div class="form-group row">
               <label class="col-sm-2 form-control-label">Descripcion <span class="text-primary">*</span></label>
               <div class="col-sm-10">
-                <textarea class="form-control" [(ngModel)]="lote.descripcion" required name="descripcion" placeholder="Ingrese la descripcion" maxlength="100"></textarea>
+                <textarea class="form-control" [(ngModel)]="lote.descripcion" required name="descripcion" placeholder="Ingrese la descripcion" maxlength="250"></textarea>
               </div>
             </div>
           </div>
@@ -110,7 +112,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <button type="button" (click)="cargarImagenes()" [disabled]="archivos.length==0" class="btn btn-success btn-sm">Subir Imagenes</button>
-                    <button type="button" (click)="limpiarArchivos()" [disabled]="archivos.length==0" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> Limpiar</button>
+                    <button type="button" (click)="limpiarArchivos()" [disabled]="archivos.length==0" class="btn btn-danger btn-sm"><i class="fa fa-eraser"></i> Limpiar</button>
                     <!--/.table-responsive-->
                     <div class="table-responsive" *ngIf="fotos.length!=0">
                       <!--/.table-->
@@ -258,9 +260,9 @@
         </div>
     </div>
     <div class="modal-footer border-primary">
-      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!loteform.form.valid || listaLP.length==0"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!loteform.form.valid || listaLP.length==0 || ubigeo.ubigeo.id==undefined"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-      <button type="reset" (click)="limpiarlote()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+      <button type="reset" (click)="limpiarlote()" class="btn btn-sm btn-danger"><i class="fa fa-eraser"></i> Limpiar</button>
 
       <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
     </div>

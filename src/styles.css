@@ -21,6 +21,14 @@
   padding-top: 1px;
 }
 
+.sizeBar{
+  line-height: 0.75;
+}
+
+.mapa{
+  padding-bottom: 15px;
+  background: white;
+}
 .nosotros{
   padding: 2rem 1rem;
   margin-bottom: 2rem;
@@ -63,9 +71,9 @@
 }
 
 .pie{
-  right: 0;
-  bottom: 0;
-  left: 0;
+  padding: 2px 0 0px;
+  background: #555;
+  color: #fff;
 }
 .tabla{
   background-color: white;

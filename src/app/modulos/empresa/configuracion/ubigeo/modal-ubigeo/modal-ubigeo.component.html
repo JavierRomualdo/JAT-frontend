@@ -23,19 +23,19 @@
             </div>
             <div class="card-body">
               <div class="input-group">
-                <select (change)="mostrarprovincias()" class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="ubigeodepartamento" [(ngModel)]="idUbigeoDepartamento" placeholder="Filtrar por Rol">
+                <select (change)="mostrarprovincias(idUbigeoDepartamento)" [(ngModel)]="idUbigeoDepartamento" class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="ubigeodepartamento" [(ngModel)]="idUbigeoDepartamento" placeholder="Filtrar por Rol">
                   <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
-                  <option value="0">Seleccione Departamento...</option>
+                  <option value='0'>Seleccione Departamento...</option>
                   <option [ngValue]="ubigeodepartamento.id" *ngFor="let ubigeodepartamento of ubigeodepartamentos"  >{{ubigeodepartamento.ubigeo}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
                 </select>
-                <select (change)="mostrardistritos()" class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="ubigeoprovincia" [(ngModel)]="idUbigeoProvincia" placeholder="Filtrar por Rol">
+                <select (change)="mostrardistritos(idUbigeoProvincia)" [(ngModel)]="idUbigeoProvincia" class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="ubigeoprovincia" [(ngModel)]="idUbigeoProvincia" placeholder="Filtrar por Rol">
                   <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
                   <option value="0">Seleccione Provincia...</option>
                   <option [ngValue]="ubigeoprovincia.id" *ngFor="let ubigeoprovincia of ubigeoprovincias"  >{{ubigeoprovincia.ubigeo}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
                 </select>
-                <input type="text" class="form-control border-primary" placeholder="Busque por ubigeo" maxlength="150" name="ubigeo" [(ngModel)]="parametros.ubigeo"><!--[(ngModel)]="dni"-->
+                <input type="text" class="form-control border-primary" placeholder="Busque por ubigeo" maxlength="150" name="ubigeo" [(ngModel)]="parametros.ubigeo.ubigeo"><!--[(ngModel)]="dni"-->
                 <button type="submit" class="input-group-addon btn btn-square btn-primary"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
               </div>
               <div class="table-responsive">
@@ -50,7 +50,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let ubigeo of ubigeos;let i=index" style="cursor: pointer" (click)="enviarubigeo(ubigeo)">
+                      <tr *ngFor="let ubigeo of ubigeos;let i=index" [ngStyle]="{'cursor': idUbigeoProvincia>0 ? 'pointer ': 'default'}" (click)="idUbigeoProvincia>0 ? enviarubigeo(ubigeo): ''">
                         <th class="text-center">{{i+1}}</th>
                         <td>{{ubigeo.ubigeo}}</td>
                         <td>
@@ -89,7 +89,7 @@
         <!--/.card-->
       </div>
       <div class="modal-footer border-primary">
-          <button (click)="limpiar()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+          <button (click)="limpiar()" class="btn btn-sm btn-danger"><i class="fa fa-eraser"></i> Limpiar</button>
           <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
       </div>
     </form>
@@ -103,30 +103,56 @@
         <div class="form-group row">
           <label class="col-sm-3 form-control-label">Estado <span class="text-primary">*</span></label>
           <div class="col-sm-9" >
-            <ui-switch *ngIf="ubigeo.id" [(ngModel)]="ubigeo.estado" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
-            <ui-switch *ngIf="!ubigeo.id" [checked]="true" name="estado" >estado</ui-switch>
+            <ui-switch *ngIf="ubigeoGuardar.ubigeo.id" [(ngModel)]="ubigeoGuardar.ubigeo.estado" name="estado" >estado</ui-switch><!--*ngIf="!ingeniero.id"-->
+            <ui-switch *ngIf="!ubigeoGuardar.ubigeo.id" [checked]="true" name="estado" >estado</ui-switch>
           </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-3 form-control-label">Ubigeo <span class="text-primary">*</span></label>
+            <label class="col-sm-3 form-control-label">Tipo Ubigeo <span class="text-primary">*</span></label>
             <div class="col-sm-9">
-              <select class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="roles" [(ngModel)]="idTipoUbigeo" placeholder="Filtrar por Rol">
+              <select class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="idTipoUbigeo" [(ngModel)]="idTipoUbigeo" placeholder="Filtrar por Rol">
                   <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
                   <option value="0">Seleccione tipo ubigeo...</option>
                   <option [ngValue]="tipoubigeo.id" *ngFor="let tipoubigeo of tipoubigeos"  >{{tipoubigeo.tipoubigeo}}</option>
                   <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
               </select>
             </div>
+        </div>
+        <div class="form-group row" *ngIf="idTipoUbigeo==2 || idTipoUbigeo==3" >
+          <label class="col-sm-3 form-control-label">Departamento <span class="text-primary">*</span></label>
+          <div class="col-sm-9">
+            <select class="form-control border-primary" (change)="idTipoUbigeo==3 ? mostrarprovincias(idUbigeoDepartamento): ''" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="idUbigeoDepartamento" [(ngModel)]="idUbigeoDepartamento" placeholder="Filtrar por Rol">
+              <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
+              <option value="0">Seleccione tipo ubigeo...</option>
+              <option [ngValue]="ubigeodepartamento.id" *ngFor="let ubigeodepartamento of ubigeodepartamentos"  >{{ubigeodepartamento.ubigeo}}</option>
+              <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="idTipoUbigeo==3" >
+          <label class="col-sm-3 form-control-label">Provincia <span class="text-primary">*</span></label>
+          <div class="col-sm-9">
+            <select class="form-control border-primary" placeholder="Filtrar por Ubigeo" style="height: calc(2.5rem);" name="roles" [(ngModel)]="idUbigeoProvincia" placeholder="Filtrar por Rol">
+              <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
+              <option value="0">Seleccione tipo ubigeo...</option>
+              <option [ngValue]="ubigeoprovincia.id" *ngFor="let ubigeoprovincia of ubigeoprovincias"  >{{ubigeoprovincia.ubigeo}}</option>
+              <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
           <label class="col-sm-3 form-control-label">Ubigeo <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="ubigeo" required="" placeholder="Ingrese nombre ubigeo" maxlength="50" [(ngModel)]="ubigeo.ubigeo"><!--[(ngModel)]="ingeniero.nombre"-->
+            <input type="text" class="form-control" name="ubigeo" required="" placeholder="Ingrese nombre ubigeo" maxlength="50" [(ngModel)]="ubigeoGuardar.ubigeo.ubigeo"><!--[(ngModel)]="ingeniero.nombre"-->
           </div>
         </div>
       </div>
       <div class="modal-footer border-primary">
-          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid || idTipoUbigeo==0"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid || idTipoUbigeo==0">
+            <i class="fa fa-dot-circle-o"></i> Guardar
+          </button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
           <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+          <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-eraser"></i> Limpiar</button>
           <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
       </div>
     </form>

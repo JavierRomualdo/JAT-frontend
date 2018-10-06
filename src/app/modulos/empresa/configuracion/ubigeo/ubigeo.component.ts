@@ -7,6 +7,8 @@ import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacio
 import { AuthService } from '../../../../servicios/auth.service';
 import { ModalUbigeoComponent } from './modal-ubigeo/modal-ubigeo.component';
 import { ModalTipoUbigeoComponent } from './modal-tipoubigeo/modal-tipoubigeo.component';
+import { UbigeoGuardar } from '../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../entidades/entidad.ubigeo';
 
 @Component({
   selector: 'app-ubigeo',
@@ -18,7 +20,7 @@ export class UbigeoComponent implements OnInit {
   public cargando: Boolean = false;
   public confirmarcambioestado: Boolean = false;
   public ubigeos: any = []; // lista proyecto
-  public parametros: Users;
+  public parametros: UbigeoGuardar;
   errors: Array<Object> = [];
 
   constructor(
@@ -27,7 +29,10 @@ export class UbigeoComponent implements OnInit {
     public toastr: ToastrService,
     public auth: AuthService,
   ) {
-    this.parametros = new Users();
+    this.parametros = new UbigeoGuardar();
+    this.parametros.departamento = null;
+    this.parametros.provincia = null;
+    this.parametros.ubigeo = new Ubigeo();
   }
 
   ngOnInit() {
@@ -117,24 +122,24 @@ export class UbigeoComponent implements OnInit {
   }
 
   limpiar() {
-    this.parametros = new Users();
+    this.parametros = new UbigeoGuardar();
+    this.parametros.departamento = null;
+    this.parametros.provincia = null;
+    this.parametros.ubigeo = new Ubigeo();
+
     this.ubigeos = [];
     this.listarUbigeos();
   }
 
   busqueda() {
     let nohayvacios: Boolean = false;
-    if (this.parametros.name !== undefined && this.parametros.name !== '') {
+    if (this.parametros.ubigeo.ubigeo !== undefined && this.parametros.ubigeo.ubigeo !== '') {
       // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
-      nohayvacios = true;
-    }
-    if (this.parametros.email !== undefined && this.parametros.email !== '') {
-      // this.toastr.info('Hay detalle datos: ' + this.parametros.detalle);
       nohayvacios = true;
     }
     if (nohayvacios) {
       console.log(this.parametros);
-      this.api.post('buscarubigeo', this.parametros).then(
+      this.api.post('buscarubigeos', this.parametros).then(
         (res) => {
           console.log(res);
           this.ubigeos = res;

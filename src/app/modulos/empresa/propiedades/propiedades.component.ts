@@ -7,6 +7,8 @@ import { AuthService } from '../../../servicios/auth.service';
 import { ConfirmacionComponent } from '../../../util/confirmacion/confirmacion.component';
 import { Casa } from '../../../entidades/entidad.casa';
 import { Persona } from '../../../entidades/entidad.persona';
+import { Ubigeo } from '../../../entidades/entidad.ubigeo';
+import { CasaMensaje } from '../../../entidades/entidad.casamensaje';
 
 @Component({
   selector: 'app-propiedades',
@@ -16,8 +18,12 @@ import { Persona } from '../../../entidades/entidad.persona';
 export class PropiedadesComponent implements OnInit {
 
   public cargando: Boolean = false;
+  public vermensajes: Boolean = false;
+  public estadomensajes: Boolean = true;
   public confirmarcambioestado: Boolean = false;
-  public  casas: any = []; // lista proyecto
+  public casas: any = []; // lista proyecto
+  public casa_id: number;
+  public mensajes: CasaMensaje[];
   public parametros: Casa;
   errors: Array<Object> = [];
 
@@ -28,7 +34,9 @@ export class PropiedadesComponent implements OnInit {
     public auth: AuthService,
   ) {
     this.parametros = new Casa();
+    this.mensajes = [];
     this.parametros.persona_id = new Persona();
+    this.parametros.ubigeo_id = new Ubigeo();
   }
 
   ngOnInit() {
@@ -38,6 +46,7 @@ export class PropiedadesComponent implements OnInit {
   limpiar() {
     this.parametros = new Casa();
     this.parametros.persona_id = new Persona();
+    this.parametros.ubigeo_id = new Ubigeo();
     this.casas = [];
     this.listarPropiedades();
   }
@@ -48,7 +57,7 @@ export class PropiedadesComponent implements OnInit {
       this.parametros.persona_id.nombres !== '') {
         nohayvacios = true;
       }
-    if (this.parametros.ubicacion !== undefined && this.parametros.ubicacion !== '') {
+    if (this.parametros.ubigeo_id.ubigeo !== undefined && this.parametros.ubigeo_id.ubigeo !== '') {
       // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
       nohayvacios = true;
     }
@@ -136,6 +145,41 @@ export class PropiedadesComponent implements OnInit {
     ).catch(err => this.handleError(err));
   }
 
+  confirmarcambiodeestadomensaje(mensaje): void {
+    const modalRef = this.modalService.open(ConfirmacionComponent, {windowClass: 'nuevo-modal', size: 'sm', keyboard: false});
+    modalRef.result.then((result) => {
+      this.confirmarcambioestado = true;
+      this.confirmarmensajeleido(mensaje);
+      // this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      mensaje.estado = !mensaje.estado;
+      // this.auth.agregarmodalopenclass();
+    });
+  }
+
+  confirmarmensajeleido(mensaje) {
+    // this.cargando = true;
+    this.api.delete('casamensaje/' + mensaje.id).then(
+      (res) => {
+        console.log(res);
+        this.toastr.success(res.operacionMensaje, 'Exito');
+        this.listarmensajes(this.casa_id, this.estadomensajes);
+        // this.cargando = false;
+      },
+      (error) => {
+        if (error.status === 422) {
+          this.errors = [];
+          const errors = error.json();
+          console.log('Error');
+          this.cargando = false;
+          /*for (const key in errors) {
+            this.errors.push(errors[key]);
+          }*/
+        }
+      }
+    ).catch(err => this.handleError(err));
+  }
+
   listarPropiedades() {
     this.cargando = true;
     this.api.get('casas').then(
@@ -157,6 +201,44 @@ export class PropiedadesComponent implements OnInit {
         }
       }
     ).catch(err => this.handleError(err));
+  }
+
+  listarmensajes(casa_id, estado) {
+    console.log('estado del mensaje: ');
+    console.log(estado);
+    this.estadomensajes = estado;
+    let valor = 1;
+    if (estado === false) {
+      valor = 0;
+    }
+    console.log(valor);
+    this.cargando = true;
+    this.vermensajes = true;
+    this.casa_id = casa_id;
+    this.api.get('mostrarcasamensajes/' + casa_id + '/' + valor).then(
+      (res) => {
+        this.mensajes = res;
+        this.cargando = false;
+        console.log('resultado: ');
+        console.log(this.mensajes);
+      },
+      (error) => {
+        if (error.status === 422) {
+          this.errors = [];
+          const errors = error.json();
+          console.log('Error');
+          this.cargando = false;
+          /*for (const key in errors) {
+            this.errors.push(errors[key]);
+          }*/
+        }
+      }
+    ).catch(err => this.handleError(err));
+  }
+
+  private cerrarmensajes() {
+    this.vermensajes = false;
+    this.listarPropiedades();
   }
 
   private handleError(error: any): void {

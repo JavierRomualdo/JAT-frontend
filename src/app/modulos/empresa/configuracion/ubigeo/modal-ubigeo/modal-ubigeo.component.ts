@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
@@ -6,6 +6,7 @@ import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirma
 import { AuthService } from '../../../../../servicios/auth.service';
 import { Ubigeo } from '../../../../../entidades/entidad.ubigeo';
 import { UbigeoTipo } from '../../../../../entidades/entidad.tipoubigeo';
+import { UbigeoGuardar } from '../../../../../entidades/entidad.ubigeoguardar';
 
 @Component({
   selector: 'app-modal-ubigeo',
@@ -13,7 +14,9 @@ import { UbigeoTipo } from '../../../../../entidades/entidad.tipoubigeo';
   styleUrls: ['./modal-ubigeo.component.css']
 })
 export class ModalUbigeoComponent implements OnInit {
+  @Input() edit;
   public ubigeo: Ubigeo;
+  public ubigeoGuardar: UbigeoGuardar;
   public vistaFormulario = false;
   public cargando: Boolean = false;
   public verNuevo: Boolean = false;
@@ -28,8 +31,11 @@ export class ModalUbigeoComponent implements OnInit {
   public idUbigeoDepartamento: number = 0;
   // tslint:disable-next-line:no-inferrable-types
   public idUbigeoProvincia: number = 0;
+  // tslint:disable-next-line:no-inferrable-types
+  public idUbigeoDistrito: number = 0;
   errors: Array<Object> = [];
-  public parametros: Ubigeo;
+  // public parametros: Ubigeo;
+  public parametros: UbigeoGuardar;
 
   public listado: Boolean = false;
   constructor(
@@ -40,33 +46,38 @@ export class ModalUbigeoComponent implements OnInit {
     public auth: AuthService
   ) {
     this.ubigeo = new Ubigeo();
+    this.ubigeoGuardar = new UbigeoGuardar();
+    this.ubigeoGuardar.ubigeo = new Ubigeo();
     this.ubigeodepartamentos = [];
     this.ubigeoprovincias = [];
     this.ubigeos = [];
     this.tipoubigeos = [];
-    this.parametros = new Ubigeo();
+    // this.parametros = new Ubigeo();
+    this.parametros = new UbigeoGuardar();
+    this.parametros.departamento = null;
+    this.parametros.provincia = null;
+    this.parametros.ubigeo = new Ubigeo();
   }
 
   ngOnInit() {
-    // this.listarUbigeos();
+    if (this.edit) {
+      this.traerParaEdicion(this.edit);
+    } else {
+      this.listarUbigeos(); // index ubigeos (departamento)
+    }
     // por defecto se debe listar tipoubigeo 1 (departamentos)
-    this.listarCiudades(1); // Departamentos (por defecto)
   }
 
   busqueda(): void {
     let nohayvacios: Boolean = false;
-    if (this.parametros.ubigeo !== undefined && this.parametros.ubigeo !== '') {
+    if (this.parametros.ubigeo.ubigeo !== undefined && this.parametros.ubigeo.ubigeo !== '') {
       // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
       nohayvacios = true;
     }
-    if (this.parametros.codigo !== undefined && this.parametros.codigo !== '' &&
-    this.parametros.codigo !== null ) {
-      // this.toastr.info('Hay detalle datos: ' + this.parametros.detalle);
-      nohayvacios = true;
-    }
+
     if (nohayvacios) {
       console.log(this.parametros);
-      this.api.post('buscarubigeo', this.parametros).then(
+      this.api.post('buscarubigeos', this.parametros).then(
         (res) => {
           console.log(res);
           this.ubigeos = res;
@@ -93,23 +104,63 @@ export class ModalUbigeoComponent implements OnInit {
     }
   }
 
-  mostrarprovincias() {
-    this.listarCiudades(2);
+  mostrarprovincias(idubigeo) {
+    if (idubigeo > 0) {
+      let departamento: Ubigeo = new Ubigeo();
+      for (const ubigeo of this.ubigeodepartamentos) {
+        if (idubigeo === ubigeo.id) {
+          departamento = ubigeo;
+        }
+      }
+      this.parametros.departamento = departamento;
+      console.log(departamento);
+      this.mostrarubigeos(departamento.tipoubigeo_id, departamento.codigo);
+    } else {
+      this.ubigeoprovincias = [];
+      this.parametros.departamento = null;
+      this.listarUbigeos();
+    }
   }
 
-  mostrardistritos() {
-    this.listarCiudades(3);
+  mostrardistritos(idubigeo) {
+    if (idubigeo > 0) {
+      let provincia: Ubigeo = new Ubigeo();
+      for (const ubigeo of this.ubigeoprovincias) {
+        if (idubigeo === ubigeo.id) {
+          provincia = ubigeo;
+        }
+      }
+      this.parametros.provincia = provincia;
+      console.log(provincia);
+      this.mostrarubigeos(provincia.tipoubigeo_id, provincia.codigo);
+    } else {
+      this.ubigeos = [];
+      this.parametros.provincia = null;
+      this.listarUbigeos();
+    }
   }
 
   limpiar() {
-    this.parametros = new Ubigeo();
+    // this.parametros = new Ubigeo();
+    this.parametros = new UbigeoGuardar();
+    this.parametros.departamento = null;
+    this.parametros.provincia = null;
+    this.parametros.ubigeo = new Ubigeo();
+
     this.ubigeos = [];
+    this.ubigeoprovincias = [];
+    this.idUbigeoDepartamento = 0;
+    this.idUbigeoProvincia = 0;
     this.listarUbigeos();
   }
 
   nuevo() {
     this.vistaFormulario = true;
     this.verNuevo = true;
+    this.idTipoUbigeo = 0;
+    this.idUbigeoDepartamento = 0;
+    this.idUbigeoProvincia = 0;
+    this.ubigeoGuardar.ubigeo = new Ubigeo();
     this.ubigeo = new Ubigeo();
     // this.idTipoUbigeo = 0;
     this.listarTipoUbigeos();
@@ -119,6 +170,7 @@ export class ModalUbigeoComponent implements OnInit {
     this.cargando = true;
     this.api.get('ubigeos').then(
       (res) => {
+        this.ubigeodepartamentos = res;
         this.ubigeos = res;
         this.cargando = false;
         console.log(res);
@@ -137,17 +189,16 @@ export class ModalUbigeoComponent implements OnInit {
     ).catch(err => this.handleError(err));
   }
 
-  listarCiudades(idtipoubigeo) {
+  mostrarubigeos(idtipoubigeo, codigo) {
     this.cargando = true;
-    this.api.get('buscarubigeo/' + idtipoubigeo).then(
+    this.api.get('mostrarubigeos/' + idtipoubigeo + '/' + codigo).then(
       (res) => {
-        if (idtipoubigeo === 1) {
-          this.ubigeodepartamentos = res;
-          this.ubigeos = this.ubigeodepartamentos;
-        } else if (idtipoubigeo === 2) {
+        if (idtipoubigeo === 1) { // departamento
+          // listo las provincias del departamento
           this.ubigeoprovincias = res;
           this.ubigeos = this.ubigeoprovincias;
-        } else {
+        } else if (idtipoubigeo === 2) { // provincia
+          // listo los distritos de la provincia
           this.ubigeos = res; // distritos
         }
         // this.ubigeos = res;
@@ -197,9 +248,23 @@ export class ModalUbigeoComponent implements OnInit {
     this.cargando = true;
     this.api.get('ubigeos/' + id).then(
       (res) => {
-        // console.log(res);
-        this.ubigeo = res;
-        this.idTipoUbigeo = this.ubigeo.tipoubigeo_id.id;
+        console.log(res);
+        this.ubigeoGuardar.ubigeo = res.ubigeo;
+        // this.ubigeo = res;
+        this.idTipoUbigeo = this.ubigeoGuardar.ubigeo.tipoubigeo_id.id;
+        // console.log('tipoubigeo_id: ' + this.idTipoUbigeo);
+        if (res.departamento != null) {
+          this.ubigeoGuardar.departamento = res.departamento;
+          this.idUbigeoDepartamento = this.ubigeoGuardar.departamento.id;
+          // console.log('departamento != null ' + this.idUbigeoDepartamento);
+        }
+        if (res.provincia != null) {
+          // console.log('prvinci != null');
+          this.ubigeoGuardar.departamento = res.departamento;
+          this.idUbigeoDepartamento = this.ubigeoGuardar.departamento.id;
+          this.ubigeoGuardar.provincia = res.provincia;
+          this.idUbigeoProvincia = this.ubigeoGuardar.provincia.id;
+        }
         this.cargando = false;
       },
       (error) => {
@@ -218,14 +283,37 @@ export class ModalUbigeoComponent implements OnInit {
 
   guardarUbigeo() {
     this.cargando = true;
-    if (!this.ubigeo.id) { // guardar nuevo ubigeo
-      for (const tipoubigeo of this.tipoubigeos) {
-        if (tipoubigeo.id === this.idTipoUbigeo) {
-          this.ubigeo.tipoubigeo_id = tipoubigeo;
+    if (this.idTipoUbigeo === 1) {
+      this.ubigeoGuardar.departamento = null;
+      this.ubigeoGuardar.provincia = null;
+    } else if (this.idTipoUbigeo === 2) {
+      for (const departamento of this.ubigeodepartamentos) {
+        if (this.idUbigeoDepartamento === departamento.id) {
+          this.ubigeoGuardar.departamento = departamento;
         }
       }
-      console.log(this.ubigeo);
-      this.api.post('ubigeos', this.ubigeo).then(
+    } else if (this.idTipoUbigeo === 3) {
+      for (const departamento of this.ubigeodepartamentos) {
+        if (this.idUbigeoDepartamento === departamento.id) {
+          this.ubigeoGuardar.departamento = departamento;
+        }
+      }
+      for (const provincia of this.ubigeoprovincias) {
+        if (this.idUbigeoProvincia === provincia.id) {
+          this.ubigeoGuardar.provincia = provincia;
+        }
+      }
+    }
+
+    for (const tipoubigeo of this.tipoubigeos) {
+      if (tipoubigeo.id === this.idTipoUbigeo) {
+        this.ubigeoGuardar.ubigeo.tipoubigeo_id = tipoubigeo;
+      }
+    }
+    if (!this.ubigeoGuardar.ubigeo.id) { // guardar nuevo ubigeo
+      console.log('antes de guardar:');
+      console.log(this.ubigeoGuardar);
+      this.api.post('ubigeos', this.ubigeoGuardar).then(
         (res) => {
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
@@ -241,20 +329,13 @@ export class ModalUbigeoComponent implements OnInit {
             console.log('Error');
             this.cargando = false;
             this.handleError(error);
-            /*for (const key in errors) {
-              this.errors.push(errors[key]);
-            }*/
           }
         }
       ).catch(err => this.handleError(err));
     } else { // guardar el ubigeo editado
-      for (const tipoubigeo of this.tipoubigeos) {
-        if (tipoubigeo.id === this.idTipoUbigeo) {
-          this.ubigeo.tipoubigeo_id = tipoubigeo;
-        }
-      }
-      console.log(this.ubigeo);
-      this.api.put('ubigeos/' + this.ubigeo.id, this.ubigeo).then(
+      console.log('antes de editar:');
+      console.log(this.ubigeoGuardar);
+      this.api.put('ubigeos/' + this.ubigeoGuardar.ubigeo.id, this.ubigeoGuardar).then(
         (res) => {
           console.log(res);
           this.toastr.success(res.operacionMensaje, 'Exito');
@@ -270,13 +351,15 @@ export class ModalUbigeoComponent implements OnInit {
             console.log('Error Interno');
             this.cargando = false;
             this.handleError(error);
-            /*for (const key in errors) {
-              this.errors.push(errors[key]);
-            }*/
           }
         }
       ).catch(err => this.handleError(err));
     }
+    this.idUbigeoDepartamento = 0;
+    this.idUbigeoProvincia = 0;
+    this.ubigeoprovincias = [];
+    this.ubigeoGuardar = new UbigeoGuardar();
+    this.ubigeoGuardar.ubigeo = new Ubigeo();
   }
 
   confirmarcambiodeestado(ubigeo): void {
@@ -320,6 +403,7 @@ export class ModalUbigeoComponent implements OnInit {
   }
 
   enviarubigeo(ubigeo: Ubigeo) {
-    this.activeModal.close(ubigeo);
+    this.parametros.ubigeo = ubigeo;
+    this.activeModal.close(this.parametros);
   }
 }

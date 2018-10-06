@@ -1,11 +1,15 @@
 import { Persona } from './entidad.persona';
+import { Ubigeo } from './entidad.ubigeo';
+
 export class Lote {
     id: number;
     persona_id: Persona;
+    ubigeo_id: Ubigeo;
     precio: number;
     largo: number;
     ancho: number;
-    ubicacion: string;
+    // tslint:disable-next-line:no-inferrable-types
+    nmensajes: number = 0;
     direccion: string;
     descripcion: string = null;
     foto: string = null;

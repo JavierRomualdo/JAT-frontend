@@ -26,9 +26,19 @@
         </div>
         <div class="line"></div>
         <div class="form-group row">
-          <label class="col-sm-3 form-control-label">Ubicacion <span class="text-primary">*</span></label>
+        <label class="col-sm-3 form-control-label">Ubigeo <span class="text-primary">*</span></label>
           <div class="col-sm-9">
-            <input type="text" name="urbanizacion" [(ngModel)]="empresa.ubicacion" placeholder="Ingrese ubicacion" required class="form-control" maxlength="100">
+            <div class="form-group">
+              <div class="input-group">
+                <!--<label type="text" class="form-control">{ {ingeniero.idubigeo.nombre}}</label>-->
+                <label class="form-control">
+                  {{ubigeo.departamento.ubigeo}} - {{ubigeo.provincia.ubigeo}} - {{ubigeo.ubigeo.ubigeo}}
+                </label>
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-primary" (click)="buscarubigeo()"><i class="fa fa-search"></i></button><!--(click)="abrirModalUbigeo()"-->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="line"></div>
@@ -75,7 +85,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-md-12" *ngIf="imagen==null; then imagenDefecto else imagenFirebase" >
+          <div class="col-md-12" *ngIf="imagen==null; then imagenDefecto else imagenFirebase">
           </div>
           <ng-template #imagenDefecto class="text-center">
             <img src="assets/img-empresa/avatars/no_image.png" class="rounded mx-auto d-block">
@@ -91,9 +101,9 @@
         </div>
     </div>
     <div class="modal-footer border-primary">
-      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!empresaform.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
+      <button type="submit" class="btn btn-sm btn-primary" [disabled]="!empresaform.form.valid || ubigeo.ubigeo.id==undefined"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
       <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+      <button type="reset" class="btn btn-sm btn-danger" (click)="limpiarempresa()"><i class="fa fa-eraser"></i> Limpiar</button>
 
       <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
     </div>

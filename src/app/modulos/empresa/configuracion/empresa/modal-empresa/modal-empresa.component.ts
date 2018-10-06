@@ -5,6 +5,10 @@ import { FileItem } from '../../../../../entidades/file-item';
 import { Empresa } from '../../../../../entidades/entidad.empresa';
 import { CargaImagenesService } from '../../../../../servicios/carga-imagenes.service';
 import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
+import { UbigeoGuardar } from '../../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../../entidades/entidad.ubigeo';
+import { ModalUbigeoComponent } from '../../ubigeo/modal-ubigeo/modal-ubigeo.component';
+import { AuthService } from '../../../../../servicios/auth.service';
 
 @Component({
   selector: 'app-modal-empresa',
@@ -20,6 +24,7 @@ export class ModalEmpresaComponent implements OnInit {
   public imagen: string = null;
   public imagenAnterior: string = null; // solo se usara para editar usuario
   public empresa: Empresa;
+  public ubigeo: UbigeoGuardar;
   errors: Array<Object> = [];
 
   constructor(
@@ -27,10 +32,17 @@ export class ModalEmpresaComponent implements OnInit {
     public api: ApiRequest2Service,
     public toastr: ToastrService,
     public modalService: NgbModal,
+    public auth: AuthService,
     public _cargaImagenes: CargaImagenesService,
   ) {
     this.empresa = new Empresa();
+    this.empresa.ubigeo_id = new Ubigeo();
     this.archivo = new FileItem(null);
+
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
   }
 
   ngOnInit() {
@@ -46,6 +58,7 @@ export class ModalEmpresaComponent implements OnInit {
           console.log('datos empresa: ');
           console.log(res);
           this.empresa = res;
+          this.ubigeo = res.ubigeo;
           console.log('traido para edicion');
           console.log(this.empresa);
           this.imagen = res.foto;
@@ -74,6 +87,7 @@ export class ModalEmpresaComponent implements OnInit {
 
   guardarEmpresa() {
     this.cargando = true;
+    this.empresa.ubigeo_id = this.ubigeo.ubigeo;
     // this.imagenAnterior es un parametro que tambien se podra visualizar si es nuevo o editar empresa
     if (this.imagenAnterior === undefined) { // nueva empresa undefined
       if (this.archivo.archivo == null) { // la empresa guarda sin su foto
@@ -181,12 +195,32 @@ export class ModalEmpresaComponent implements OnInit {
     }
   }
 
+  buscarubigeo() {
+    const modalRef = this.modalService.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.empresa.ubigeo_id = result.ubigeo;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
   cargarImagen() {
     // el primer parametro es el nombre de la carpeta que le vamos bueno el nombre de la carpeta
     // lo vamos a ponerle al nombre del usuario y el segundo parametro su imagen para almacenar
     // en firebase (storage (aca se sube el archivo completo) y firestore (aca se registra el archivo en la bd))
     this._cargaImagenes.cargarImagen('empresa', this.archivo);
     // this._cargaImagenes.cargarImagen('usuarios/', this.archivos[0]); // +  this.usuario.name
+  }
+
+  limpiarempresa() {
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
   }
 
   private handleError(error: any): void {

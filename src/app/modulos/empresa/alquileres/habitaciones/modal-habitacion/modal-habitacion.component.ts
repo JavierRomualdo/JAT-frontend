@@ -9,11 +9,14 @@ import { Persona } from '../../../../../entidades/entidad.persona';
 import { CargaImagenesService } from '../../../../../servicios/carga-imagenes.service';
 import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../../../servicios/auth.service';
+
 import { ModalPersonaComponent } from '../../../configuracion/empresa/modal-persona/modal-persona.component';
 import { ModalServicioComponent } from '../../../configuracion/empresa/modal-servicio/modal-servicio.component';
 import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirmacion.component';
-
+import { UbigeoGuardar } from '../../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../../entidades/entidad.ubigeo';
+import { ModalUbigeoComponent } from '../../../configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
+import { AuthService } from '../../../../../servicios/auth.service';
 @Component({
   selector: 'app-modal-habitacion',
   templateUrl: './modal-habitacion.component.html',
@@ -30,6 +33,7 @@ export class ModalHabitacionComponent implements OnInit {
   public fotos: Foto[];
   public persona: Persona;
   public listaLP: any = []; // lista de persona-roles
+  public ubigeo: UbigeoGuardar;
   errors: Array<Object> = [];
 
   constructor(
@@ -44,6 +48,10 @@ export class ModalHabitacionComponent implements OnInit {
     this.fotos = [];
     this.servicios = [];
     this.persona = new Persona();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.archivos = [];
     this.listaLP = [];
   }
@@ -59,6 +67,7 @@ export class ModalHabitacionComponent implements OnInit {
     this.cargando = true;
     this.habitacion.habitacionpersonaList = this.listaLP;
     this.habitacion.persona_id = this.listaLP[0]; // this.listaPR[0].idrol
+    this.habitacion.ubigeo_id = this.ubigeo.ubigeo;
     this.habitacion.serviciosList = this.servicios;
     if (!this.edit) { // guardar nueva habitacion
       // guardar en lista fotos
@@ -149,6 +158,7 @@ export class ModalHabitacionComponent implements OnInit {
         this.habitacion = res;
         this.listaLP = res.habitacionpersonaList;
         this.persona = this.listaLP[0];
+        this.ubigeo = res.ubigeo;
         this.servicios = res.serviciosList;
         this.habitacionservicios = res.habitacionservicioList;
 
@@ -191,6 +201,19 @@ export class ModalHabitacionComponent implements OnInit {
       this.persona = result;
       this.habitacion.persona_id = result;
       this.listaLP[0] = result;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
+  buscarubigeo() {
+    const modalRef = this.modalService.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.habitacion.ubigeo_id = result.ubigeo;
       this.auth.agregarmodalopenclass();
     }, (reason) => {
       this.auth.agregarmodalopenclass();
@@ -243,6 +266,11 @@ export class ModalHabitacionComponent implements OnInit {
     // limpiar persona
     this.persona = new Persona();
     this.habitacion.persona_id = new Persona();
+    this.habitacion.ubigeo_id = new Ubigeo();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.listaLP = [];
     // limpiar foto
     this.habitacion.foto = null;

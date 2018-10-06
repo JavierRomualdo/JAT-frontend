@@ -7,6 +7,7 @@ import { AuthService } from '../../../../servicios/auth.service';
 import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
 import { Persona } from '../../../../entidades/entidad.persona';
 import { Local } from '../../../../entidades/entidad.local';
+import { Ubigeo } from '../../../../entidades/entidad.ubigeo';
 @Component({
   selector: 'app-locales',
   templateUrl: './locales.component.html',
@@ -27,6 +28,7 @@ export class LocalesComponent implements OnInit {
     public auth: AuthService,
   ) {
     this.parametros = new Local();
+    this.parametros.ubigeo_id = new Ubigeo();
     this.parametros.persona_id = new Persona();
   }
 
@@ -37,6 +39,7 @@ export class LocalesComponent implements OnInit {
   limpiar() {
     this.parametros = new Local();
     this.parametros.persona_id = new Persona();
+    this.parametros.ubigeo_id = new Ubigeo();
     this.locales = [];
     this.listarLocales();
   }
@@ -47,7 +50,7 @@ export class LocalesComponent implements OnInit {
       this.parametros.persona_id.nombres !== '') {
         nohayvacios = true;
       }
-    if (this.parametros.ubicacion !== undefined && this.parametros.ubicacion !== '') {
+    if (this.parametros.ubigeo_id.ubigeo !== undefined && this.parametros.ubigeo_id.ubigeo !== '') {
       // this.toastr.info('Hay servicio datos: ' + this.parametros.servicio);
       nohayvacios = true;
     }

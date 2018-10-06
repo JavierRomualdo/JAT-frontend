@@ -1,3 +1,4 @@
+import { ModalUbigeoComponent } from './../../../configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Local } from '../../../../../entidades/entidad.local';
@@ -9,10 +10,12 @@ import { Persona } from '../../../../../entidades/entidad.persona';
 import { CargaImagenesService } from '../../../../../servicios/carga-imagenes.service';
 import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../../../servicios/auth.service';
 import { ModalPersonaComponent } from '../../../configuracion/empresa/modal-persona/modal-persona.component';
 import { ModalServicioComponent } from '../../../configuracion/empresa/modal-servicio/modal-servicio.component';
 import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirmacion.component';
+import { UbigeoGuardar } from '../../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../../entidades/entidad.ubigeo';
+import { AuthService } from '../../../../../servicios/auth.service';
 
 @Component({
   selector: 'app-modal-local',
@@ -29,7 +32,9 @@ export class ModalLocalComponent implements OnInit {
   public localservicios: Localservicio[];
   public fotos: Foto[];
   public persona: Persona;
+  public ubigeo: UbigeoGuardar;
   public listaLP: any = []; // lista de persona-roles
+
   errors: Array<Object> = [];
   constructor(
     public modalService: NgbModal,
@@ -43,6 +48,10 @@ export class ModalLocalComponent implements OnInit {
     this.fotos = [];
     this.servicios = [];
     this.persona = new Persona();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.archivos = [];
     this.listaLP = [];
   }
@@ -58,6 +67,7 @@ export class ModalLocalComponent implements OnInit {
     this.cargando = true;
     this.local.localpersonaList = this.listaLP;
     this.local.persona_id = this.listaLP[0]; // this.listaPR[0].idrol
+    this.local.ubigeo_id = this.ubigeo.ubigeo;
     this.local.serviciosList = this.servicios;
     if (!this.edit) { // guardar nueva local
       // guardar en lista fotos
@@ -148,6 +158,7 @@ export class ModalLocalComponent implements OnInit {
         this.local = res;
         this.listaLP = res.localpersonaList;
         this.persona = this.listaLP[0];
+        this.ubigeo = res.ubigeo;
         this.servicios = res.serviciosList;
         this.localservicios = res.localservicioList;
 
@@ -190,6 +201,19 @@ export class ModalLocalComponent implements OnInit {
       this.persona = result;
       this.local.persona_id = result;
       this.listaLP[0] = result;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
+  buscarubigeo() {
+    const modalRef = this.modalService.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.local.ubigeo_id = result.ubigeo;
       this.auth.agregarmodalopenclass();
     }, (reason) => {
       this.auth.agregarmodalopenclass();
@@ -242,6 +266,11 @@ export class ModalLocalComponent implements OnInit {
     // limpiar persona
     this.persona = new Persona();
     this.local.persona_id = new Persona();
+    this.local.ubigeo_id = new Ubigeo();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.listaLP = [];
     // limpiar foto
     this.local.foto = null;

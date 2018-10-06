@@ -12,6 +12,9 @@ import { Lote } from '../../../../entidades/entidad.lote';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { ConfirmacionComponent } from '../../../../util/confirmacion/confirmacion.component';
+import { UbigeoGuardar } from '../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../entidades/entidad.ubigeo';
+import { ModalUbigeoComponent } from '../../configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
 
 @Component({
   selector: 'app-modal-lote',
@@ -28,6 +31,7 @@ export class ModalLoteComponent implements OnInit {
   // public files: File[];
   public persona: Persona;
   public listaLP: any = []; // lista de persona-roles
+  public ubigeo: UbigeoGuardar;
   errors: Array<Object> = [];
 
   // private itemsCollection: AngularFirestoreCollection<FileItem>;
@@ -44,6 +48,10 @@ export class ModalLoteComponent implements OnInit {
     this.lote = new Lote();
     this.fotos = [];
     this.persona = new Persona();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.archivos = [];
     this.listaLP = [];
   }
@@ -59,6 +67,7 @@ export class ModalLoteComponent implements OnInit {
     this.cargando = true;
     this.lote.lotepersonaList = this.listaLP;
     this.lote.persona_id = this.listaLP[0]; // this.listaPR[0].idrol
+    this.lote.ubigeo_id = this.ubigeo.ubigeo;
     if (!this.edit) { // guardar nuevo rol
       // guardar en lista fotos
       for (const item of this.archivos) {
@@ -147,6 +156,7 @@ export class ModalLoteComponent implements OnInit {
         this.lote = res;
         this.listaLP = res.lotepersonaList;
         this.persona = this.listaLP[0] ;
+        this.ubigeo = res.ubigeo;
 
         for (const item of res.fotosList) {
           console.log('foto: ');
@@ -193,6 +203,19 @@ export class ModalLoteComponent implements OnInit {
     });
   }
 
+  buscarubigeo() {
+    const modalRef = this.modalService.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.lote.ubigeo_id = result.ubigeo;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
+  }
+
   cargarImagenes() {
     let estadetalle: Boolean = true;
     for (const item of this.archivos) {
@@ -217,6 +240,11 @@ export class ModalLoteComponent implements OnInit {
     // limpiar persona
     this.persona = new Persona();
     this.lote.persona_id = new Persona();
+    this.lote.ubigeo_id = new Ubigeo();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.listaLP = [];
     // limpiar foto
     this.lote.foto = null;

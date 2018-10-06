@@ -1,12 +1,16 @@
 import { Persona } from './entidad.persona';
+import { Ubigeo } from './entidad.ubigeo';
+
 export class Local {
     id: number;
     persona_id: Persona;
+    ubigeo_id: Ubigeo;
     precio: number;
     largo: number;
     ancho: number;
-    ubicacion: string;
     direccion: string;
+    // tslint:disable-next-line:no-inferrable-types
+    nmensajes: number = 0;
     tbanio: Boolean = false;
     descripcion: string;
     foto: string = null;

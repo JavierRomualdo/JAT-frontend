@@ -8,6 +8,14 @@ import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponentComponent } from './welcome-component/welcome-component.component';
+import { PropiedadDetalleComponent } from './servicios/propiedades/propiedaddetalle/propiedaddetalle.component';
+import { LoteDetalleComponent } from './servicios/lotes/lotedetalle/lotedetalle.component';
+import { HabitacionesComponent } from './servicios/alquileres/habitaciones/habitaciones.component';
+import { HabitacionDetalleComponent } from './servicios/alquileres/habitaciones/habitaciondetalle/habitaciondetalle.component';
+import { LocalesComponent } from './servicios/alquileres/locales/locales.component';
+import { LocalDetalleComponent } from './servicios/alquileres/locales/localdetalle/localdetalle.component';
+import { VentaComponent } from './servicios/venta/venta.component';
+import { AlquilerComponent } from './servicios/alquiler/alquiler.component';
 
 const welcomeRoutes: Routes = [
   {
@@ -19,8 +27,16 @@ const welcomeRoutes: Routes = [
       {path: 'nosotros', component: NosotrosComponent},
       {path: 'servicios', component: ServiciosComponent},
       {path: 'servicios/propiedades', component: PropiedadesComponent},
+      {path: 'propiedad/:id', component: PropiedadDetalleComponent},
       {path: 'servicios/lotes', component: LotesComponent},
+      {path: 'lote/:id', component: LoteDetalleComponent},
       {path: 'servicios/alquileres', component: AlquileresComponent},
+      {path: 'servicios/venta', component: VentaComponent},
+      {path: 'servicios/alquiler', component: AlquilerComponent},
+      {path: 'servicios/alquileres/habitaciones', component: HabitacionesComponent},
+      {path: 'habitacion/:id', component: HabitacionDetalleComponent},
+      {path: 'servicios/alquileres/locales', component: LocalesComponent},
+      {path: 'local/:id', component: LocalDetalleComponent},
       {path: 'suscripcion', component: SuscripcionComponent},
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', component: HomeComponent}

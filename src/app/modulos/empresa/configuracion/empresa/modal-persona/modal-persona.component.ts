@@ -7,6 +7,9 @@ import { AuthService } from '../../../../../servicios/auth.service';
 import { ConfirmacionComponent } from '../../../../../util/confirmacion/confirmacion.component';
 import { ModalRolComponent } from '../modal-rol/modal-rol.component';
 import { Rol } from '../../../../../entidades/entidad.rol';
+import { UbigeoGuardar } from '../../../../../entidades/entidad.ubigeoguardar';
+import { Ubigeo } from '../../../../../entidades/entidad.ubigeo';
+import { ModalUbigeoComponent } from '../../ubigeo/modal-ubigeo/modal-ubigeo.component';
 
 @Component({
   selector: 'app-modal-persona',
@@ -22,6 +25,7 @@ export class ModalPersonaComponent implements OnInit {
   public personas: any = [];
   errors: Array<Object> = [];
   public roles: Rol[];
+  public ubigeo: UbigeoGuardar;
   public parametros: Persona;
   public idServicio: Number = 0; // sirve para el combo roles en la busqueda
 
@@ -37,6 +41,10 @@ export class ModalPersonaComponent implements OnInit {
   ) {
     this.persona = new Persona();
     this.parametros = new Persona();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
     this.roles = [];
     this.listaPR = [];
   }
@@ -97,6 +105,13 @@ export class ModalPersonaComponent implements OnInit {
   limpiar() {
     this.parametros = new Persona();
     this.personas = [];
+
+    this.persona.ubigeo_id = new Ubigeo();
+    this.ubigeo = new UbigeoGuardar();
+    this.ubigeo.departamento = new Ubigeo();
+    this.ubigeo.provincia = new Ubigeo();
+    this.ubigeo.ubigeo = new Ubigeo();
+
     this.listarPersonas();
   }
 
@@ -161,6 +176,7 @@ export class ModalPersonaComponent implements OnInit {
         console.log('esto trajo para editar');
         console.log(res);
         this.persona = res;
+        this.ubigeo = res.ubigeo;
         this.cargando = false;
         this.listaPR = this.persona.personarolList && this.persona.personarolList.length > 0 ? this.persona.personarolList : [];
       },
@@ -179,6 +195,7 @@ export class ModalPersonaComponent implements OnInit {
     this.cargando = true;
     this.persona.personarolList = this.listaPR;
     this.persona.rol_id = this.listaPR[0]; // this.listaPR[0].idrol
+    this.persona.ubigeo_id = this.ubigeo.ubigeo;
     if (!this.persona.id) { // guardar nuevo rol
       console.log('antes de guardar persona: ');
       console.log(this.persona);
@@ -296,6 +313,19 @@ export class ModalPersonaComponent implements OnInit {
           this.auth.agregarmodalopenclass();
         }
     );
+  }
+
+  buscarubigeo() {
+    const modalRef = this.modal.open(ModalUbigeoComponent, {size: 'lg', keyboard: true});
+    modalRef.result.then((result) => {
+      console.log('ubigeoguardar:');
+      console.log(result);
+      this.ubigeo = result;
+      this.persona.ubigeo_id = result.ubigeo;
+      this.auth.agregarmodalopenclass();
+    }, (reason) => {
+      this.auth.agregarmodalopenclass();
+    });
   }
 
   quitardelista(pr) {

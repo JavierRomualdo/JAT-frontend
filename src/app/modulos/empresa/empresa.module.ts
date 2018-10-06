@@ -26,7 +26,6 @@ import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-loca
 import { ModalServicioComponent } from './configuracion/empresa/modal-servicio/modal-servicio.component';
 import { ModalUsuarioComponent } from './configuracion/empresa/modal-usuario/modal-usuario.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { CargandoComponent } from '../../util/cargando/cargando.component';
 import { ConfirmacionComponent } from '../../util/confirmacion/confirmacion.component';
 
 import { NgDropFileDirective } from '../../directivas/ng-drop-file.directive';
@@ -38,7 +37,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ModalTipoUbigeoComponent } from './configuracion/ubigeo/modal-tipoubigeo/modal-tipoubigeo.component';
 import { ModalUbigeoComponent } from './configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
 import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
-
+import { CargandoComponent } from './../../util/cargando/cargando.component';
+import { CocherasComponent } from './alquileres/cocheras/cocheras.component';
+import { ApartamentosComponent } from './alquileres/apartamentos/apartamentos.component';
+import { ModalCocheraComponent } from './alquileres/cocheras/modal-cochera/modal-cochera.component';
+import { ModalApartamentoComponent } from './alquileres/apartamentos/modal-apartamento/modal-apartamento.component';
+import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal-apartamentocuarto/modal-apartamentocuarto.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -58,6 +62,7 @@ import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
   ],
   declarations: [
     EmpresaComponentComponent,
+    CargandoComponent,
     PropiedadesComponent,
     AlquileresComponent,
     LotesComponent,
@@ -78,9 +83,13 @@ import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
     ModalTipoUbigeoComponent,
     ModalUbigeoComponent,
     UbigeoComponent,
-    CargandoComponent,
     ConfirmacionComponent,
     NgDropFileDirective,
+    CocherasComponent,
+    ApartamentosComponent,
+    ModalCocheraComponent,
+    ModalApartamentoComponent,
+    ModalApartamentocuartoComponent,
   ],
   entryComponents: [
     ModalEmpresaComponent,
@@ -91,6 +100,9 @@ import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
     ModalHabitacionComponent,
     ModalLocalComponent,
     ModalServicioComponent,
+    ModalCocheraComponent,
+    ModalApartamentoComponent,
+    ModalApartamentocuartoComponent,
     ModalUsuarioComponent,
     ModalTipoUbigeoComponent,
     ModalUbigeoComponent,

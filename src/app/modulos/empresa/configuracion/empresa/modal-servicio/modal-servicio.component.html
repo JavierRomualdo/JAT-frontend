@@ -80,7 +80,7 @@
         <!--/.card-->
       </div>
       <div class="modal-footer border-primary">
-          <button type="reset" class="btn btn-sm btn-danger" (click)="limpiar()"><i class="fa fa-ban"></i> Limpiar</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="limpiar()"><i class="fa fa-eraser"></i> Limpiar</button>
           <button type="button" class="btn btn-sm btn-dark" (click)="activeModal.dismiss('Cross click')"><i class="fa fa-remove"></i> Cerrar</button>
       </div>
     </form>
@@ -114,7 +114,7 @@
       <div class="modal-footer border-primary">
         <button type="submit" class="btn btn-sm btn-primary" [disabled]="!formulario.form.valid"><i class="fa fa-dot-circle-o"></i> Guardar</button><!--*ngIf="!ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre"-->
         <!--<button type="submit" class="btn btn-primary" *ngIf="ingeniero.id" [disabled]="!formulario.form.valid || !ingeniero.idubigeo.nombre">Actualizar</button>-->
-        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Limpiar</button>
+        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-eraser"></i> Limpiar</button>
         <button type="button" class="btn btn-sm btn-dark" (click)="vistaFormulario = false"><i class="fa fa-remove"></i> Cancelar</button>
       </div>
     </form>

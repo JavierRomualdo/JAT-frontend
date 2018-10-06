@@ -13,3 +13,6 @@ export class CargandoComponent implements OnInit {
   }
 
 }
+
+export class PaWelcomeCargandoComponent extends CargandoComponent {}
+// export class PaEmpresaCargandoComponent extends CargandoComponent {}
