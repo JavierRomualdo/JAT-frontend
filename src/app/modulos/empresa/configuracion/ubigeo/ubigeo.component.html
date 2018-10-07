@@ -76,7 +76,7 @@
               <div *ngIf="cargando">
                 <app-cargando></app-cargando>
               </div>
-              <form #buscarusuarios="ngForm" *ngIf="!cargando && !vistaFormulario" (ngSubmit)="busqueda()">
+              <form #buscarusuarios="ngForm" *ngIf="!cargando" (ngSubmit)="busqueda()">
               <div class="card-body">
                 <div class="input-group">
                   <input type="text" class="form-control border-primary" [(ngModel)]="this.parametros.ubigeo.ubigeo" placeholder="Busque por ubigeo" maxlength="150" id="cdescor" name="cdescor">
