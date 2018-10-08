@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiRequest2Service } from '../../../../../../servicios/api-request2.service';
@@ -18,6 +18,7 @@ import { HabitacionMensaje } from '../../../../../../entidades/entidad.habitacio
   styleUrls: ['./habitaciondetalle.component.css']
 })
 export class HabitacionDetalleComponent implements OnInit {
+  @Input() id;
   public habitacion: Habitacion;
   public mensaje: HabitacionMensaje;
   public cargando: Boolean = false;
@@ -49,9 +50,12 @@ export class HabitacionDetalleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._activedRoute.params.subscribe(params => {
-      this.listarHabitacion(params['id']);
-    });
+    if (this.id) {
+      this.listarHabitacion(this.id);
+    }
+    // this._activedRoute.params.subscribe(params => {
+    //   this.listarHabitacion(params['id']);
+    // });
   }
 
   listarHabitacion(id) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiRequest2Service } from '../../../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +17,7 @@ import { LoteMensaje } from '../../../../../entidades/entidad.lotemensaje';
   styleUrls: ['./lotedetalle.component.css']
 })
 export class LoteDetalleComponent implements OnInit {
+  @Input() id;
   public lote: Lote;
   public mensaje: LoteMensaje;
   public cargando: Boolean = false;
@@ -47,9 +48,12 @@ export class LoteDetalleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._activedRoute.params.subscribe(params => {
-      this.listarLotes(params['id']);
-    });
+    if (this.id) {
+      this.listarLotes(this.id);
+    }
+    // this._activedRoute.params.subscribe(params => {
+    //   this.listarLotes(params['id']);
+    // });
   }
 
   listarLotes(id) {

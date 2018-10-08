@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiRequest2Service } from '../../../../../../servicios/api-request2.service';
@@ -18,6 +18,7 @@ import { LocalMensaje } from '../../../../../../entidades/entidad.localmensaje';
   styleUrls: ['./localdetalle.component.css']
 })
 export class LocalDetalleComponent implements OnInit {
+  @Input() id;
   public local: Local;
   public mensaje: LocalMensaje;
   public cargando: Boolean = false;
@@ -49,9 +50,12 @@ export class LocalDetalleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._activedRoute.params.subscribe(params => {
-      this.listarLocal(params['id']);
-    });
+    if (this.id) {
+      this.listarLocal(this.id);
+    }
+    // this._activedRoute.params.subscribe(params => {
+    //   this.listarLocal(params['id']);
+    // });
   }
 
   listarLocal(id) {

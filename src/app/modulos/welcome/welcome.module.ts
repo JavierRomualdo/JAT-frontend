@@ -3,7 +3,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
-import { PropiedadesComponent } from './servicios/propiedades/propiedades.component';
+// import { PropiedadesComponent } from './servicios/propiedades/propiedades.component';
+import { PropiedadesComponent } from './propiedades/propiedades.component';
 import { AlquileresComponent } from './servicios/alquileres/alquileres.component';
 import { LotesComponent } from './servicios/lotes/lotes.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
@@ -25,6 +26,8 @@ import { HabitacionesComponent } from './servicios/alquileres/habitaciones/habit
 import { HabitacionDetalleComponent } from './servicios/alquileres/habitaciones/habitaciondetalle/habitaciondetalle.component';
 import { VentaComponent } from './servicios/venta/venta.component';
 import { AlquilerComponent } from './servicios/alquiler/alquiler.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades.component';
 // import { LoginComponent } from '../../componentescomunes/login/login.component';
 
 @NgModule({
@@ -37,11 +40,13 @@ import { AlquilerComponent } from './servicios/alquiler/alquiler.component';
       apiKey: 'AIzaSyACiya9u1WJZ3DBZmZcw2gUlczgoHtxC80'
     }),
     ToastrModule.forRoot(),
-    WelcomeRoutingModule
+    WelcomeRoutingModule,
+    RadioButtonModule
   ],
   declarations: [
     HomeComponent,
     PropiedadesComponent,
+    PropiedadesServiceComponent,
     PropiedadDetalleComponent,
     LotesComponent,
     LoteDetalleComponent,

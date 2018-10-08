@@ -1,6 +1,6 @@
 import { HomeComponent } from './home/home.component';
 import { ServiciosComponent } from './servicios/servicios.component';
-import { PropiedadesComponent } from './servicios/propiedades/propiedades.component';
+import { PropiedadesComponent } from './propiedades/propiedades.component';
 import { AlquileresComponent } from './servicios/alquileres/alquileres.component';
 import { LotesComponent } from './servicios/lotes/lotes.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
@@ -25,8 +25,9 @@ const welcomeRoutes: Routes = [
       // {path: '', component: HomeComponent},
       {path: 'home', component: HomeComponent},
       {path: 'nosotros', component: NosotrosComponent},
+      {path: 'propiedades', component: PropiedadesComponent},
       {path: 'servicios', component: ServiciosComponent},
-      {path: 'servicios/propiedades', component: PropiedadesComponent},
+      // {path: 'servicios/propiedades', component: PropiedadesComponent},
       {path: 'propiedad/:id', component: PropiedadDetalleComponent},
       {path: 'servicios/lotes', component: LotesComponent},
       {path: 'lote/:id', component: LoteDetalleComponent},
