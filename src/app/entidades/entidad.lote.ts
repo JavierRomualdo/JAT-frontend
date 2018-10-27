@@ -15,6 +15,7 @@ export class Lote {
     foto: string = null;
     path: string = null; // camino o ruta de imagenes en cloud storage de firebase
     // fotos: Blob[];
+    tiposervicio: string;
     estado: Boolean = true;
     lotepersonaList: any = {};
     fotosList: any = {};

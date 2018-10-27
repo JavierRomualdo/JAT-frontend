@@ -12,13 +12,13 @@
     </button>
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['home']">Home</a>
+        <a class="nav-link" [routerLink]="['inicio']">Inicio</a>
       </li>
       <!--<li class="nav-item px-3" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['configuracion']">Users</a>
       </li>-->
       <li class="nav-item px-3" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['configuracion']">Settings</a>
+        <a class="nav-link" [routerLink]="['configuracion/empresa']">Empresa</a>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -102,37 +102,45 @@
               <span class="badge badge-primary">NEW</span>
             </a>
           </li>
-          <li class="nav-title">Theme</li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['propiedades']">
-              <i class="nav-icon icon-drop"></i> Propiedades</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" [routerLink]="['lotes']">
-              <i class="nav-icon icon-pencil"></i> Lotes</a>
-          </li>
-          <li class="nav-title">Components</li>
+          <li class="nav-title">Principal</li>
           <li class="nav-item nav-dropdown" routerLinkActive="active">
             <a class="nav-link nav-dropdown-toggle" href="#">
-              <i class="nav-icon icon-puzzle"></i> Alquileres</a>
+              <i class="nav-icon icon-puzzle"></i> Propiedades</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['alquileres/habitaciones']">
+                <a class="nav-link" [routerLink]="['propiedades/casas']">
+                  <i class="nav-icon icon-drop"></i> Casas</a>
+              </li>
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['propiedades/lotes']">
+                  <i class="nav-icon icon-pencil"></i> Lotes</a>
+              </li>
+              <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['propiedades/habitaciones']">
                   <i class="nav-icon icon-puzzle"></i> Habitaciones</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" [routerLink]="['alquileres/locales']">
+                <a class="nav-link" [routerLink]="['propiedades/locales']">
                   <i class="nav-icon icon-puzzle"></i> Locales</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" [routerLink]="['alquileres/cocheras']">
+                <a class="nav-link" [routerLink]="['propiedades/cocheras']">
                   <i class="nav-icon icon-puzzle"></i> Cocheras</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" [routerLink]="['alquileres/apartamentos']">
+                <a class="nav-link" [routerLink]="['propiedades/apartamentos']">
                   <i class="nav-icon icon-puzzle"></i> Apartamentos</a>
               </li>
             </ul>
+          </li>
+          <li class="nav-title">Operaciones</li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['alquileres']">
+              <i class="nav-icon icon-puzzle"></i> Alquileres</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['ventas']">
+              <i class="nav-icon icon-puzzle"></i> Ventas</a>
           </li>
           <li class="divider"></li>
           <li class="nav-title">Extras</li>
@@ -192,9 +200,9 @@
                 <strong>Lucas</strong>
               </div>
               <small class="text-muted mr-3">
-                <i class="icon-calendar"></i>  1 - 3pm</small>
+                <i class="icon-calendar"></i> 1 - 3pm</small>
               <small class="text-muted">
-                <i class="icon-location-pin"></i>  Palo Alto, CA</small>
+                <i class="icon-location-pin"></i> Palo Alto, CA</small>
             </div>
             <div class="list-group-item list-group-item-accent-info">
               <div class="avatar float-right">
@@ -204,9 +212,9 @@
                 <strong>Megan</strong>
               </div>
               <small class="text-muted mr-3">
-                <i class="icon-calendar"></i>  4 - 5pm</small>
+                <i class="icon-calendar"></i> 4 - 5pm</small>
               <small class="text-muted">
-                <i class="icon-social-skype"></i>  On-line</small>
+                <i class="icon-social-skype"></i> On-line</small>
             </div>
             <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Tomorrow</div>
             <div class="list-group-item list-group-item-accent-danger list-group-item-divider">
@@ -214,9 +222,9 @@
                 <strong>deadline</strong>
               </div>
               <small class="text-muted mr-3">
-                <i class="icon-calendar"></i>  10 - 11pm</small>
+                <i class="icon-calendar"></i> 10 - 11pm</small>
               <small class="text-muted">
-                <i class="icon-home"></i>  creativeLabs HQ</small>
+                <i class="icon-home"></i> creativeLabs HQ</small>
               <div class="avatars-stack mt-2">
                 <div class="avatar avatar-xs">
                   <img class="img-avatar" src="assets/img-empresa/avatars/2.jpg" alt="admin@bootstrapmaster.com">
@@ -239,18 +247,18 @@
               <div>
                 <strong>#10 Startups.Garden</strong> Meetup</div>
               <small class="text-muted mr-3">
-                <i class="icon-calendar"></i>  1 - 3pm</small>
+                <i class="icon-calendar"></i> 1 - 3pm</small>
               <small class="text-muted">
-                <i class="icon-location-pin"></i>  Palo Alto, CA</small>
+                <i class="icon-location-pin"></i> Palo Alto, CA</small>
             </div>
             <div class="list-group-item list-group-item-accent-primary list-group-item-divider">
               <div>
                 <strong>Team meeting</strong>
               </div>
               <small class="text-muted mr-3">
-                <i class="icon-calendar"></i>  4 - 6pm</small>
+                <i class="icon-calendar"></i> 4 - 6pm</small>
               <small class="text-muted">
-                <i class="icon-home"></i>  creativeLabs HQ</small>
+                <i class="icon-home"></i> creativeLabs HQ</small>
               <div class="avatars-stack mt-2">
                 <div class="avatar avatar-xs">
                   <img class="img-avatar" src="assets/img-empresa/avatars/2.jpg" alt="admin@bootstrapmaster.com">
@@ -290,7 +298,8 @@
               <small class="text-muted float-right mt-1">1:52 PM</small>
             </div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt...</small>
           </div>
           <hr>
           <div class="message">
@@ -305,7 +314,8 @@
               <small class="text-muted float-right mt-1">1:52 PM</small>
             </div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt...</small>
           </div>
           <hr>
           <div class="message">
@@ -320,7 +330,8 @@
               <small class="text-muted float-right mt-1">1:52 PM</small>
             </div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt...</small>
           </div>
           <hr>
           <div class="message">
@@ -335,7 +346,8 @@
               <small class="text-muted float-right mt-1">1:52 PM</small>
             </div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt...</small>
           </div>
           <hr>
           <div class="message">
@@ -350,7 +362,8 @@
               <small class="text-muted float-right mt-1">1:52 PM</small>
             </div>
             <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              incididunt...</small>
           </div>
         </div>
         <div class="tab-pane p-3" id="settings" role="tabpanel">
@@ -366,7 +379,8 @@
               </label>
             </div>
             <div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</small>
             </div>
           </div>
           <div class="aside-options">
@@ -380,7 +394,8 @@
               </label>
             </div>
             <div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</small>
             </div>
           </div>
           <div class="aside-options">
@@ -413,7 +428,8 @@
             </small>
           </div>
           <div class="progress progress-xs">
-            <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+              aria-valuemax="100"></div>
           </div>
           <small class="text-muted">348 Processes. 1/4 Cores.</small>
           <div class="text-uppercase mb-1 mt-2">
@@ -422,7 +438,8 @@
             </small>
           </div>
           <div class="progress progress-xs">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0"
+              aria-valuemax="100"></div>
           </div>
           <small class="text-muted">11444GB/16384MB</small>
           <div class="text-uppercase mb-1 mt-2">
@@ -431,7 +448,8 @@
             </small>
           </div>
           <div class="progress progress-xs">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0"
+              aria-valuemax="100"></div>
           </div>
           <small class="text-muted">243GB/256GB</small>
           <div class="text-uppercase mb-1 mt-2">
@@ -440,7 +458,8 @@
             </small>
           </div>
           <div class="progress progress-xs">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0"
+              aria-valuemax="100"></div>
           </div>
           <small class="text-muted">25GB/256GB</small>
         </div>

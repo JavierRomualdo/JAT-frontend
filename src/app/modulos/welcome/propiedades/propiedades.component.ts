@@ -4,6 +4,7 @@ import { Ubigeo } from '../../../entidades/entidad.ubigeo';
 import { Rangoprecios } from '../../../entidades/entidadad.rangoprecios';
 import { ApiRequest2Service } from '../../../servicios/api-request2.service';
 import { ToastrService } from 'ngx-toastr';
+import { Servicios } from '../../../entidades/entidad.servicios';
 @Component({
   selector: 'app-propiedades',
   templateUrl: './propiedades.component.html',
@@ -21,6 +22,8 @@ export class PropiedadesComponent implements OnInit {
   public ubigeodistritos: Ubigeo[]; // son ubigeos de distritos que muestra en la tabla
   public propiedades: any = []; // lista proyecto
   public idPropiedad = 0; // parametro para la propiedad detalle
+  public rangoprecio = new Rangoprecios();
+  public servicios: Servicios[] = [];
 
   // tslint:disable-next-line:no-inferrable-types
   public idUbigeoDepartamento: number = 0;
@@ -31,7 +34,7 @@ export class PropiedadesComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   public idRangoPrecio: number = 0;
   public activar: Boolean = false;
-
+  public verServicios: Boolean = false;
 
   constructor(
     public api: ApiRequest2Service,
@@ -57,8 +60,10 @@ export class PropiedadesComponent implements OnInit {
     this.tipopropiedades.push('Habitaciones');
     this.tipopropiedades.push('Locales');
     this.tipopropiedades.push('Lotes');
+    this.parametros.tipopropiedad = 'Casas';
     this.listarUbigeos(); // index ubigeos (departamento)
     this.listarRangoPrecios();
+    this.rangoprecio.preciominimo = 0;
   }
 
   cambiarActivar(activar) {
@@ -128,7 +133,7 @@ export class PropiedadesComponent implements OnInit {
       console.log(departamento);
       this.mostrarubigeos(departamento.tipoubigeo_id, departamento.codigo); // provincias
       // this.mostrarlotes(departamento.tipoubigeo_id, departamento.codigo);
-      this.listarPropiedes();
+      this.listarPropiedades();
     } else {
       this.propiedades = [];
       this.ubigeoprovincias = [];
@@ -151,13 +156,13 @@ export class PropiedadesComponent implements OnInit {
       this.ubigeo.provincia = provincia;
       console.log(provincia);
       this.mostrarubigeos(provincia.tipoubigeo_id, provincia.codigo); // provincias
-      this.listarPropiedes();
+      this.listarPropiedades();
     } else {
       this.ubigeodistritos = [];
       this.ubigeo.distrito = new Ubigeo();
       this.ubigeo.provincia = new Ubigeo();
       // buscar por departamento (regresando al combo departamento)
-      this.listarPropiedes();
+      this.listarPropiedades();
       // this.parametros.departamento = null;
       // this.listarUbigeos();
     }
@@ -173,11 +178,11 @@ export class PropiedadesComponent implements OnInit {
       }
       this.ubigeo.distrito = distrito;
       console.log(distrito);
-      this.listarPropiedes();
+      this.listarPropiedades();
     } else {
       // this.ubigeodistritos = [];
       this.ubigeo.distrito = new Ubigeo();
-      this.listarPropiedes();
+      this.listarPropiedades();
       // this.parametros.departamento = null;
       // this.listarUbigeos();
     }
@@ -194,36 +199,47 @@ export class PropiedadesComponent implements OnInit {
       this.ubigeo.rangoprecio = rangoprecio;
       console.log('rango de precio:');
       console.log(rangoprecio);
-      this.listarPropiedes();
+      this.listarPropiedades();
     } else {
       this.ubigeo.rangoprecio = new Rangoprecios();
-      this.listarPropiedes();
+      this.listarPropiedades();
     }
   }
 
   // en ventas solo hay lotes
-  listarPropiedes() {
+  listarPropiedades() {
     if (this.idUbigeoDepartamento !== 0) {
       if (this.parametros.tipopropiedad === 'Casas') {
         this.mostrarPropiedad('mostrarcasas');
+        this.listarServicios();
       } else if (this.parametros.tipopropiedad === 'Cocheras') {
+        this.listarServicios();
       } else if (this.parametros.tipopropiedad === 'Departamentos') {
+        this.listarServicios();
       } else if (this.parametros.tipopropiedad === 'Habitaciones') {
         this.mostrarPropiedad('mostrarhabitaciones');
+        this.listarServicios();
       } else if (this.parametros.tipopropiedad === 'Locales') {
         this.mostrarPropiedad('mostrarlocales');
+        this.listarServicios();
       } else if (this.parametros.tipopropiedad === 'Lotes') {
         this.mostrarPropiedad('mostrarlotes');
+        this.verServicios = false;
       }
     }
   }
 
   mostrarPropiedad(ruta: string) {
     this.cargando = true;
+    this.ubigeo.rangoprecio = this.rangoprecio;
+    this.ubigeo.propiedad = this.parametros.tipopropiedad;
     console.log('Ubigeo:');
     console.log(this.ubigeo);
-    this.api.post(ruta, this.ubigeo).then(
+    console.log('mostrar propiedad: '+ruta);
+    this.api.post('busquedaPropiedad', this.ubigeo).then(
       (res) => {
+        console.log('resultado: ');
+        console.log(res);
         this.propiedades = res;
         console.log('Ubigeo:');
         console.log(this.ubigeo);
@@ -245,6 +261,30 @@ export class PropiedadesComponent implements OnInit {
     ).catch(err => this.handleError(err));
   }
 
+  listarServicios() {
+    this.verServicios = true;
+    if (this.servicios.length === 0) {
+      this.api.get('servicios').then(
+        (res) => {
+          this.servicios = res;
+          console.log('Servicios:');
+          console.log(this.servicios);
+          this.cargando = false;
+        },
+        (error) => {
+          if (error.status === 422) {
+            // .errors = [];
+            const errors = error.json();
+            console.log('Error');
+            // this.cargando = false;
+            /*for (const key in errors) {
+              this.errors.push(errors[key]);
+            }*/
+          }
+        }
+      ).catch(err => this.handleError(err));
+    }
+  }
   redondear(numero) {
     return Math.round(numero);
   }

@@ -17,6 +17,7 @@ export class Cochera {
   // foto: Blob;
   // fotos: Blob [];
   // tslint:disable-next-line:no-inferrable-types
+  tiposervicio: string;
   estado: Boolean = true;
   cocherapersonaList: any = {};
   fotosList: any = {};

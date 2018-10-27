@@ -17,6 +17,7 @@ export class Local {
     path: string = null; // camino o ruta de imagenes en cloud storage de firebase
     // foto: Blob;
     // fotos: Blob[];
+    tiposervicio: string;
     estado: Boolean = true;
     localpersonaList: any = {};
     fotosList: any = {};

@@ -4,25 +4,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresaComponentComponent } from './empresa-component/empresa-component.component';
-import { PropiedadesComponent } from './propiedades/propiedades.component';
+import { CasaComponent } from './propiedades/casas/casa.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
-import { LotesComponent } from './lotes/lotes.component';
+import { LotesComponent } from './propiedades/lotes/lotes.component';
 import { EmpresaConfiguracionComponent } from './configuracion/empresa/empresa.component';
 import { EmpresaRoutingModule } from './empresa-routing-module';
-import { LocalesComponent } from './alquileres/locales/locales.component';
-import { HabitacionesComponent } from './alquileres/habitaciones/habitaciones.component';
+import { LocalesComponent } from './propiedades/locales/locales.component';
+import { HabitacionesComponent } from './propiedades/habitaciones/habitaciones.component';
 import { ModalEmpresaComponent } from './configuracion/empresa/modal-empresa/modal-empresa.component';
 import { ModalPersonaComponent } from './configuracion/empresa/modal-persona/modal-persona.component';
 import { ModalRolComponent } from './configuracion/empresa/modal-rol/modal-rol.component';
-import { ModalPropiedadComponent } from './propiedades/modal-propiedad/modal-propiedad.component';
+import { ModalCasaComponent } from './propiedades/casas/modal-casa/modal-casa.component';
 import { HomeComponent } from './home/home.component';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {ProgressBarModule} from 'primeng/progressbar';
-import { ModalLoteComponent } from './lotes/modal-lote/modal-lote.component';
-import { ModalHabitacionComponent } from './alquileres/habitaciones/modal-habitacion/modal-habitacion.component';
-import { ModalLocalComponent } from './alquileres/locales/modal-local/modal-local.component';
+import { ModalLoteComponent } from './propiedades/lotes/modal-lote/modal-lote.component';
+import { ModalHabitacionComponent } from './propiedades/habitaciones/modal-habitacion/modal-habitacion.component';
+import { ModalLocalComponent } from './propiedades/locales/modal-local/modal-local.component';
 import { ModalServicioComponent } from './configuracion/empresa/modal-servicio/modal-servicio.component';
 import { ModalUsuarioComponent } from './configuracion/empresa/modal-usuario/modal-usuario.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -38,11 +38,14 @@ import { ModalTipoUbigeoComponent } from './configuracion/ubigeo/modal-tipoubige
 import { ModalUbigeoComponent } from './configuracion/ubigeo/modal-ubigeo/modal-ubigeo.component';
 import { UbigeoComponent } from './configuracion/ubigeo/ubigeo.component';
 import { CargandoComponent } from './../../util/cargando/cargando.component';
-import { CocherasComponent } from './alquileres/cocheras/cocheras.component';
-import { ApartamentosComponent } from './alquileres/apartamentos/apartamentos.component';
-import { ModalCocheraComponent } from './alquileres/cocheras/modal-cochera/modal-cochera.component';
-import { ModalApartamentoComponent } from './alquileres/apartamentos/modal-apartamento/modal-apartamento.component';
-import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal-apartamentocuarto/modal-apartamentocuarto.component';
+import { CocherasComponent } from './propiedades/cocheras/cocheras.component';
+import { ApartamentosComponent } from './propiedades/apartamentos/apartamentos.component';
+import { ModalCocheraComponent } from './propiedades/cocheras/modal-cochera/modal-cochera.component';
+import { ModalApartamentoComponent } from './propiedades/apartamentos/modal-apartamento/modal-apartamento.component';
+import { ModalApartamentocuartoComponent } from './propiedades/apartamentos/modal-apartamentocuarto/modal-apartamentocuarto.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { VentasComponent } from './ventas/ventas.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -55,6 +58,8 @@ import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
+    RadioButtonModule,
+    CheckboxModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
@@ -63,7 +68,7 @@ import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal
   declarations: [
     EmpresaComponentComponent,
     CargandoComponent,
-    PropiedadesComponent,
+    CasaComponent,
     AlquileresComponent,
     LotesComponent,
     EmpresaConfiguracionComponent,
@@ -72,9 +77,8 @@ import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal
     ModalEmpresaComponent,
     ModalPersonaComponent,
     ModalRolComponent,
-    ModalPropiedadComponent,
+    ModalCasaComponent,
     HomeComponent,
-    ModalPropiedadComponent,
     ModalLoteComponent,
     ModalHabitacionComponent,
     ModalLocalComponent,
@@ -90,12 +94,13 @@ import { ModalApartamentocuartoComponent } from './alquileres/apartamentos/modal
     ModalCocheraComponent,
     ModalApartamentoComponent,
     ModalApartamentocuartoComponent,
+    VentasComponent,
   ],
   entryComponents: [
     ModalEmpresaComponent,
     ModalPersonaComponent,
     ModalRolComponent,
-    ModalPropiedadComponent,
+    ModalCasaComponent,
     ModalLoteComponent,
     ModalHabitacionComponent,
     ModalLocalComponent,

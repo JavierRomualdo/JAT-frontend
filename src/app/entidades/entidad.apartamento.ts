@@ -16,6 +16,7 @@ export class Apartamento {
   // fotos: Blob [];
   // tslint:disable-next-line:no-inferrable-types
   nmensajes: number = 0;
+  tiposervicio: string;
   estado: Boolean = true;
   fotosList: any = {};
   serviciosList: any = {};

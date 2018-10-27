@@ -27,6 +27,10 @@ import { HabitacionDetalleComponent } from './servicios/alquileres/habitaciones/
 import { VentaComponent } from './servicios/venta/venta.component';
 import { AlquilerComponent } from './servicios/alquiler/alquiler.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import {PanelModule} from 'primeng/panel';
+import {SpinnerModule} from 'primeng/spinner';
 import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades.component';
 // import { LoginComponent } from '../../componentescomunes/login/login.component';
 
@@ -41,7 +45,11 @@ import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades
     }),
     ToastrModule.forRoot(),
     WelcomeRoutingModule,
-    RadioButtonModule
+    RadioButtonModule,
+    CheckboxModule,
+    ScrollPanelModule,
+    PanelModule,
+    SpinnerModule
   ],
   declarations: [
     HomeComponent,

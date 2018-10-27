@@ -1,9 +1,10 @@
 <ol class="breadcrumb border-primary">
   <li class="breadcrumb-item">
-    <a [routerLink]="['home']">Home</a>
+    <a [routerLink]="['inicio']">Inicio</a>
   </li>
-  <li class="breadcrumb-item active">Configuracion</li>
+  <li class="breadcrumb-item active">Lotes</li>
 </ol>
+
 <div class="container-fluid">
     <div class="animated fadeIn">
       <!--/.row-->
@@ -20,24 +21,24 @@
               <div class="row">
                 <!--/.col-->
                 <div class="col-sm-3">
-                  <div class="callout callout-info" style="cursor: pointer" (click)="abrirDatos()">
-                    <small class="text-muted">La Empresa</small>
+                  <div class="callout callout-info" style="cursor: pointer" (click)="abrirLotes()">
+                    <small class="text-muted">Lotes</small>
+                    <br>
+                    <strong class="h4">{{lotes.length}}</strong>
+                  </div>
+                </div>
+                <!--/.col-->
+                <div class="col-sm-3">
+                  <div class="callout callout-danger">
+                    <small class="text-muted">Vendidos</small>
                     <br>
                     <strong class="h4">0</strong>
                   </div>
                 </div>
                 <!--/.col-->
                 <div class="col-sm-3">
-                  <div class="callout callout-danger" style="cursor: pointer" (click)="abrirPersonas()">
-                    <small class="text-muted">Personas</small>
-                    <br>
-                    <strong class="h4">0</strong>
-                  </div>
-                </div>
-                <!--/.col-->
-                <div class="col-sm-3">
-                  <div class="callout callout-warning" style="cursor: pointer" (click)="abrirRoles()">
-                    <small class="text-muted">Roles</small>
+                  <div class="callout callout-warning">
+                    <small class="text-muted">Reservados</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -47,8 +48,8 @@
                 </div>
                 <!--/.col-->
                 <div class="col-sm-3">
-                  <div class="callout callout-success" style="cursor: pointer" (click)="abrirServicios()">
-                    <small class="text-muted">Servicios</small>
+                  <div class="callout callout-success">
+                    <small class="text-muted">Retenidos</small>
                     <br>
                     <strong class="h4">0</strong>
                     <div class="chart-wrapper">
@@ -72,61 +73,75 @@
             <!--/.card-->
             <div class="card border-primary">
               <div class="card-header bg-primary">
-                <i class="fa fa-align-justify"></i> Administradores
-                <button type="button" class="btn btn-primary btn-sm float-right" (click)="abrirUsuario()">
+                  <i class="fa fa-align-justify"></i> Detalle
+                <button type="button" class="btn btn-primary btn-sm float-right" (click)="abrirLotes()">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
+
               <div *ngIf="cargando">
                 <app-cargando></app-cargando>
               </div>
-              <form #buscarusuarios="ngForm" *ngIf="!cargando" (ngSubmit)="busqueda()">
+              <form #buscarlote="ngForm" *ngIf="!cargando" (ngSubmit)="busqueda()">
               <div class="card-body">
                 <div class="input-group">
-                  <input type="text" class="form-control border-primary" [(ngModel)]="parametros.name" placeholder="Busque por nombre" maxlength="150" id="cdescor" name="cdescor">
-                  <input type="text" class="form-control border-primary" [(ngModel)]="parametros.email" placeholder="Busque por email" maxlength="150" id="cdescr" name="cdscor">
-                  <button class="input-group-addon btn btn-square btn-primary" title="buscar" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button><!--(click)="busqueda()" -->
+                  <input type="text" class="form-control border-primary" placeholder="Busque por propietario" maxlength="150" id="nombres"
+                    [(ngModel)]="parametros.persona_id.nombres" name="nombres">
+                  <input type="text" class="form-control border-primary" placeholder="Busque por ubigeo" maxlength="150" id="ubigeo"
+                    [(ngModel)]="parametros.ubigeo_id.ubigeo" name="ubicacion">
+                  <input type="text" class="form-control border-primary" placeholder="Busque por direccion" maxlength="150" id="direccion"
+                    [(ngModel)]="parametros.direccion" name="direccion">
+                  <button class="input-group-addon btn btn-square btn-primary" (click)="busqueda()" type="button"><i class="fa fa-search cursor-pointer"></i></button>
                   <button type="reset" class="btn btn-sm btn-primary" title="limpiar" (click)="limpiar()"><i class="fa fa-eraser"></i></button>
                 </div>
                 <!--/.table-->
-                <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
+                <div class="table-responsive">
+                  <table class="table table-responsive-sm table-bordered table-striped table-hover table-outline">
                     <thead class="thead-light">
                       <tr>
                         <th class="text-center">#</th>
                         <th class="text-center">
                           <i class="fa fa-file-image-o"></i>
                         </th>
-                        <th>Nombre</th>
-                        <th>Email</th>
+                        <th>Propietario</th>
+                        <th class="text-center">Ubigeo</th>
+                        <th>Direccion</th>
+                        <th class="text-center">Area</th>
+                        <th>Precio</th>
+                        <!--<th>Descripcion</th>-->
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let usuario of usuarios;let i=index">
+                      <tr *ngFor="let lote of lotes;let i=index">
                         <th class="text-center">{{i+1}}</th>
-                        <td *ngIf="usuario.foto==null">
-                          <a href="assets/img-empresa/avatars/usuario.png" target="_blank">
-                            <img src="assets/img-empresa/avatars/usuario.png" class="rounded mx-auto d-block" width="10"/>
+                        <td *ngIf="lote.foto==null">
+                          <a href="assets/img-empresa/avatars/no_image.png" target="_blank">
+                            <img src="assets/img-empresa/avatars/no_image.png" class="rounded mx-auto d-block" width="10"/>
                           </a>
                         </td>
-                        <td *ngIf="usuario.foto!=null">
-                          <a [href]="usuario.foto" target="_blank">
-                            <img [src]="usuario.foto" class="rounded mx-auto d-block" width="10"/>
+                        <td *ngIf="lote.foto!=null">
+                          <a [href]="lote.foto" target="_blank">
+                            <img [src]="lote.foto" class="rounded mx-auto d-block" width="10"/>
                           </a>
                         </td>
-                        <td>{{usuario.name}}</td>
-                        <td>{{usuario.email}}</td>
+                        <td>{{lote.nombres}}</td>
+                        <td>{{lote.ubigeo}}</td>
+                        <td>{{lote.direccion}}</td>
+                        <td>{{lote.largo}} x {{lote.ancho}} mts.</td>
+                        <td>S/ {{lote.precio}}</td>
+                        <!--<td>{ {lote.descripcion}}</td>-->
                         <td>
-                          <ui-switch [(ngModel)]="usuario.estado" name="estado" (click)="confirmarcambiodeestado(usuario)">estado</ui-switch>
+                          <ui-switch [(ngModel)]="lote.estado" name="estado" (click)="confirmarcambiodeestado(lote)">estado</ui-switch>
                         </td>
                         <td scope="row" class="text-center">
-                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarUsuario(usuario.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
+                          <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarLote(lote.id)"><i class="fa fa-edit text-primary" style="font-size: 23px; "></i></a>
                         </td>
                       </tr>
-
                     </tbody>
-                </table>
+                  </table>
+                </div>
                 <!--/.table-->
                 <ul class="pagination">
                     <li class="page-item">
@@ -150,7 +165,6 @@
                 </ul>
               </div>
             </form>
-            <!--/.form-->
             </div>
             <!--/.card-->
           </div>
@@ -158,4 +172,4 @@
         </div>
         <!--/.row-->
     </div>
-  </div>
+</div>
