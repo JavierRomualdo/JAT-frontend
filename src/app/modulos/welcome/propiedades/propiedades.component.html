@@ -11,16 +11,6 @@
           <i class="fa fa-filter"></i>
           <b> Filtros</b>
         </span>
-        <div class="card-header-actions">
-          <button type="button" class="btn btn-sm btn-default mr-1" (click)="listarPropiedades()" title="Buscar">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-          <div class="btn-group">
-            <button type="reset" class="btn btn-sm btn-default" title="limpiar" (click)="limpiar()">
-              <i class="fa fa-eraser"></i>
-            </button>
-          </div>
-        </div>
       </div>
       <p-scrollPanel [style]="{width: '100%', height: '420px'}">
       <div class="card-body">
@@ -29,14 +19,14 @@
             <div class="form-group form-group-sm">
               <label class="control-label">
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <b> Eliga <span class="text-primary">*</span></b>
+                <b> Tipo servicio <span class="text-primary">*</span></b>
               </label>
               <div class="row">
                 <div class="col-md-6">
-                  <p-checkbox name="group1" value="V" label="Venta" [(ngModel)]="ubigeo.tiposervicio" inputId="ny"></p-checkbox>
+                  <p-checkbox name="group1" value="V" label="Venta" [(ngModel)]="ubigeo.tiposervicio" inputId="ny" (onChange)="ubigeo.tiposervicio ? listarPropiedades() : null"></p-checkbox>
                 </div>
                 <div class="col-md-6">
-                  <p-checkbox name="group1" value="A" label="Alquiler" [(ngModel)]="ubigeo.tiposervicio" inputId="sf"></p-checkbox>
+                  <p-checkbox name="group1" value="A" label="Alquiler" [(ngModel)]="ubigeo.tiposervicio" inputId="sf" (onChange)="ubigeo.tiposervicio ? listarPropiedades() : null"></p-checkbox>
                 </div>
               </div>
             </div>
@@ -45,8 +35,9 @@
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <b> Propiedad <span class="text-primary">*</span></b>
               </label>
-              <select class="form-control form-control-sm mousetrap" name="tipopropiedades" required [(ngModel)]="parametros.tipopropiedad"
+              <select class="form-control border-success" name="tipopropiedades" required [(ngModel)]="parametros.tipopropiedad"
                 (change)="listarPropiedades()">
+                <option value=''>Seleccione...</option>
                 <option [ngValue]="tipopropiedad" *ngFor="let tipopropiedad of tipopropiedades">
                   {{tipopropiedad}}
                 </option>
@@ -57,19 +48,19 @@
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <b> Ubigeo <span class="text-primary">*</span></b>
               </label>
-              <select (change)="mostrarprovincias(idUbigeoDepartamento)" [(ngModel)]="idUbigeoDepartamento" class="form-control border-success"
+              <select (change)="mostrarprovincias(idUbigeoDepartamento)" [(ngModel)]="idUbigeoDepartamento" class="form-control border-success" (change)="listarPropiedades()"
                 placeholder="Filtrar por Ubigeo" name="ubigeodepartamento">
                 <option value='0'>Departamento...</option>
                 <option [ngValue]="ubigeodepartamento.id" *ngFor="let ubigeodepartamento of ubigeodepartamentos">{{ubigeodepartamento.ubigeo}}</option>
               </select>
-              <select (change)="mostrardistritos(idUbigeoProvincia)" [(ngModel)]="idUbigeoProvincia" class="form-control border-success"
+              <select (change)="mostrardistritos(idUbigeoProvincia)" [(ngModel)]="idUbigeoProvincia" class="form-control border-success" (change)="listarPropiedades()"
                 placeholder="Filtrar por Ubigeo" name="ubigeodepartamento">
                 <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
                 <option value='0'>Provincia...</option>
                 <option [ngValue]="ubigeoprovincia.id" *ngFor="let ubigeoprovincia of ubigeoprovincias">{{ubigeoprovincia.ubigeo}}</option>
                 <!--<option [ ngValue]="tip.id" *ngFor="let tip of tiposubigeos"  >{ {tip.nombre}}</option>-->
               </select>
-              <select (change)="mostrarpadistritos(idUbigeoDistrito)" [(ngModel)]="idUbigeoDistrito" class="form-control border-success"
+              <select (change)="mostrarpadistritos(idUbigeoDistrito)" [(ngModel)]="idUbigeoDistrito" class="form-control border-success" (change)="listarPropiedades()"
                 placeholder="Filtrar por Ubigeo" name="ubigeodistrito">
                 <!-- [(ngModel)]="idRol"   [disabled] = "responsable || proveedores || captadores"-->
                 <option value='0'>Distrito...</option>
@@ -78,6 +69,7 @@
               </select>
             </div>
           </p-panel><br/>
+          <!--Panel opcional-->
         <p-panel header="Opcional" [toggleable]="true">
             <div class="form-group form-group-sm">
           <label class="control-label">
@@ -113,6 +105,18 @@
             </div>
           </div>
         </div>
+        <p-footer>
+          <div class="text-right">
+            <button type="button" class="btn btn-sm btn-default mr-1" (click)="listarPropiedades()" title="Buscar">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+            <div class="btn-group">
+              <button type="reset" class="btn btn-sm btn-default" title="limpiar" (click)="limpiar()">
+                <i class="fa fa-eraser"></i>
+              </button>
+            </div>
+          </div>
+        </p-footer>
         </p-panel>
       </div>
       </p-scrollPanel>

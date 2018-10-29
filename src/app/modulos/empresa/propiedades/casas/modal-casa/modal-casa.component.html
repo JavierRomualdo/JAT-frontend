@@ -16,7 +16,11 @@
       <div class="card border-primary">
         <div class="card-header bg-primary border-primary">
           <i class="fa fa-align-justify"></i> General
-          <ui-switch [checked]="true" name="estado1" class="float-right" title="estado">estado</ui-switch>
+          <div class="float-right">
+            <h3 class="first">Basic - {{estado}}</h3>
+            <p-inputSwitch [(ngModel)]="estado" title="estado"></p-inputSwitch>
+          </div>
+          <!--<ui-switch [checked]="true" name="estado1" class="float-right" title="estado">estado</ui-switch>-->
         </div>
         <div class="card-body">
           <!--/.row-->

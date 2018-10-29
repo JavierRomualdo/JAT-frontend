@@ -34,6 +34,7 @@ export class ModalCasaComponent implements OnInit {
   public persona: Persona;
   public ubigeo: UbigeoGuardar;
   public listaLP: any = []; // lista de persona-roles
+  public estado: boolean = true;
   errors: Array<Object> = [];
 
   constructor(

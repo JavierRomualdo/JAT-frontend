@@ -46,6 +46,7 @@ import { ModalApartamentocuartoComponent } from './propiedades/apartamentos/moda
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { VentasComponent } from './ventas/ventas.component';
+import {InputSwitchModule} from 'primeng/inputswitch';
 @NgModule({
   imports: [
     CommonModule,
@@ -60,6 +61,7 @@ import { VentasComponent } from './ventas/ventas.component';
     ChartsModule,
     RadioButtonModule,
     CheckboxModule,
+    InputSwitchModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,

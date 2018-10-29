@@ -161,7 +161,8 @@
                       </td>
                       <!--<td>{ {casa.descripcion}}</td>-->
                       <td>
-                        <ui-switch [(ngModel)]="casa.estado" name="estado" (click)="confirmarcambiodeestado(casa)">estado</ui-switch>
+                        <p-inputSwitch [(ngModel)]="casa.estado" name="estado" (click)="confirmarcambiodeestado(casa)"></p-inputSwitch>
+                        <!--<ui-switch [(ngModel)]="casa.estado" name="estado" (click)="confirmarcambiodeestado(casa)">estado</ui-switch>-->
                       </td>
                       <td scope="row" class="text-center">
                         <a class="btn-link" style="cursor: pointer" title="editar" (click)="editarPropiedad(casa.id)"><i

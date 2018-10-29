@@ -12,7 +12,6 @@ import { ApiRequest2Service } from './servicios/api-request2.service';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './servicios/auth.service';
-import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './componentescomunes/login/login.component';
 import { LoginService } from './servicios/login.service';
 import { AngularFireModule } from 'angularfire2';
@@ -27,7 +26,6 @@ import { AuthGuardService } from './servicios/auth-guard.service';
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot(),
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpModule,
@@ -46,7 +44,6 @@ import { AuthGuardService } from './servicios/auth-guard.service';
     ApiRequestService,
     ApiRequest2Service,
     AuthService,
-    NgbActiveModal,
     LoginService,
     AuthGuardService
   ],
