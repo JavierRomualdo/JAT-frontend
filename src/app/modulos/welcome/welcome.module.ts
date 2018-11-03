@@ -32,6 +32,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import {PanelModule} from 'primeng/panel';
 import {SpinnerModule} from 'primeng/spinner';
 import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades.component';
+import {TooltipModule} from 'primeng/tooltip';
+import { CocheradetalleComponent } from './servicios/cocheras/cocheradetalle/cocheradetalle.component';
 // import { LoginComponent } from '../../componentescomunes/login/login.component';
 
 @NgModule({
@@ -49,7 +51,8 @@ import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades
     CheckboxModule,
     ScrollPanelModule,
     PanelModule,
-    SpinnerModule
+    SpinnerModule,
+    TooltipModule
   ],
   declarations: [
     HomeComponent,
@@ -74,6 +77,7 @@ import { PropiedadesServiceComponent } from './servicios/propiedades/propiedades
     WelcomeComponentComponent,
     VentaComponent,
     AlquilerComponent,
+    CocheradetalleComponent,
     // LoginComponent
   ],
   entryComponents: [

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase';
+import { ApiRequest2Service } from './api-request2.service';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
   public usuario: any = {};
-  constructor(public afAuth: AngularFireAuth) {
+  constructor(public afAuth: AngularFireAuth) { //public api: ApiRequest2Service
     this.afAuth.authState.subscribe(user => {
       console.log('Estado del usuario: ', user);
       this.usuario = user;

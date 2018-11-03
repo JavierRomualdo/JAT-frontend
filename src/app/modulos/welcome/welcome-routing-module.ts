@@ -16,6 +16,7 @@ import { LocalesComponent } from './servicios/alquileres/locales/locales.compone
 import { LocalDetalleComponent } from './servicios/alquileres/locales/localdetalle/localdetalle.component';
 import { VentaComponent } from './servicios/venta/venta.component';
 import { AlquilerComponent } from './servicios/alquiler/alquiler.component';
+import { LoginComponent } from '../../componentescomunes/login/login.component';
 
 const welcomeRoutes: Routes = [
   {
@@ -23,7 +24,7 @@ const welcomeRoutes: Routes = [
     component: WelcomeComponentComponent,
     children: [
       // {path: '', component: HomeComponent},
-      {path: 'home', component: HomeComponent},
+      {path: 'inicio', component: HomeComponent},
       {path: 'nosotros', component: NosotrosComponent},
       {path: 'propiedades', component: PropiedadesComponent},
       {path: 'servicios', component: ServiciosComponent},

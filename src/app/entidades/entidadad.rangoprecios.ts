@@ -1,5 +1,5 @@
 export class Rangoprecios {
   id: number;
-  preciominimo: number;
-  preciomaximo: number;
+  preciominimo: string = "0";
+  preciomaximo: string = "";
 }

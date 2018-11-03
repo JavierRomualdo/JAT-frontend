@@ -61,7 +61,7 @@ export class PropiedadDetalleComponent implements OnInit {
 
   listarPropiedad(id) {
     // aqui traemos los datos del usuario con ese id para ponerlo en el formulario y editarlo
-    // this.cargando = true;
+    this.cargando = true;
     this.api.get('casas/' + id).then(
       (res) => {
         // console.log(res);
@@ -89,7 +89,7 @@ export class PropiedadDetalleComponent implements OnInit {
         // aqui metodo para mostrar todas las imagenes de este propiedad ....
         // this.imagen = res.foto;
         // this.imagenAnterior = res.foto;
-        // this.cargando = false;
+        this.cargando = false;
       },
       (error) => {
         if (error.status === 422) {

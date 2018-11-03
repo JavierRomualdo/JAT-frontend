@@ -1,16 +1,20 @@
 <div *ngIf="cargando">
   <app-cargando></app-cargando>
 </div>
+
 <div id="heading-breadcrumbs" *ngIf="!cargando">
   <div class="container">
     <div class="row d-flex align-items-center flex-wrap">
-      <div class="col-md-10">
+      <div class="col-md-9">
         <h3 class="h3">
-          <strong><i class="fa fa-home" aria-hidden="true"></i> LOTE</strong>
+          <strong><i class="fa fa-home" aria-hidden="true"></i> COCHERA 
+            <span *ngIf="cochera.tiposervicio=='A'">(Alquiler)</span>
+            <span *ngIf="cochera.tiposervicio=='V'">(Venta)</span>
+          </strong>
         </h3>
       </div>
-      <div class="col-md-2">
-        <h2 class="h3"><strong>S/ {{lote.precio}}</strong></h2>
+      <div class="col-md-3">
+        <h2 class="h3"><strong>S/ {{cochera.precio}}</strong></h2>
       </div>
     </div>
   </div>
@@ -36,7 +40,7 @@
             <div class="carousel-item active" [ngClass]="{'active': i==0}" *ngFor="let foto of fotos; let i = index;">
               <img class="d-block w-100" [src]="foto.foto" [alt]="foto.nombre">
               <div class="carousel-caption d-none d-md-block">
-                <h3>LOTE ({{i+1}})</h3>
+                <h3>PROPIEDAD ({{i+1}})</h3>
                 <p>{{foto.detalle}}</p>
               </div>
             </div>
@@ -62,7 +66,7 @@
               <strong><i class="fa fa-file-text-o" aria-hidden="true"></i> Descripcion</strong>
             </h3>
           </div>
-          <p style="font-size: 17px">{{lote.descripcion}}</p>
+          <p style="font-size: 17px">{{cochera.descripcion}}</p>
           <div class="heading">
             <h3>
               <strong><i class="fa fa-envelope-o" aria-hidden="true"></i> Contacto</strong>
@@ -107,7 +111,7 @@
                 <div class="form-group">
                   <label for="mensaje"><strong>Mensaje <span class="text-primary">*</span></strong></label>
                   <textarea id="mensaje" class="form-control" [(ngModel)]="mensaje.mensaje" name="mensaje" required
-                    placeholder="Ingrese mensaje"></textarea>
+                    placeholder="Ingrese mensaje" maxlength="255"></textarea>
                 </div>
               </div>
               <div class="col-md-12 text-center">
@@ -129,16 +133,16 @@
           </p>
           <h4><strong>Direccion</strong></h4>
           <p>
-            <i class="fa fa-home" aria-hidden="true"></i> {{lote.direccion}}
+            <i class="fa fa-home" aria-hidden="true"></i> {{cochera.direccion}}
           </p>
-          <!--<h4><strong>Servicios</strong></h4>
-            <p>
-              <span *ngFor="let servicio of servicios">
-                <i class="fa fa-check" aria-hidden="true"></i> { {servicio.servicio}}<br/>
-              </span>
-            </p>-->
+          <h4><strong>Servicios</strong></h4>
+          <p>
+            <span *ngFor="let servicio of servicios">
+              <i class="fa fa-check" aria-hidden="true"></i> {{servicio.servicio}}<br />
+            </span>
+          </p>
           <h4><strong>Area</strong></h4>
-          <p>{{lote.largo}} m. x {{lote.ancho}}.</p>
+          <p>{{cochera.largo}} m. x {{cochera.ancho}}.</p>
         </div>
       </div>
     </section>
@@ -157,7 +161,7 @@
       <!--class="bar pt-0"-->
       <div class="row portfolio">
         <div class="col-md-12">
-          <h3 class="text-center">Mas servicios</h3>
+          <h3 class="text-center">Mas propiedades</h3>
         </div>
         <div class="col-md-6 col-lg-3">
           <div class="box-image">

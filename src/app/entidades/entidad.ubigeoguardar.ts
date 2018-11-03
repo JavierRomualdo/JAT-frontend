@@ -3,11 +3,11 @@ import { Rangoprecios } from './entidadad.rangoprecios';
 import { Servicios } from './entidad.servicios';
 
 export class UbigeoGuardar {
-  departamento: Ubigeo;
-  provincia: Ubigeo;
-  distrito: Ubigeo;
-  ubigeo: Ubigeo;
-  rangoprecio: Rangoprecios;
+  departamento: Ubigeo = new Ubigeo();
+  provincia: Ubigeo = new Ubigeo();
+  distrito: Ubigeo = new Ubigeo();
+  ubigeo: Ubigeo = new Ubigeo();
+  rangoprecio: Rangoprecios = new Rangoprecios();
   tiposervicio ?: String[] = [];
   propiedad ?: String;
   servicios: number[] = [];

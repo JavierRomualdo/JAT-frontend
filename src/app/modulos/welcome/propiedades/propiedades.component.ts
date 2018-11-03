@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { UbigeoGuardar } from '../../../entidades/entidad.ubigeoguardar';
-import { Ubigeo } from '../../../entidades/entidad.ubigeo';
-import { Rangoprecios } from '../../../entidades/entidadad.rangoprecios';
-import { ApiRequest2Service } from '../../../servicios/api-request2.service';
-import { ToastrService } from 'ngx-toastr';
-import { Servicios } from '../../../entidades/entidad.servicios';
+import { Component, OnInit } from "@angular/core";
+import { UbigeoGuardar } from "../../../entidades/entidad.ubigeoguardar";
+import { Rangoprecios } from "../../../entidades/entidadad.rangoprecios";
+import { ApiRequest2Service } from "../../../servicios/api-request2.service";
+import { ToastrService } from "ngx-toastr";
+import { Servicios } from "../../../entidades/entidad.servicios";
+import { Ubigeo } from "../../../entidades/entidad.ubigeo";
 @Component({
-  selector: 'app-propiedades',
-  templateUrl: './propiedades.component.html',
-  styleUrls: ['./propiedades.component.css']
+  selector: "app-propiedades",
+  templateUrl: "./propiedades.component.html",
+  styleUrls: ["./propiedades.component.css"]
 })
 export class PropiedadesComponent implements OnInit {
-
   public tipopropiedades: string[] = [];
   public parametros: any = {};
   public rangoprecios: Rangoprecios[];
@@ -36,10 +35,7 @@ export class PropiedadesComponent implements OnInit {
   public activar: Boolean = false;
   public verServicios: Boolean = false;
 
-  constructor(
-    public api: ApiRequest2Service,
-    public toastr: ToastrService
-  ) {
+  constructor(public api: ApiRequest2Service, public toastr: ToastrService) {
     this.ubigeo = new UbigeoGuardar();
     this.ubigeo.departamento = new Ubigeo();
     this.ubigeo.provincia = new Ubigeo();
@@ -54,16 +50,16 @@ export class PropiedadesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tipopropiedades.push('Casas');
-    this.tipopropiedades.push('Cocheras');
-    this.tipopropiedades.push('Departamentos');
-    this.tipopropiedades.push('Habitaciones');
-    this.tipopropiedades.push('Locales');
-    this.tipopropiedades.push('Lotes');
-    this.parametros.tipopropiedad = '';
+    this.tipopropiedades.push("Casas");
+    this.tipopropiedades.push("Cocheras");
+    this.tipopropiedades.push("Apartamentos");
+    this.tipopropiedades.push("Habitaciones");
+    this.tipopropiedades.push("Locales");
+    this.tipopropiedades.push("Lotes");
+    this.parametros.tipopropiedad = "";
     this.listarUbigeos(); // index ubigeos (departamento)
     this.listarRangoPrecios();
-    this.rangoprecio.preciominimo = 0;
+    this.rangoprecio.preciominimo = "0";
   }
 
   cambiarActivar(activar) {
@@ -72,24 +68,27 @@ export class PropiedadesComponent implements OnInit {
 
   listarUbigeos() {
     // this.cargando = true;
-    this.api.get('ubigeos').then(
-      (res) => {
-        this.ubigeodepartamentos = res;
-        // this.cargando = false;
-        console.log(res);
-      },
-      (error) => {
-        if (error.status === 422) {
-          // this.errors = [];
-          const errors = error.json();
-          console.log('Error');
+    this.api
+      .get("ubigeos")
+      .then(
+        res => {
+          this.ubigeodepartamentos = res;
           // this.cargando = false;
-          /*for (const key in errors) {
+          console.log(res);
+        },
+        error => {
+          if (error.status === 422) {
+            // this.errors = [];
+            const errors = error.json();
+            console.log("Error");
+            // this.cargando = false;
+            /*for (const key in errors) {
             this.errors.push(errors[key]);
           }*/
+          }
         }
-      }
-    ).catch(err => this.handleError(err));
+      )
+      .catch(err => this.handleError(err));
   }
 
   listarRangoPrecios() {
@@ -100,19 +99,19 @@ export class PropiedadesComponent implements OnInit {
     const rango4 = new Rangoprecios();
     const rango5 = new Rangoprecios();
     rango1.id = 1;
-    rango1.preciominimo = 0;
-    rango1.preciomaximo = 20000.00;
+    rango1.preciominimo = "0";
+    rango1.preciomaximo = "20000.00";
     rango2.id = 3;
-    rango2.preciominimo = 20000.00;
-    rango2.preciomaximo = 50000.00;
+    rango2.preciominimo = "20000.00";
+    rango2.preciomaximo = "50000.00";
     rango3.id = 3;
-    rango3.preciominimo = 50000.00;
-    rango3.preciomaximo = 100000.00;
+    rango3.preciominimo = "50000.00";
+    rango3.preciomaximo = "100000.00";
     rango4.id = 4;
-    rango4.preciominimo = 100000.00;
-    rango4.preciomaximo = 300000.00;
+    rango4.preciominimo = "100000.00";
+    rango4.preciomaximo = "300000.00";
     rango5.id = 5;
-    rango5.preciominimo = 300000.00;
+    rango5.preciominimo = "300000.00";
     rango5.preciomaximo = undefined;
     this.rangoprecios[0] = rango1;
     this.rangoprecios[1] = rango2;
@@ -197,7 +196,7 @@ export class PropiedadesComponent implements OnInit {
         }
       }
       this.ubigeo.rangoprecio = rangoprecio;
-      console.log('rango de precio:');
+      console.log("rango de precio:");
       console.log(rangoprecio);
       this.listarPropiedades();
     } else {
@@ -209,94 +208,100 @@ export class PropiedadesComponent implements OnInit {
   // en ventas solo hay lotes
   listarPropiedades() {
     let mensaje: String = "";
-    if (this.ubigeo.tiposervicio == "") {
+    if (this.ubigeo.tiposervicio.length === 0) {
       mensaje += " tipo servicio. ";
     }
-    if (this.parametros.tipopropiedad == "") {
+    if (this.parametros.tipopropiedad === "") {
       mensaje += " propiedad. ";
     }
-    if (this.idUbigeoDepartamento==0) {
-      mensaje += " ubigeo."
+    if (this.idUbigeoDepartamento == 0) {
+      mensaje += " ubigeo.";
     }
-    console.log("mensaje.."+mensaje)
+    console.log("mensaje.." + mensaje);
     if (mensaje == "") {
-      if (this.parametros.tipopropiedad === 'Casas') {
-        this.mostrarPropiedad('mostrarcasas');
+      if (this.parametros.tipopropiedad === "Casas") {
+        this.mostrarPropiedad();
         this.listarServicios();
-      } else if (this.parametros.tipopropiedad === 'Cocheras') {
+      } else if (this.parametros.tipopropiedad === "Cocheras") {
+        this.mostrarPropiedad();
         this.listarServicios();
-      } else if (this.parametros.tipopropiedad === 'Departamentos') {
+      } else if (this.parametros.tipopropiedad === "Apartamentos") {
+        this.mostrarPropiedad();
         this.listarServicios();
-      } else if (this.parametros.tipopropiedad === 'Habitaciones') {
-        this.mostrarPropiedad('mostrarhabitaciones');
+      } else if (this.parametros.tipopropiedad === "Habitaciones") {
+        this.mostrarPropiedad();
         this.listarServicios();
-      } else if (this.parametros.tipopropiedad === 'Locales') {
-        this.mostrarPropiedad('mostrarlocales');
+      } else if (this.parametros.tipopropiedad === "Locales") {
+        this.mostrarPropiedad();
         this.listarServicios();
-      } else if (this.parametros.tipopropiedad === 'Lotes') {
-        this.mostrarPropiedad('mostrarlotes');
+      } else if (this.parametros.tipopropiedad === "Lotes") {
+        this.mostrarPropiedad();
         this.verServicios = false;
       }
     } else {
       this.propiedades = [];
-      this.toastr.info('Ingrese: ' + mensaje);
+      this.toastr.info("Ingrese: " + mensaje);
     }
   }
 
-  mostrarPropiedad(ruta: string) {
+  mostrarPropiedad() {
     this.cargando = true;
     this.ubigeo.rangoprecio = this.rangoprecio;
     this.ubigeo.propiedad = this.parametros.tipopropiedad;
-    console.log('Ubigeo:');
+    console.log("Ubigeo:");
     console.log(this.ubigeo);
-    console.log('mostrar propiedad: '+ruta);
-    this.api.post('busquedaPropiedad', this.ubigeo).then(
-      (res) => {
-        console.log('resultado: ');
-        console.log(res);
-        this.propiedades = res;
-        console.log('Ubigeo:');
-        console.log(this.ubigeo);
-        console.log('Los lotes son:');
-        console.log(res);
-        this.cargando = false;
-      },
-      (error) => {
-        if (error.status === 422) {
-          // .errors = [];
-          const errors = error.json();
-          console.log('Error');
-          // this.cargando = false;
-          /*for (const key in errors) {
+    this.api
+      .post("busquedaPropiedad", this.ubigeo)
+      .then(
+        res => {
+          console.log("resultado: ");
+          console.log(res);
+          if (res !== "vacio") {
+            this.propiedades = res;
+            console.log("Ubigeo:");
+            console.log(this.ubigeo);
+            console.log("Los lotes son:");
+            console.log(res);
+          } else {
+            this.propiedades = [];
+          }
+          this.cargando = false;
+        },
+        error => {
+          if (error.status === 422) {
+            // .errors = [];
+            const errors = error.json();
+            console.log("Error");
+            // this.cargando = false;
+            /*for (const key in errors) {
             this.errors.push(errors[key]);
           }*/
+          }
         }
-      }
-    ).catch(err => this.handleError(err));
+      )
+      .catch(err => this.handleError(err));
   }
 
   listarServicios() {
     this.verServicios = true;
     if (this.servicios.length === 0) {
-      this.api.get('servicios').then(
-        (res) => {
-          this.servicios = res;
-          console.log('Servicios:');
-          console.log(this.servicios);
-          this.cargando = false;
-        },
-        (error) => {
-          if (error.status === 422) {
-            // .errors = [];
-            const errors = error.json();
-            console.log('Error');
-            // this.cargando = false;
-            /*for (const key in errors) {
-              this.errors.push(errors[key]);
-            }*/
+      this.api
+        .get("servicios")
+        .then(
+          res => {
+            this.servicios = res;
+            console.log("Servicios:");
+            console.log(this.servicios);
+            this.cargando = false;
+          },
+          error => {
+            if (error.status === 422) {
+              const errors = error.json();
+              console.log("Error");
+            }
           }
-        }
-      ).catch(err => this.handleError(err));
+        )
+        .catch(err => this.handleError(err));
     }
   }
   redondear(numero) {
@@ -306,12 +311,6 @@ export class PropiedadesComponent implements OnInit {
   limpiar() {
     this.propiedades = [];
     this.ubigeo = new UbigeoGuardar();
-    this.ubigeo.departamento = new Ubigeo();
-    this.ubigeo.provincia = new Ubigeo();
-    this.ubigeo.distrito = new Ubigeo();
-    this.ubigeo.ubigeo = new Ubigeo();
-    this.ubigeo.rangoprecio = new Rangoprecios();
-
     // this.ubigeodepartamentos = [];
     // this.idUbigeoDepartamento = 0;
     this.ubigeoprovincias = [];
@@ -320,37 +319,42 @@ export class PropiedadesComponent implements OnInit {
 
   mostrarubigeos(idtipoubigeo, codigo) {
     // this.cargando = true;
-    this.api.get('mostrarubigeos/' + idtipoubigeo + '/' + codigo).then(
-      (res) => {
-        if (idtipoubigeo === 1) { // departamento
-          // listo las provincias del departamento
-          this.ubigeoprovincias = res;
-          // this.ubigeos = this.ubigeoprovincias;
-        } else if (idtipoubigeo === 2) { // provincia
-          // listo los distritos de la provincia
-          this.ubigeodistritos = res; // distritos
-        }
-        // this.ubigeos = res;
-        // this.cargando = false;
-        console.log(res);
-      },
-      (error) => {
-        if (error.status === 422) {
-          // this.errors = [];
-          const errors = error.json();
-          console.log('Error');
+    this.api
+      .get("mostrarubigeos/" + idtipoubigeo + "/" + codigo)
+      .then(
+        res => {
+          if (idtipoubigeo === 1) {
+            // departamento
+            // listo las provincias del departamento
+            this.ubigeoprovincias = res;
+            // this.ubigeos = this.ubigeoprovincias;
+          } else if (idtipoubigeo === 2) {
+            // provincia
+            // listo los distritos de la provincia
+            this.ubigeodistritos = res; // distritos
+          }
+          // this.ubigeos = res;
           // this.cargando = false;
-          /*for (const key in errors) {
+          console.log(res);
+        },
+        error => {
+          if (error.status === 422) {
+            // this.errors = [];
+            const errors = error.json();
+            console.log("Error");
+            // this.cargando = false;
+            /*for (const key in errors) {
             this.errors.push(errors[key]);
           }*/
+          }
         }
-      }
-    ).catch(err => this.handleError(err));
+      )
+      .catch(err => this.handleError(err));
   }
 
   private handleError(error: any): void {
     // this.cargando = false;
-    this.toastr.error('Error Interno: ' + error, 'Error');
+    this.toastr.error("Error Interno: " + error, "Error");
   }
 
   /************* Metodos de propiedad detalle ***************/
